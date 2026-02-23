@@ -41,6 +41,7 @@ except ImportError:
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS   = os.path.join(BASE_DIR, "assets")
 VIDEOS   = os.path.join(ASSETS, "videos")
+AUDIO    = os.path.join(ASSETS, "audio")
 
 # ── Constants ──────────────────────────────────────────────────────
 WIDTH, HEIGHT = 1024, 640
@@ -65,12 +66,16 @@ CHARACTERS = {
         "color": (130, 80, 200), "accent": (180, 120, 255),
         "sprite_folder": "sasuke", "ultimate_video": "chidori.mp4",
         "anim_map": {
-            "idle": "idle", "attack": "attack_1", "jutsu": "special_1",
-            "ultimate": "chidori", "hit": "hit", "down": "down",
-            "guard": "guard", "heal": "idle", "run": "run",
+            "idle": "idle", "attack": "attack_1", "jutsu": "chidori_new",
+            "ultimate": "kirin", "hit": "hit", "down": "down",
+            "guard": "guard", "heal": "healing", "run": "run",
             "walk": "walk", "victory": "victory",
         },
         "move_names": ["KATANA", "CHIDORI", "KIRIN", "RECOVER"],
+        "sfx": {
+            "JUTSU":    "sasuke/chidori-1.mp3",
+            "ULTIMATE": "sasuke/kirin.mp3",
+        },
     },
     "Tanjiro": {
         "color": (30, 160, 100), "accent": (50, 220, 140),
@@ -87,20 +92,24 @@ CHARACTERS = {
         "color": (180, 40, 40), "accent": (240, 80, 80),
         "sprite_folder": "itachi", "ultimate_video": "tsukuyomi.mp4",
         "anim_map": {
-            "idle": "idle", "attack": "attack_1", "jutsu": "genjutsu",
+            "idle": "idle", "attack": "kunai", "jutsu": "genjutsu",
             "ultimate": "tsukuyomi", "hit": "hit", "down": "down",
             "guard": "guard", "heal": "idle", "run": "run",
             "walk": "walk", "victory": "victory",
         },
         "move_names": ["KUNAI", "GENJUTSU", "TSUKUYOMI", "RECOVER"],
+        "sfx": {
+            "JUTSU":    "itachi/itachi-mangekyou-sharingan-sound-effect.mp3",
+            "ULTIMATE": "itachi/itachi_tsukuyomi.mp3",
+        },
     },
     "Zenitsu": {
         "color": (200, 180, 30), "accent": (255, 230, 60),
         "sprite_folder": "zenitsu", "ultimate_video": "thunderclap.mp4",
         "anim_map": {
-            "idle": "idle", "attack": "attack_b", "jutsu": "forward_b",
-            "ultimate": "ultimate", "hit": "hit", "down": "down",
-            "guard": "guard", "heal": "idle", "run": "run",
+            "idle": "idle_new", "attack": "attack_1", "jutsu": "sixfold",
+            "ultimate": "godspeed", "hit": "hit", "down": "down",
+            "guard": "guard", "heal": "healing", "run": "run",
             "dash": "dash", "victory": "victory",
         },
         "move_names": ["SLASH", "SIXFOLD", "GODSPEED", "RECOVER"],
@@ -109,7 +118,11 @@ CHARACTERS = {
 
 DAMAGE = {"ATTACK": 15, "JUTSU": 25, "ULTIMATE": 50}
 HEAL_AMOUNT = 20
-ANIM_FPS = 8  # Frames per second for sprite animation
+ANIM_FPS = 8       # Frames per second for sprite animation
+ATTACK_ANIM_FPS = 20  # Faster FPS for attack/jutsu/ultimate (many frames)
+MAX_IDLE_FRAMES = 12  # Cap idle animation to first N frames
+MAX_ATTACK_FRAMES = 30  # Cap attack/jutsu/ultimate to first N frames
+MAX_HEAL_FRAMES = 20   # Cap healing animation frames
 
 
 
@@ -353,6 +366,17 @@ class AnimatedSprite:
                     img = pygame.image.load(os.path.join(anim_path, fname)).convert_alpha()
                     frames.append(img)
             if frames:
+                # Cap frame counts to prevent absurdly long animations
+                if "idle" in anim_dir:
+                    frames = frames[:MAX_IDLE_FRAMES]
+                elif "healing" in anim_dir or "heal" in anim_dir:
+                    frames = frames[:MAX_HEAL_FRAMES]
+                elif anim_dir in ("hit", "down", "guard", "run", "walk",
+                                  "jump", "crouch", "dash", "fall", "dodge"):
+                    pass  # Keep original count for basic anims
+                else:
+                    # Attack/jutsu/special/ultimate - cap to keep snappy
+                    frames = frames[:MAX_ATTACK_FRAMES]
                 self.animations[anim_dir] = frames
 
     def play(self, action_name, loop=False, on_finish="idle"):
@@ -372,10 +396,24 @@ class AnimatedSprite:
         self.looping = loop
         self.on_finish_anim = self.anim_map.get(on_finish, on_finish)
 
+    def _get_anim_fps(self):
+        """Return appropriate FPS for the current animation type."""
+        a = self.current_anim
+        if "idle" in a or a in ("walk", "run", "guard", "crouch"):
+            return ANIM_FPS  # Normal speed for looping anims
+        elif a in ("hit", "down", "fall"):
+            return ANIM_FPS  # Normal speed for reaction anims
+        elif "healing" in a or "heal" in a:
+            return ANIM_FPS + 4  # Slightly faster
+        else:
+            # Attack / jutsu / ultimate / specials → play faster
+            return ATTACK_ANIM_FPS
+
     def update(self, dt):
         """Advance animation frame."""
         self.frame_timer += dt
-        spf = 1.0 / ANIM_FPS
+        current_fps = self._get_anim_fps()
+        spf = 1.0 / current_fps
         if self.frame_timer >= spf:
             self.frame_timer -= spf
             frames = self.animations.get(self.current_anim, [])
@@ -467,6 +505,7 @@ def play_cutscene(screen: pygame.Surface, video_filename: str):
         return
 
     fps_vid = cap.get(cv2.CAP_PROP_FPS) or 30
+    scr_w, scr_h = screen.get_size()
     clock = pygame.time.Clock()
 
     # Audio via ffpyplayer
@@ -492,15 +531,31 @@ def play_cutscene(screen: pygame.Surface, video_filename: str):
                 sys.exit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
+                break
 
-        # Convert BGR → RGB, resize to screen
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame = cv2.resize(frame, (WIDTH, HEIGHT))
-        surf = pygame.surfarray.make_surface(frame.swapaxes(0, 1))
-        screen.blit(surf, (0, 0))
+        if not running:
+            break
+
+        # ── Render the frame to the Pygame screen ─────────────────
+        # Convert BGR → RGB
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+        # Scale to fill the screen (maintain aspect ratio, letterbox)
+        fh, fw = frame_rgb.shape[:2]
+        scale = min(scr_w / fw, scr_h / fh)
+        new_w, new_h = int(fw * scale), int(fh * scale)
+        frame_resized = cv2.resize(frame_rgb, (new_w, new_h), interpolation=cv2.INTER_AREA)
+
+        # Create Pygame surface and blit centered
+        surf = pygame.surfarray.make_surface(frame_resized.swapaxes(0, 1))
+        screen.fill((0, 0, 0))
+        x_off = (scr_w - new_w) // 2
+        y_off = (scr_h - new_h) // 2
+        screen.blit(surf, (x_off, y_off))
+
         pygame.display.flip()
 
-        # Drain audio frames to keep sync
+        # Drain audio frames to keep audio in sync
         if player:
             player.get_frame()
 
@@ -512,30 +567,235 @@ def play_cutscene(screen: pygame.Surface, video_filename: str):
 
 
 def _play_flash_effect(screen: pygame.Surface):
-    """Fallback cinematic flash when video is unavailable."""
-    clock = pygame.time.Clock()
-    overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
-    for i in range(30):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return
+    """No-op — flash removed so sprite animations stay visible."""
+    pass
 
-        alpha = int(255 * (1 - i / 30))
-        overlay.fill((255, 255, 255, alpha))
-        screen.blit(overlay, (0, 0))
 
-        # Screen shake
-        offset_x = random.randint(-8, 8) if i < 15 else 0
-        offset_y = random.randint(-8, 8) if i < 15 else 0
-        temp = screen.copy()
-        screen.fill(C_BG)
-        screen.blit(temp, (offset_x, offset_y))
+# ═══════════════════════════════════════════════════════════════════
+#  KIRIN LIGHTNING DRAGON EFFECT
+# ═══════════════════════════════════════════════════════════════════
 
-        pygame.display.flip()
-        clock.tick(60)
+class KirinBolt:
+    """Single lightning bolt segment for the Kirin dragon."""
+    def __init__(self, x, y_start, y_end):
+        self.x = x
+        self.y_start = y_start
+        self.y_end = y_end
+        self.segments = []  # list of (x, y) points
+        self._generate()
+        self.life = random.uniform(0.08, 0.18)
+        self.age = 0.0
+        self.color = random.choice([
+            (100, 180, 255), (150, 200, 255), (200, 230, 255),
+            (80, 140, 255), (255, 255, 255),
+        ])
+        self.width = random.randint(1, 3)
+
+    def _generate(self):
+        """Generate jagged lightning path."""
+        self.segments = [(self.x, self.y_start)]
+        y = self.y_start
+        step = 12
+        while y < self.y_end:
+            y += step
+            x_offset = random.randint(-25, 25)
+            self.segments.append((self.x + x_offset, min(y, self.y_end)))
+
+    def update(self, dt):
+        self.age += dt
+
+    def draw(self, surf):
+        if len(self.segments) < 2:
+            return
+        alpha = max(0.0, 1.0 - self.age / self.life)
+        col = tuple(int(c * alpha) for c in self.color)
+        for i in range(len(self.segments) - 1):
+            pygame.draw.line(surf, col, self.segments[i], self.segments[i + 1], self.width)
+        # Glow at the tip
+        tip = self.segments[-1]
+        glow_r = int(8 * alpha)
+        if glow_r > 0:
+            glow_surf = pygame.Surface((glow_r * 4, glow_r * 4), pygame.SRCALPHA)
+            pygame.draw.circle(glow_surf, (*col, int(80 * alpha)),
+                               (glow_r * 2, glow_r * 2), glow_r * 2)
+            surf.blit(glow_surf, (tip[0] - glow_r * 2, tip[1] - glow_r * 2))
+
+    @property
+    def alive(self):
+        return self.age < self.life
+
+
+class KirinDragonEffect:
+    """
+    Animated Kirin lightning dragon that strikes down onto a target.
+    Draws a dragon silhouette made of lightning descending from the sky.
+    """
+    def __init__(self, target_x, target_y, duration=2.0):
+        self.target_x = target_x
+        self.target_y = target_y
+        self.duration = duration
+        self.age = 0.0
+        self.bolts = []
+        self.bolt_timer = 0.0
+        self.phase = "charge"  # charge → strike → impact → fade
+        self.strike_y = -100   # dragon head Y position (descends)
+        self.impact_particles = []
+        self.flash_alpha = 0
+
+    def update(self, dt):
+        self.age += dt
+        self.bolt_timer += dt
+
+        # Phase transitions
+        if self.age < 0.4:
+            self.phase = "charge"
+        elif self.age < 1.0:
+            self.phase = "strike"
+        elif self.age < 1.6:
+            self.phase = "impact"
+        else:
+            self.phase = "fade"
+
+        # ── Charge: lightning gathers at top ──
+        if self.phase == "charge":
+            if self.bolt_timer > 0.03:
+                self.bolt_timer = 0.0
+                bx = self.target_x + random.randint(-120, 120)
+                self.bolts.append(KirinBolt(bx, -20, random.randint(30, 100)))
+            self.flash_alpha = int(60 * abs(math.sin(self.age * 15)))
+
+        # ── Strike: dragon descends ──
+        elif self.phase == "strike":
+            progress = (self.age - 0.4) / 0.6
+            self.strike_y = -100 + (self.target_y + 100) * min(progress, 1.0)
+
+            # Main dragon lightning bolts
+            if self.bolt_timer > 0.02:
+                self.bolt_timer = 0.0
+                # Central thick bolt
+                bx = self.target_x + random.randint(-15, 15)
+                self.bolts.append(KirinBolt(bx, -30, int(self.strike_y)))
+                # Side bolts for dragon "wings"
+                for offset in [-60, -40, 40, 60]:
+                    if random.random() > 0.5:
+                        wing_x = self.target_x + offset + random.randint(-10, 10)
+                        y_top = max(-20, self.strike_y - random.randint(80, 160))
+                        self.bolts.append(KirinBolt(wing_x, y_top, int(self.strike_y)))
+
+            self.flash_alpha = int(100 * abs(math.sin(self.age * 20)))
+
+        # ── Impact: explosion at target ──
+        elif self.phase == "impact":
+            if self.bolt_timer > 0.02:
+                self.bolt_timer = 0.0
+                # Bolts radiating from impact point
+                for _ in range(3):
+                    bx = self.target_x + random.randint(-50, 50)
+                    by_end = self.target_y + random.randint(-60, 80)
+                    self.bolts.append(KirinBolt(bx, self.target_y - 20, by_end))
+                # Impact particles
+                for _ in range(2):
+                    self.impact_particles.append({
+                        "x": float(self.target_x + random.randint(-30, 30)),
+                        "y": float(self.target_y + random.randint(-20, 20)),
+                        "vx": random.uniform(-200, 200),
+                        "vy": random.uniform(-300, -50),
+                        "life": random.uniform(0.3, 0.7),
+                        "age": 0.0,
+                        "size": random.randint(3, 8),
+                        "color": random.choice([
+                            (100, 180, 255), (200, 230, 255), (255, 255, 200),
+                        ]),
+                    })
+
+            impact_progress = (self.age - 1.0) / 0.6
+            self.flash_alpha = int(150 * max(0, 1 - impact_progress))
+
+        # ── Fade ──
+        else:
+            self.flash_alpha = int(30 * max(0, 1 - (self.age - 1.6) / 0.4))
+
+        # Update bolts
+        alive_bolts = []
+        for b in self.bolts:
+            b.update(dt)
+            if b.alive:
+                alive_bolts.append(b)
+        self.bolts = alive_bolts
+
+        # Update impact particles
+        alive_parts = []
+        for p in self.impact_particles:
+            p["age"] += dt
+            p["x"] += p["vx"] * dt
+            p["y"] += p["vy"] * dt
+            p["vy"] += 400 * dt
+            if p["age"] < p["life"]:
+                alive_parts.append(p)
+        self.impact_particles = alive_parts
+
+    def draw(self, surf):
+        # Flash overlay (blue-white)
+        if self.flash_alpha > 0:
+            overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+            overlay.fill((100, 150, 255, min(self.flash_alpha, 200)))
+            surf.blit(overlay, (0, 0))
+
+        # Draw dragon head during strike (simple beast shape via circles + lines)
+        if self.phase == "strike" and self.strike_y > 0:
+            # Dragon head glow
+            head_y = int(self.strike_y)
+            glow_size = 40
+            glow = pygame.Surface((glow_size * 2, glow_size * 2), pygame.SRCALPHA)
+            pygame.draw.circle(glow, (80, 160, 255, 120), (glow_size, glow_size), glow_size)
+            surf.blit(glow, (self.target_x - glow_size, head_y - glow_size))
+
+            # Eyes (red dots)
+            for ex in [-8, 8]:
+                pygame.draw.circle(surf, (255, 50, 50),
+                                   (self.target_x + ex, head_y - 5), 3)
+
+            # Mouth / jaw lines
+            pygame.draw.line(surf, (150, 200, 255),
+                             (self.target_x - 20, head_y + 5),
+                             (self.target_x, head_y + 15), 2)
+            pygame.draw.line(surf, (150, 200, 255),
+                             (self.target_x + 20, head_y + 5),
+                             (self.target_x, head_y + 15), 2)
+
+        # Impact ring
+        if self.phase == "impact":
+            impact_progress = (self.age - 1.0) / 0.6
+            ring_r = int(20 + 80 * impact_progress)
+            ring_alpha = int(200 * max(0, 1 - impact_progress))
+            ring_surf = pygame.Surface((ring_r * 2 + 4, ring_r * 2 + 4), pygame.SRCALPHA)
+            pygame.draw.circle(ring_surf, (100, 180, 255, ring_alpha),
+                               (ring_r + 2, ring_r + 2), ring_r, 3)
+            surf.blit(ring_surf,
+                      (self.target_x - ring_r - 2, self.target_y - ring_r - 2))
+
+        # Lightning bolts
+        for b in self.bolts:
+            b.draw(surf)
+
+        # Impact particles
+        for p in self.impact_particles:
+            alpha = max(0.0, 1.0 - p["age"] / p["life"])
+            r = max(1, int(p["size"] * alpha))
+            col = tuple(int(c * alpha) for c in p["color"])
+            pygame.draw.circle(surf, col, (int(p["x"]), int(p["y"])), r)
+
+        # "KIRIN" text during strike/impact
+        if self.phase in ("strike", "impact"):
+            font = pygame.font.SysFont("Segoe UI", 42, bold=True)
+            text_alpha = 255 if self.phase == "strike" else int(255 * max(0, 1 - (self.age - 1.0) / 0.6))
+            txt = font.render("⚡ K I R I N ⚡", True, (100, 200, 255))
+            txt.set_alpha(text_alpha)
+            surf.blit(txt, txt.get_rect(center=(WIDTH // 2, 40)))
+
+    @property
+    def alive(self):
+        return self.age < self.duration
 
 
 
@@ -604,6 +864,15 @@ class Game:
         self.status_timer = 0
         self.disconnected = False
         self.hand_sign_enabled = HAS_HAND_SIGNS   # toggle hand-sign mini-game
+        self.kirin_effect = None  # KirinDragonEffect when active
+
+        # ── Sound effects ──
+        try:
+            pygame.mixer.init()
+            self.sfx_enabled = True
+        except Exception:
+            self.sfx_enabled = False
+        self.sfx_cache = {}   # {relative_path: pygame.mixer.Sound}
 
         # Animated sprites  {char_name: AnimatedSprite}
         self.anim_sprites = {}
@@ -784,51 +1053,115 @@ class Game:
             self.scene = "MENU"
             self.disconnected = True
 
+    def _play_sfx(self, char_name, action_type):
+        """Play a sound effect for a character's action if one exists."""
+        if not self.sfx_enabled:
+            return
+        char_data = CHARACTERS.get(char_name, {})
+        sfx_map = char_data.get("sfx", {})
+        rel_path = sfx_map.get(action_type)
+        if not rel_path:
+            return
+        if rel_path not in self.sfx_cache:
+            full_path = os.path.join(AUDIO, rel_path)
+            if not os.path.isfile(full_path):
+                return
+            try:
+                self.sfx_cache[rel_path] = pygame.mixer.Sound(full_path)
+            except Exception:
+                return
+        try:
+            self.sfx_cache[rel_path].play()
+        except Exception:
+            pass
+
     def _process_action(self, action):
         """Trigger visual effects and sprite animations for a received action."""
         act = action.get("action")
         by = action.get("by")
+        reflected = action.get("reflected", False)
 
         if act in ("ATTACK", "JUTSU", "ULTIMATE"):
-            # Particles at target location
-            if by == self.player_id:
-                px, py = WIDTH - 180, 130
-                # Attacker anim on our sprite
-                if self.player_anim:
-                    anim_key = act.lower()
-                    self.player_anim.play(anim_key, loop=False, on_finish="idle")
-                # Hit anim on enemy
-                if self.enemy_anim:
-                    self.enemy_anim.play("hit", loop=False, on_finish="idle")
-            else:
-                px, py = 150, HEIGHT - 250
-                # Enemy attacked us
-                if self.enemy_anim:
-                    anim_key = act.lower()
-                    self.enemy_anim.play(anim_key, loop=False, on_finish="idle")
-                # Hit anim on our sprite
-                if self.player_anim:
-                    self.player_anim.play("hit", loop=False, on_finish="idle")
+            # ── Play attack sound effect ──
+            attacker_char = action.get("attacker_char", "")
+            self._play_sfx(attacker_char, act)
 
-            col = CHARACTERS.get(action.get("attacker_char", ""), {}).get("accent", C_CYAN)
-            for _ in range(20):
-                self.particles.append(Particle(px + random.randint(-20, 20), py + random.randint(-20, 20), col))
-            self.shake_timer = 0.3
+            if reflected:
+                # ── Genjutsu counter: attack was reflected! ──
+                # Defender plays genjutsu anim, attacker takes the hit
+                if by == self.player_id:
+                    # We attacked but it was reflected — we get hit
+                    px, py = 150, HEIGHT - 250
+                    if self.player_anim:
+                        self.player_anim.play("hit", loop=False, on_finish="idle")
+                    if self.enemy_anim:
+                        self.enemy_anim.play("guard", loop=False, on_finish="idle")
+                else:
+                    # Enemy attacked us but our shield reflected it
+                    px, py = WIDTH - 180, 130
+                    if self.enemy_anim:
+                        self.enemy_anim.play("hit", loop=False, on_finish="idle")
+                    if self.player_anim:
+                        self.player_anim.play("guard", loop=False, on_finish="idle")
+
+                # Red particles on the attacker who gets hit
+                for _ in range(25):
+                    self.particles.append(Particle(
+                        px + random.randint(-30, 30),
+                        py + random.randint(-30, 30),
+                        (255, 40, 40)
+                    ))
+                self.shake_timer = 0.5
+
+                # Play genjutsu counter screen flash
+                self._play_genjutsu_counter_effect()
+
+            else:
+                # ── Normal attack ──
+                # Particles at target location
+                if by == self.player_id:
+                    px, py = WIDTH - 180, 130
+                    if self.player_anim:
+                        anim_key = act.lower()
+                        self.player_anim.play(anim_key, loop=False, on_finish="idle")
+                    if self.enemy_anim:
+                        self.enemy_anim.play("hit", loop=False, on_finish="idle")
+                else:
+                    px, py = 150, HEIGHT - 250
+                    if self.enemy_anim:
+                        anim_key = act.lower()
+                        self.enemy_anim.play(anim_key, loop=False, on_finish="idle")
+                    if self.player_anim:
+                        self.player_anim.play("hit", loop=False, on_finish="idle")
+
+                col = CHARACTERS.get(action.get("attacker_char", ""), {}).get("accent", C_CYAN)
+                for _ in range(20):
+                    self.particles.append(Particle(px + random.randint(-20, 20), py + random.randint(-20, 20), col))
+                self.shake_timer = 0.3
 
             # Special: Itachi Genjutsu animation for JUTSU
             if act == "JUTSU" and action.get("attacker_char") == "Itachi":
                 is_vs_sasuke = action.get("special_cutscene") == "tsukuyomi"
                 play_genjutsu_anim(self.screen, is_vs_sasuke)
-                if is_vs_sasuke:
-                    # After the flash effect/anim, play the specific video requested
-                    play_cutscene(self.screen, "Itachi Genjutsu .mp4")
 
-            # Ultimate video cutscene
-            if act == "ULTIMATE" and by == self.player_id:
-                char = action.get("attacker_char")
-                vid = CHARACTERS.get(char, {}).get("ultimate_video")
-                if vid:
-                    play_cutscene(self.screen, vid)
+            # ── Kirin lightning dragon effect ──
+            if act == "ULTIMATE" and action.get("attacker_char") == "Sasuke":
+                # Dragon always strikes the character who is NOT Sasuke
+                # Figure out which side is the non-Sasuke target
+                if self.my_char == "Sasuke" and by == self.player_id:
+                    # I am Sasuke and I attacked → hit enemy (top-right)
+                    tx, ty = WIDTH - 160, 180
+                elif self.opp_char == "Sasuke" and by != self.player_id:
+                    # Enemy is Sasuke and they attacked → hit me (bottom-left)
+                    tx, ty = 150, HEIGHT - 290
+                elif self.my_char == "Sasuke" and by != self.player_id:
+                    # I am Sasuke but enemy somehow triggered it → hit me
+                    tx, ty = 150, HEIGHT - 290
+                else:
+                    # Enemy is Sasuke, I triggered view → hit enemy
+                    tx, ty = WIDTH - 160, 180
+                self.kirin_effect = KirinDragonEffect(tx, ty, duration=2.0)
+                self.shake_timer = 1.5  # extended shake for Kirin
 
         elif act == "HEAL":
             if by == self.player_id:
@@ -841,6 +1174,33 @@ class Game:
                     self.enemy_anim.play("heal", loop=False, on_finish="idle")
             for _ in range(15):
                 self.particles.append(Particle(px + random.randint(-20, 20), py + random.randint(-10, 10), C_GREEN))
+
+    def _play_genjutsu_counter_effect(self):
+        """Quick screen flash when genjutsu counter reflects an attack."""
+        clock = pygame.time.Clock()
+        bg_snapshot = self.screen.copy()
+        overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+
+        for i in range(35):
+            for ev in pygame.event.get():
+                if ev.type == pygame.QUIT:
+                    pygame.quit(); sys.exit()
+
+            self.screen.blit(bg_snapshot, (0, 0))
+
+            pulse = abs(math.sin(i * 0.2))
+            alpha = int(140 * pulse)
+            overlay.fill((180, 0, 0, alpha))
+            self.screen.blit(overlay, (0, 0))
+
+            # "COUNTER" text
+            font = pygame.font.SysFont("Segoe UI", 52, bold=True)
+            txt = font.render("GENJUTSU COUNTER!", True, (255, 60, 60))
+            txt.set_alpha(int(255 * pulse))
+            self.screen.blit(txt, txt.get_rect(center=(WIDTH // 2, HEIGHT // 2)))
+
+            pygame.display.flip()
+            clock.tick(60)
 
     
 
@@ -891,11 +1251,61 @@ class Game:
 
     def _try_connect(self):
         ip = self.ip_input.text.strip() or "localhost"
-        self.status_msg = f"Connecting to {ip}…"
-        self.status_timer = 3
-        self.net = Network(ip)
-        if self.net.connect():
-            self.player_id = self.net.player_id
+        net = Network(ip)
+
+        # ── Run blocking connect in a background thread ───────────
+        result = {"done": False, "ok": False}
+
+        def _bg_connect():
+            result["ok"] = net.connect()
+            result["done"] = True
+
+        t = threading.Thread(target=_bg_connect, daemon=True)
+        t.start()
+
+        # ── Keep Pygame alive with a "Connecting…" overlay ────────
+        spinner_chars = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+        connect_start = time.time()
+        font_con = pygame.font.SysFont("Segoe UI", 30, bold=True)
+        font_hint = pygame.font.SysFont("Segoe UI", 18)
+
+        while not result["done"]:
+            dt = self.clock.tick(FPS) / 1000.0
+            elapsed = time.time() - connect_start
+
+            for ev in pygame.event.get():
+                if ev.type == pygame.QUIT:
+                    net.close()
+                    pygame.quit()
+                    sys.exit()
+                if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE:
+                    # Cancel connection attempt
+                    net.close()
+                    self.status_msg = "Connection cancelled."
+                    self.status_timer = 3
+                    self.net = None
+                    return
+
+            # Dark overlay
+            overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 180))
+            self.screen.blit(overlay, (0, 0))
+
+            # Spinner + text
+            spin_idx = int(elapsed * 10) % len(spinner_chars)
+            spin = spinner_chars[spin_idx]
+            txt = font_con.render(f"{spin}  Connecting to {ip}…", True, C_CYAN)
+            self.screen.blit(txt, txt.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 10)))
+
+            hint = font_hint.render("Press ESC to cancel", True, C_GREY)
+            self.screen.blit(hint, hint.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 30)))
+
+            pygame.display.flip()
+
+        # ── Connection finished ───────────────────────────────────
+        if result["ok"]:
+            self.net = net
+            self.player_id = net.player_id
             self.disconnected = False
             self.status_msg = f"Connected as {self.player_id}! Waiting for opponent…"
             self.status_timer = 5
@@ -961,8 +1371,12 @@ class Game:
 
         if self.player_id == "P1":
             my_hp, opp_hp = gs["hp_p1"], gs["hp_p2"]
+            my_shield = gs.get("genjutsu_shield_p1", False)
+            opp_shield = gs.get("genjutsu_shield_p2", False)
         else:
             my_hp, opp_hp = gs["hp_p2"], gs["hp_p1"]
+            my_shield = gs.get("genjutsu_shield_p2", False)
+            opp_shield = gs.get("genjutsu_shield_p1", False)
 
         # ── Apply screen shake ──
         ox, oy = self.shake_offset
@@ -1017,6 +1431,18 @@ class Game:
                 spr_rect = scaled.get_rect(midbottom=(WIDTH - 160 + ox, 260 + bob + oy))
                 self.screen.blit(scaled, spr_rect)
 
+            # Genjutsu shield indicator (enemy)
+            if opp_shield:
+                shield_pulse = abs(math.sin(self.anim_time * 3))
+                shield_alpha = int(100 + 80 * shield_pulse)
+                shield_surf = pygame.Surface((120, 120), pygame.SRCALPHA)
+                pygame.draw.circle(shield_surf, (180, 0, 0, shield_alpha), (60, 60), 55, 3)
+                pygame.draw.circle(shield_surf, (255, 40, 40, shield_alpha // 2), (60, 60), 50, 2)
+                self.screen.blit(shield_surf, (WIDTH - 220 + ox, 150 + oy))
+                stxt = self.font_sm.render("GENJUTSU", True, (255, 60, 60))
+                stxt.set_alpha(shield_alpha)
+                self.screen.blit(stxt, stxt.get_rect(center=(WIDTH - 160 + ox, 275 + oy)))
+
         # ── Player (bottom left) ──
         if self.my_char:
             my_data = CHARACTERS.get(self.my_char, {})
@@ -1046,6 +1472,18 @@ class Game:
                 sprite_flip = pygame.transform.flip(scaled, True, False)
                 spr_rect = sprite_flip.get_rect(midbottom=(150 + ox, HEIGHT - 200 + bob + oy))
                 self.screen.blit(sprite_flip, spr_rect)
+
+            # Genjutsu shield indicator (player)
+            if my_shield:
+                shield_pulse = abs(math.sin(self.anim_time * 3))
+                shield_alpha = int(100 + 80 * shield_pulse)
+                shield_surf = pygame.Surface((120, 120), pygame.SRCALPHA)
+                pygame.draw.circle(shield_surf, (180, 0, 0, shield_alpha), (60, 60), 55, 3)
+                pygame.draw.circle(shield_surf, (255, 40, 40, shield_alpha // 2), (60, 60), 50, 2)
+                self.screen.blit(shield_surf, (90 + ox, HEIGHT - 330 + oy))
+                stxt = self.font_sm.render("GENJUTSU", True, (255, 60, 60))
+                stxt.set_alpha(shield_alpha)
+                self.screen.blit(stxt, stxt.get_rect(center=(150 + ox, HEIGHT - 195 + oy)))
 
         # ── Command Panel ──
         panel_rect = pygame.Rect(0, HEIGHT - 110, WIDTH, 110)
@@ -1077,12 +1515,7 @@ class Game:
                                 self.status_msg = "HAND SIGNS FAILED — ATTACK MISSED!"
                                 self.status_timer = 3
 
-                    if act == "ULTIMATE":
-                        # Play our ultimate cutscene BEFORE sending to server
-                        vid = CHARACTERS.get(self.my_char, {}).get("ultimate_video")
-                        if vid and hand_sign_success:
-                            play_cutscene(self.screen, vid)
-                    elif act == "JUTSU" and self.my_char == "Itachi":
+                    if act == "JUTSU" and self.my_char == "Itachi":
                         if hand_sign_success:
                             # Play genjutsu anim locally too
                             is_vs_sasuke = self.opp_char == "Sasuke"
@@ -1100,6 +1533,13 @@ class Game:
         turn_col = tuple(min(255, max(0, c + pulse - 200)) if c == max(turn_color) else c for c in turn_color)
         banner = self.font_big.render(turn_text, True, turn_col)
         self.screen.blit(banner, banner.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 20)))
+
+        # ── Kirin lightning dragon effect ──
+        if self.kirin_effect:
+            self.kirin_effect.update(dt)
+            self.kirin_effect.draw(self.screen)
+            if not self.kirin_effect.alive:
+                self.kirin_effect = None
 
         # ── Particles ──
         alive = []

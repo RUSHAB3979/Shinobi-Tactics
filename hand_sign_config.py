@@ -8,20 +8,20 @@ Signs: "fist", "open_palm", "peace", "point_up", "thumbs_up", "rock"
 
 HAND_SIGN_SEQUENCES = {
     "Sasuke": {
-        "JUTSU":    ["fist", "peace", "point_up"],      # Chidori: Tiger → Snake → Bird
+        "JUTSU":    ["fist", "peace", "point_up"],      # Chidori: Tiger - Snake - Bird
         "ULTIMATE": ["point_up"],                        # Kirin: raise hand skyward
     },
     "Itachi": {
-        "JUTSU":    ["peace", "fist"],                   # Genjutsu: Snake → Tiger
-        "ULTIMATE": ["open_palm", "peace", "fist"],      # Tsukuyomi: Ram → Snake → Tiger
+        "JUTSU":    ["peace", "fist"],                   # Genjutsu: Snake - Tiger
+        "ULTIMATE": ["open_palm", "peace", "fist"],      # Tsukuyomi: Ram - Snake - Tiger
     },
     "Tanjiro": {
-        "JUTSU":    ["open_palm", "fist"],               # Water Breathing: Ram → Tiger
-        "ULTIMATE": ["open_palm", "point_up", "fist"],   # Sun Breathing: Ram → Bird → Tiger
+        "JUTSU":    ["open_palm", "fist"],               # Water Breathing: Ram - Tiger
+        "ULTIMATE": ["open_palm", "point_up", "fist"],   # Sun Breathing: Ram - Bird - Tiger
     },
     "Zenitsu": {
-        "JUTSU":    ["fist", "point_up"],                # Thunder: Tiger → Bird
-        "ULTIMATE": ["fist", "peace", "point_up"],       # Godspeed: Tiger → Snake → Bird
+        "JUTSU":    ["fist", "point_up"],                # Thunder: Tiger - Bird
+        "ULTIMATE": ["fist", "peace", "point_up"],       # Godspeed: Tiger - Snake - Bird
     },
 }
 
@@ -41,5 +41,5 @@ TIME_PER_SIGN = {
     "ULTIMATE": 4.0,
 }
 
-# Webcam index (0 = default/droidcam, 1 = external/usb)
+# Webcam index (0 = droidcam, 1 = default/built-in camera)
 CAMERA_INDEX = 1

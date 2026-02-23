@@ -74,6 +74,7 @@ class GameState:
         self.last_action = None     # dict describing what just happened
         self.connected = {"P1": False, "P2": False}
         self.genjutsu_used = {"P1": False, "P2": False}  # Itachi one-time genjutsu
+        self.genjutsu_shield = {"P1": False, "P2": False}  # Active counter shield
 
     def snapshot(self):
         """Return a serialisable dict of the full state."""
@@ -88,6 +89,8 @@ class GameState:
             "last_action": self.last_action,
             "p1_connected": self.connected["P1"],
             "p2_connected": self.connected["P2"],
+            "genjutsu_shield_p1": self.genjutsu_shield["P1"],
+            "genjutsu_shield_p2": self.genjutsu_shield["P2"],
         }
 
 
@@ -209,7 +212,17 @@ class GameServer:
                     return
 
                 dmg = msg.get("dmg", DAMAGE.get(action, 0))
-                self.state.hp[other] = max(0, self.state.hp[other] - dmg)
+
+                # ── Genjutsu counter: if defender has active shield ──
+                reflected = False
+                if self.state.genjutsu_shield[other] and dmg > 0:
+                    # Block the attack and reflect damage to attacker
+                    self.state.genjutsu_shield[other] = False
+                    self.state.hp[pid] = max(0, self.state.hp[pid] - dmg)
+                    reflected = True
+                    print(f"[SERVER] GENJUTSU COUNTER! {other}'s shield reflects {dmg} dmg back to {pid}")
+                else:
+                    self.state.hp[other] = max(0, self.state.hp[other] - dmg)
 
                 # Build action info for clients
                 action_info = {
@@ -219,13 +232,26 @@ class GameServer:
                     "dmg":            dmg,
                     "attacker_char":  self.state.characters[pid],
                     "defender_char":  self.state.characters[other],
+                    "reflected":      reflected,
                 }
                 # Special flag: Itachi Genjutsu vs Sasuke
                 if (action == "JUTSU"
                         and self.state.characters[pid] == "Itachi"):
                     self.state.genjutsu_used[pid] = True
+                    # Activate genjutsu counter shield
+                    self.state.genjutsu_shield[pid] = True
+                    print(f"[SERVER] {pid} (Itachi) activated Genjutsu shield!")
                     if self.state.characters[other] == "Sasuke":
                         action_info["special_cutscene"] = "tsukuyomi"
+
+                # Check if attacker died from reflection
+                if reflected and self.state.hp[pid] <= 0:
+                    self.state.phase = "GAME_OVER"
+                    self.state.winner = other
+                    print(f"[SERVER] {other} wins (genjutsu counter KO)!")
+                    self.state.last_action = action_info
+                    self._broadcast({"type": "STATE", **self.state.snapshot()})
+                    return
 
                 self.state.last_action = action_info
 

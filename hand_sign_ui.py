@@ -9,6 +9,7 @@ Returns True (success) or False (failure).
 import time
 import math
 import sys
+import platform
 
 import cv2
 import pygame
@@ -51,11 +52,22 @@ def run_hand_sign_challenge(
     if not sign_sequence:
         return True  # nothing required
 
-    # ── Open webcam ───────────────────────────────────────────────
-    cap = cv2.VideoCapture(CAMERA_INDEX)
+    # ── Open webcam (try multiple backends on Windows) ─────────
+    cap = None
+    if platform.system() == "Windows":
+        for backend in [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]:
+            attempt = cv2.VideoCapture(CAMERA_INDEX, backend)
+            if attempt.isOpened():
+                cap = attempt
+                break
+            attempt.release()
+    if cap is None:
+        cap = cv2.VideoCapture(CAMERA_INDEX)
     if not cap.isOpened():
-        # No webcam → gracefully skip (attack proceeds normally)
-        return True
+        cap.release()
+        # No webcam → show error and FAIL the challenge (attack misses)
+        _show_camera_error(screen)
+        return False
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_W)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_H)
@@ -291,6 +303,51 @@ def _show_result_flash(screen, success, font_big, clock):
         txt_alpha = max(0, 255 - int(i * 6))
         txt.set_alpha(txt_alpha)
         screen.blit(txt, txt.get_rect(center=(scr_w // 2, scr_h // 2)))
+
+        pygame.display.flip()
+        clock.tick(60)
+
+
+def _show_camera_error(screen):
+    """Show an error overlay when the camera cannot be opened."""
+    scr_w, scr_h = screen.get_size()
+    clock = pygame.time.Clock()
+    font_big = pygame.font.SysFont("Segoe UI", 44, bold=True)
+    font_med = pygame.font.SysFont("Segoe UI", 22)
+
+    lines = [
+        ("📷  CAMERA NOT FOUND", _RED, font_big),
+        ("", None, None),
+        ("Cannot open webcam — hand signs cannot be verified.", _WHITE, font_med),
+        ("Attack will MISS.  Connect a camera and try again.", _YELLOW, font_med),
+    ]
+
+    for i in range(90):  # ~1.5 seconds at 60 fps
+        for ev in pygame.event.get():
+            if ev.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if ev.type == pygame.KEYDOWN:
+                return  # any key to dismiss early
+
+        overlay = pygame.Surface((scr_w, scr_h), pygame.SRCALPHA)
+        fade = min(255, int(200 * min(1.0, i / 15)))
+        overlay.fill((40, 0, 0, fade))
+        screen.blit(overlay, (0, 0))
+
+        y_offset = scr_h // 2 - 60
+        for text, color, font in lines:
+            if font is None:
+                y_offset += 15
+                continue
+            pulse = 1.0 + 0.03 * math.sin(i * 0.2)
+            txt = font.render(text, True, color)
+            if font == font_big:
+                txt = pygame.transform.smoothscale(
+                    txt, (int(txt.get_width() * pulse), int(txt.get_height() * pulse))
+                )
+            screen.blit(txt, txt.get_rect(center=(scr_w // 2, y_offset)))
+            y_offset += 45
 
         pygame.display.flip()
         clock.tick(60)
