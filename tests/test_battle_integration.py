@@ -37,7 +37,8 @@ class IntegrationTests(unittest.TestCase):
             self.game._advance_presentation(1/60)
 
     def test_reflection_and_reflected_ko_use_actual_recipient(self):
-        self.server.state.hp["P2"]=35
+        self.server.state.hp["P2"]=38
+        self.server.state.resources["P2"].update(chakra=100, charge=3)
         self.server._process({"action":"JUTSU"},"P1")
         self.game._handle_server_msg({"type":"STATE",**self.server.state.snapshot()})
         self.advance(1.5)
@@ -49,7 +50,7 @@ class IntegrationTests(unittest.TestCase):
         self.game._handle_server_msg(snapshot)
         self.assertEqual(self.game.scene,"BATTLE")
         self.advance(1.1)
-        self.assertEqual(self.game.presentation.visible_hp["P2"],10)
+        self.assertEqual(self.game.presentation.visible_hp["P2"],20)
         self.advance(.1)
         self.assertEqual(self.game.effect.target,self.game._root("P2"))
         self.assertEqual(self.game.presentation.visible_hp["P2"],0)
@@ -58,6 +59,20 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(self.game.scene,"GAME_OVER")
         self.assertEqual(self.game.player_anim.current_anim,"victory")
         self.assertEqual(self.game.enemy_anim.current_anim,"down")
+
+    def test_guard_presentation_and_unavailable_buttons(self):
+        self.game._scene_battle([], (-1,-1), 1/60)
+        self.assertFalse(self.game.battle_buttons[2].enabled)
+        event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1,
+                                  pos=self.game.battle_buttons[4].rect.center)
+        self.game._scene_battle([event], event.pos, 1/60)
+        self.assertEqual(self.game.net.sent, [{"action": "GUARD"}])
+        self.server._process({"action": "GUARD"}, "P1")
+        self.game._handle_server_msg({"type": "STATE", **self.server.state.snapshot()})
+        self.advance(.1)
+        self.assertEqual(self.game.player_anim.current_anim, "guard")
+        self.advance(1)
+        self.assertFalse(self.game.presentation.busy)
 
     def test_rapid_clicks_send_one_action(self):
         event=pygame.event.Event(pygame.MOUSEBUTTONDOWN,button=1,pos=self.game.battle_buttons[0].rect.center)
@@ -77,7 +92,7 @@ class IntegrationTests(unittest.TestCase):
         event=pygame.event.Event(pygame.MOUSEBUTTONDOWN,button=1,pos=self.game.battle_buttons[1].rect.center)
         with patch.dict("sys.modules",{"hand_sign_ui":None}):
             self.game._scene_battle([event],event.pos,1/60)
-        self.assertEqual(self.game.net.sent,[{"action":"JUTSU","dmg":0}])
+        self.assertEqual(self.game.net.sent,[{"action":"JUTSU","success":False}])
 
     def test_disconnect_clears_queue_and_releases_pending_command(self):
         self.server._process({"action":"ATTACK"},"P1")

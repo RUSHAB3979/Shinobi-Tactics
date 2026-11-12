@@ -113,18 +113,18 @@ class BattleStyle:
         pygame.draw.rect(surface,(8,14,24),(0,530,1024,110))
         pygame.draw.line(surface,(92,78,58),(24,530),(1000,530))
         descriptions=('DIRECT STRIKE','HAND SIGN TECHNIQUE','ULTIMATE TECHNIQUE','RESTORE HEALTH')
-        colors=((113,177,226),(151,139,244),(244,177,88),(103,207,165))
+        colors=((113,177,226),(151,139,244),(244,177,88),(103,207,165),(110,200,230))
         for i,button in enumerate(buttons):
-            button.enabled=enabled;button.update(mouse,dt)
+            button.enabled=enabled and getattr(button,"available",True);button.update(mouse,dt)
             x,y,w,h=button.rect
             color=colors[i]
             base=(30,42,57) if button.hovered else (16,26,40)
             pygame.draw.polygon(surface,base,[(x,y),(x+w-12,y),(x+w,y+12),(x+w,y+h),(x,y+h)])
-            pygame.draw.line(surface,color if enabled else (69,82,96),(x,y),(x+w-14,y),2)
-            pygame.draw.line(surface,color if enabled else (69,82,96),(x,y),(x,y+h),2)
-            self.text(surface,f'0{i+1}',(x+12,y+12),12,color if enabled else MUTED)
-            self.text(surface,button.text.strip(),(x+42,y+8),18,WHITE if enabled else (170,184,197))
-            self.text(surface,descriptions[i],(x+42,y+36),10,MUTED)
+            pygame.draw.line(surface,color if button.enabled else (69,82,96),(x,y),(x+w-14,y),2)
+            pygame.draw.line(surface,color if button.enabled else (69,82,96),(x,y),(x,y+h),2)
+            self.text(surface,f'0{i+1}',(x+12,y+12),12,color if button.enabled else MUTED)
+            self.text(surface,button.text.strip(),(x+32,y+8),14,WHITE if button.enabled else (170,184,197))
+            self.text(surface,getattr(button,"description", (descriptions+("DEFEND",))[i]),(x+8,y+36),10,MUTED)
         self.text(surface,'SHINOBI / TACTICS',(24,616),10,GOLD)
 
     def technique(self,surface,effect,label,reduced=False):

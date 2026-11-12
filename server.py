@@ -12,6 +12,7 @@ import time
 import sys
 import os
 import uuid
+from combat_rules import CHARACTERS, initial_resources, unavailable, resolve
 
 # ── Constants ──────────────────────────────────────────────────────
 HOST = os.environ.get("SHINOBI_HOST", "0.0.0.0")
@@ -70,6 +71,7 @@ class GameState:
     def reset(self):
         self.match_id = uuid.uuid4().hex
         self.action_id = 0
+        self.resources = initial_resources()
         self.hp = {"P1": MAX_HP, "P2": MAX_HP}
         self.characters = {"P1": None, "P2": None}
         self.turn = "P1"
@@ -77,7 +79,6 @@ class GameState:
         self.winner = None
         self.last_action = None     # dict describing what just happened
         self.connected = {"P1": False, "P2": False}
-        self.genjutsu_used = {"P1": False, "P2": False}  # Itachi one-time genjutsu
         self.genjutsu_shield = {"P1": False, "P2": False}  # Active counter shield
 
     def record_action(self, data):
@@ -88,6 +89,8 @@ class GameState:
         """Return a serialisable dict of the full state."""
         return {
             "match_id": self.match_id,
+            "resources": self.resources,
+            "rules_version": 2,
             "hp_p1":      self.hp["P1"],
             "hp_p2":      self.hp["P2"],
             "char_p1":    self.characters["P1"],
@@ -186,6 +189,9 @@ class GameServer:
             # ── Character selection ────────────────────────────────
             if action == "SELECT_CHAR":
                 char_name = msg.get("character")
+                if self.state.phase != "SELECT" or char_name not in CHARACTERS:
+                    self._reject(pid, "Choose a valid character during selection")
+                    return
                 self.state.characters[pid] = char_name
                 print(f"[SERVER] {pid} selected {char_name}")
 
@@ -209,70 +215,21 @@ class GameServer:
 
             other = "P2" if pid == "P1" else "P1"
 
-            if action in ("ATTACK", "JUTSU", "ULTIMATE"):
-                # Itachi genjutsu one-time limit
-                if (action == "JUTSU"
-                        and self.state.characters[pid] == "Itachi"
-                        and self.state.genjutsu_used[pid]):
-                    send_msg(self.conns[pid], {
-                        "type": "NOT_YOUR_TURN",
-                        "reason": "Genjutsu already used!"
-                    })
-                    return
-
-                dmg = msg.get("dmg", DAMAGE.get(action, 0))
-
-                # ── Genjutsu counter: if defender has active shield ──
-                reflected = False
-                if self.state.genjutsu_shield[other] and dmg > 0:
-                    # Block the attack and reflect damage to attacker
-                    self.state.genjutsu_shield[other] = False
-                    self.state.hp[pid] = max(0, self.state.hp[pid] - dmg)
-                    reflected = True
-                    print(f"[SERVER] GENJUTSU COUNTER! {other}'s shield reflects {dmg} dmg back to {pid}")
-                else:
-                    self.state.hp[other] = max(0, self.state.hp[other] - dmg)
-
-                # Build action info for clients
-                action_info = {
-                    "action":         action,
-                    "by":             pid,
-                    "target":         other,
-                    "dmg":            dmg,
-                    "attacker_char":  self.state.characters[pid],
-                    "defender_char":  self.state.characters[other],
-                    "reflected":      reflected,
-                }
-                # Special flag: Itachi Genjutsu vs Sasuke
-                if (action == "JUTSU"
-                        and self.state.characters[pid] == "Itachi"):
-                    self.state.genjutsu_used[pid] = True
-                    # Activate genjutsu counter shield
-                    self.state.genjutsu_shield[pid] = True
-                    print(f"[SERVER] {pid} (Itachi) activated Genjutsu shield!")
-                    if self.state.characters[other] == "Sasuke":
-                        action_info["special_cutscene"] = "tsukuyomi"
-
-                # Check if attacker died from reflection
-                if reflected and self.state.hp[pid] <= 0:
-                    self.state.phase = "GAME_OVER"
-                    self.state.winner = other
-                    print(f"[SERVER] {other} wins (genjutsu counter KO)!")
-                    self.state.record_action(action_info)
-                    self._broadcast({"type": "STATE", **self.state.snapshot()})
-                    return
-
-                self.state.record_action(action_info)
-
-            elif action == "HEAL":
-                self.state.hp[pid] = min(MAX_HP, self.state.hp[pid] + HEAL_AMOUNT)
-                self.state.record_action({
-                    "action": "HEAL",
-                    "by":     pid,
-                    "amount": HEAL_AMOUNT,
-                })
-            else:
-                return  # unknown action
+            reason = unavailable(self.state.resources[pid], action, self.state.hp[pid])
+            if reason:
+                self._reject(pid, reason)
+                return
+            success = msg.get("success", True)
+            if type(success) is not bool:
+                self._reject(pid, "Invalid challenge result")
+                return
+            # Damage is always derived here; client-supplied dmg is ignored.
+            self.state.record_action(resolve(self.state, pid, action, success))
+            if self.state.hp[pid] <= 0:
+                self.state.phase = "GAME_OVER"
+                self.state.winner = other
+                self._broadcast({"type": "STATE", **self.state.snapshot()})
+                return
 
             # Check win condition
             if self.state.hp[other] <= 0:
@@ -284,6 +241,10 @@ class GameServer:
                 self.state.turn = other
 
             self._broadcast({"type": "STATE", **self.state.snapshot()})
+
+    def _reject(self, pid, reason):
+        if self.conns[pid]:
+            send_msg(self.conns[pid], {"type": "ACTION_REJECTED", "reason": reason})
 
     # ── broadcast to both clients ──────────────────────────────────
     def _broadcast(self, obj):
