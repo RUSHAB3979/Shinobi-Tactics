@@ -1,0 +1,10 @@
+{
+  "scope": "One game, two independent Sasuke actors, 600 headless render/update frames; excludes compositor/vsync",
+  "startup_s": 0.11684486699959962,
+  "frame_ms": {
+    "median": 1.469581000492326,
+    "p95": 2.6496989994484466,
+    "p99": 3.227071000765136
+  },
+  "peak_rss_mib": 50.85546875
+}

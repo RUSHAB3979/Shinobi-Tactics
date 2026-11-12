@@ -1,0 +1,204 @@
+{
+  "cases": [
+    {
+      "character": "Sasuke",
+      "action": "ATTACK",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ATTACK",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "HEAL",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "HEAL",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ATTACK",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ATTACK",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "HEAL",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "HEAL",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ATTACK",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ATTACK",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "HEAL",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "HEAL",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ATTACK",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ATTACK",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "HEAL",
+      "side": "P1",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "HEAL",
+      "side": "P2",
+      "passed": true
+    }
+  ],
+  "rendered_frames": 2920,
+  "frame_ms": {
+    "median": 1.6426750007667579,
+    "p95": 3.5233409998909337,
+    "p99": 4.1487380003673024
+  },
+  "peak_rss_mib": 132.4921875,
+  "scope": "Headless rendering on target laptop; no compositor/vsync, live sound or webcam"
+}

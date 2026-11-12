@@ -10,10 +10,12 @@ import pickle
 import struct
 import time
 import sys
+import os
+import uuid
 
 # ── Constants ──────────────────────────────────────────────────────
-HOST = "0.0.0.0"
-PORT = 5555
+HOST = os.environ.get("SHINOBI_HOST", "0.0.0.0")
+PORT = int(os.environ.get("SHINOBI_PORT", "5555"))
 MAX_HP = 100
 
 DAMAGE = {
@@ -66,6 +68,8 @@ class GameState:
         self.reset()
 
     def reset(self):
+        self.match_id = uuid.uuid4().hex
+        self.action_id = 0
         self.hp = {"P1": MAX_HP, "P2": MAX_HP}
         self.characters = {"P1": None, "P2": None}
         self.turn = "P1"
@@ -76,9 +80,14 @@ class GameState:
         self.genjutsu_used = {"P1": False, "P2": False}  # Itachi one-time genjutsu
         self.genjutsu_shield = {"P1": False, "P2": False}  # Active counter shield
 
+    def record_action(self, data):
+        self.action_id += 1
+        self.last_action = {**data, "id": self.action_id}
+
     def snapshot(self):
         """Return a serialisable dict of the full state."""
         return {
+            "match_id": self.match_id,
             "hp_p1":      self.hp["P1"],
             "hp_p2":      self.hp["P2"],
             "char_p1":    self.characters["P1"],
@@ -249,19 +258,19 @@ class GameServer:
                     self.state.phase = "GAME_OVER"
                     self.state.winner = other
                     print(f"[SERVER] {other} wins (genjutsu counter KO)!")
-                    self.state.last_action = action_info
+                    self.state.record_action(action_info)
                     self._broadcast({"type": "STATE", **self.state.snapshot()})
                     return
 
-                self.state.last_action = action_info
+                self.state.record_action(action_info)
 
             elif action == "HEAL":
                 self.state.hp[pid] = min(MAX_HP, self.state.hp[pid] + HEAL_AMOUNT)
-                self.state.last_action = {
+                self.state.record_action({
                     "action": "HEAL",
                     "by":     pid,
                     "amount": HEAL_AMOUNT,
-                }
+                })
             else:
                 return  # unknown action
 

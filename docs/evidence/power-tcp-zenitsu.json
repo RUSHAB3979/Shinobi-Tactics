@@ -1,0 +1,20 @@
+{
+  "character": "Zenitsu",
+  "two_tcp_clients": true,
+  "mirror_players_independent": true,
+  "startup_s": 0.2085877800000162,
+  "frame_ms": {
+    "median": 1.5605620001224452,
+    "p95": 2.829944000040996,
+    "p99": 5.524979999790958
+  },
+  "peak_rss_mib": 166.671875,
+  "checks": [
+    "impact HP timing both perspectives",
+    "duplicate state",
+    "miss",
+    "result poses",
+    "heal",
+    "lethal ultimate"
+  ]
+}

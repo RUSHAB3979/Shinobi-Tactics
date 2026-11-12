@@ -1,0 +1,1135 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P1",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": false,
+      "outcome": "reflected",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "hit",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "miss",
+      "passed": true
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "side": "P2",
+      "reduced": true,
+      "outcome": "reflected",
+      "passed": true
+    }
+  ],
+  "total": 96,
+  "clips": [
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "reduced": false,
+      "file": "clips/sasuke-jutsu.mp4",
+      "peak": 0.37467210102081294,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Sasuke",
+      "action": "JUTSU",
+      "reduced": true,
+      "file": "clips/sasuke-jutsu-reduced.mp4",
+      "peak": 0.37467210102081294,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "reduced": false,
+      "file": "clips/sasuke-ultimate.mp4",
+      "peak": 0.31499176025390624,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.1333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Sasuke",
+      "action": "ULTIMATE",
+      "reduced": true,
+      "file": "clips/sasuke-ultimate-reduced.mp4",
+      "peak": 0.31499176025390624,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.1333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "reduced": false,
+      "file": "clips/itachi-jutsu.mp4",
+      "peak": 0.7635014648437499,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Itachi",
+      "action": "JUTSU",
+      "reduced": true,
+      "file": "clips/itachi-jutsu-reduced.mp4",
+      "peak": 0.7635014648437499,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "reduced": false,
+      "file": "clips/itachi-ultimate.mp4",
+      "peak": 0.63358154296875,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.1333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Itachi",
+      "action": "ULTIMATE",
+      "reduced": true,
+      "file": "clips/itachi-ultimate-reduced.mp4",
+      "peak": 0.63358154296875,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.1333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "reduced": false,
+      "file": "clips/tanjiro-jutsu.mp4",
+      "peak": 0.7816798234176636,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Tanjiro",
+      "action": "JUTSU",
+      "reduced": true,
+      "file": "clips/tanjiro-jutsu-reduced.mp4",
+      "peak": 0.7816798234176636,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "reduced": false,
+      "file": "clips/tanjiro-ultimate.mp4",
+      "peak": 0.788913720703125,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.0333333333333334,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Tanjiro",
+      "action": "ULTIMATE",
+      "reduced": true,
+      "file": "clips/tanjiro-ultimate-reduced.mp4",
+      "peak": 0.788913720703125,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.0333333333333334,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "reduced": false,
+      "file": "clips/zenitsu-jutsu.mp4",
+      "peak": 0.7118041992187499,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Zenitsu",
+      "action": "JUTSU",
+      "reduced": true,
+      "file": "clips/zenitsu-jutsu-reduced.mp4",
+      "peak": 0.7118041992187499,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.31666666666666665,
+          "release"
+        ],
+        [
+          0.6333333333333333,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "reduced": false,
+      "file": "clips/zenitsu-ultimate.mp4",
+      "peak": 0.6782958984374999,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.0333333333333334,
+          "impact"
+        ]
+      ]
+    },
+    {
+      "character": "Zenitsu",
+      "action": "ULTIMATE",
+      "reduced": true,
+      "file": "clips/zenitsu-ultimate-reduced.mp4",
+      "peak": 0.6782958984374999,
+      "limiter_gain": 1,
+      "events": [
+        [
+          0.0,
+          "start"
+        ],
+        [
+          0.5333333333333333,
+          "release"
+        ],
+        [
+          1.0333333333333334,
+          "impact"
+        ]
+      ]
+    }
+  ],
+  "scope": "Headless Pygame rendering; video encoding excluded from frame timings; audio reconstructed from emitted events; physical speakers/vsync not verified.",
+  "frame_ms": {
+    "median": 3.1032209990371484,
+    "p95": 5.619830000796355,
+    "p99": 6.901767999806907
+  },
+  "peak_rss_mib": 115.09375
+}

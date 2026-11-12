@@ -1,0 +1,20 @@
+{
+  "character": "Tanjiro",
+  "two_tcp_clients": true,
+  "mirror_players_independent": true,
+  "startup_s": 0.20741053199981252,
+  "frame_ms": {
+    "median": 0.6675129998257034,
+    "p95": 1.4921309993951581,
+    "p99": 4.4099850001657614
+  },
+  "peak_rss_mib": 158.02734375,
+  "checks": [
+    "impact HP timing both perspectives",
+    "duplicate state",
+    "miss",
+    "result poses",
+    "heal",
+    "lethal ultimate"
+  ]
+}

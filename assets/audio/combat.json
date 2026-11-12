@@ -1,0 +1,1521 @@
+{
+  "version": 1,
+  "sample_rate": 44100,
+  "sources": {
+    "sword": {
+      "url": "https://opengameart.org/content/20-sword-sound-effects-attacks-and-clashes",
+      "author": "StarNinjas",
+      "license": "CC0-1.0"
+    },
+    "clash": {
+      "url": "https://opengameart.org/content/20-sword-sound-effects-attacks-and-clashes",
+      "author": "StarNinjas",
+      "license": "CC0-1.0"
+    },
+    "sfx100": {
+      "url": "https://opengameart.org/content/100-cc0-sfx-2",
+      "author": "rubberduck",
+      "license": "CC0-1.0"
+    },
+    "spells": {
+      "url": "https://opengameart.org/content/spell-sounds",
+      "author": "Augmentality (Brandon Morris), submitted by HaelDB",
+      "license": "CC0-1.0"
+    },
+    "demon": {
+      "url": "https://sounds.spriters-resource.com/pc_computer/demonslayerkimetsunoyaibathehinokamichronicles2/asset/558618/",
+      "author": "Theoracle1185",
+      "license": "Copyrighted game audio"
+    },
+    "itachi": {
+      "url": "https://sounds.spriters-resource.com/pc_computer/narutoshippudenultimateninjastorm4/asset/503871/",
+      "author": "bigbingchillin",
+      "license": "Copyrighted game audio"
+    },
+    "tanjiro": {
+      "url": "https://sounds.spriters-resource.com/pc_computer/demonslayerkimetsunoyaibathehinokamichronicles2/asset/558012/",
+      "author": "Theoracle1185",
+      "license": "Copyrighted game audio"
+    },
+    "hinokami": {
+      "url": "https://sounds.spriters-resource.com/pc_computer/demonslayerkimetsunoyaibathehinokamichronicles2/asset/557983/",
+      "author": "Theoracle1185",
+      "license": "Copyrighted game audio"
+    },
+    "zenitsu": {
+      "url": "https://sounds.spriters-resource.com/pc_computer/demonslayerkimetsunoyaibathehinokamichronicles2/asset/558021/",
+      "author": "Theoracle1185",
+      "license": "Copyrighted game audio"
+    },
+    "sasuke-user": {
+      "author": "User supplied clip",
+      "original": "chidori.mp3",
+      "license": "Original recording rights unspecified; user supplied for local integration",
+      "language": "User selected English dub; recording language not independently verified"
+    }
+  },
+  "source_files": {
+    "clash/sword_clash.1.ogg": {
+      "path": "assets/sources/audio/clash/sword_clash.1.ogg",
+      "source": "clash",
+      "original": "sword-clashes/sword_clash.1.ogg",
+      "sha256": "5c5e78e466ba78fe2414f2b7a2a6eb674822ccfc8a8bc9fda32be22f5dde5e69"
+    },
+    "spells/healing.ogg": {
+      "path": "assets/sources/audio/spells/healing.ogg",
+      "source": "spells",
+      "original": "healing.ogg",
+      "sha256": "4600822379d18992e9f526b718395dc752821b6218ca5728fb2d5ea9cf774c6d"
+    },
+    "sword/sword.1.ogg": {
+      "path": "assets/sources/audio/sword/sword.1.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.1.ogg",
+      "sha256": "4a3e80705619cbd7500682ab51004011ddf67e14ccf1818ceb9e5b539fe42b75"
+    },
+    "sfx100/sfx100v2_hit_01.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_hit_01.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_hit_01.ogg",
+      "sha256": "61b8b2a790e2c8dcf315886933aaefc89a8e4053d81c6869c264e40aa80f8233"
+    },
+    "clash/sword_clash.2.ogg": {
+      "path": "assets/sources/audio/clash/sword_clash.2.ogg",
+      "source": "clash",
+      "original": "sword-clashes/sword_clash.2.ogg",
+      "sha256": "e09f222b70d53f2967514d076e2ae50c21526ac640fe4919965f964af043da1a"
+    },
+    "sword/sword.3.ogg": {
+      "path": "assets/sources/audio/sword/sword.3.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.3.ogg",
+      "sha256": "ce09eb2987531d1323415065d7811a9cf0ea8639766d9fa77655d602e7e14989"
+    },
+    "sword/sword.5.ogg": {
+      "path": "assets/sources/audio/sword/sword.5.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.5.ogg",
+      "sha256": "135d1b26aad8d2f2205e56c14cd0162755a883e9419d6fd955cb978126a77452"
+    },
+    "sword/sword.7.ogg": {
+      "path": "assets/sources/audio/sword/sword.7.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.7.ogg",
+      "sha256": "66f2a2e63182fa14470a63fc4a862ff77fa861f69a6a41d8e9874c9853c2d9dd"
+    },
+    "spells/electricspell2.ogg": {
+      "path": "assets/sources/audio/spells/electricspell2.ogg",
+      "source": "spells",
+      "original": "electricspell2.ogg",
+      "sha256": "5fcb8824064d9dba2e3880d439a44b798ecdc2a58041cd028f094d774302a9a1"
+    },
+    "spells/electricspell.ogg": {
+      "path": "assets/sources/audio/spells/electricspell.ogg",
+      "source": "spells",
+      "original": "electricspell.ogg",
+      "sha256": "c1c3fa48c7c209f8b8abc7423b3bd3f17dc489af3c4a92eb1fa20fe2adc447dc"
+    },
+    "sfx100/sfx100v2_air_01.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_air_01.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_air_01.ogg",
+      "sha256": "bb292a9fc082557e65199d01abe124459d910519b39c913ecb6c6f2207576d6f"
+    },
+    "sfx100/sfx100v2_hit_02.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_hit_02.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_hit_02.ogg",
+      "sha256": "f75eaee9a0cea0f99e5d173a924c4ac72c865450c494794f9bfe48315461baea"
+    },
+    "sfx100/sfx100v2_thunder_01.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_thunder_01.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_thunder_01.ogg",
+      "sha256": "8a4f1dee999546b363f989eff92174375eeae7c241dc9beaa0892fb131ef12a9"
+    },
+    "sfx100/sfx100v2_air_03.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_air_03.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_air_03.ogg",
+      "sha256": "df32019155c3a8b5fc77244126261695f762ba7018a4fc4c6d9ad201cedeb985"
+    },
+    "sfx100/sfx100v2_stones_01.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_stones_01.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_stones_01.ogg",
+      "sha256": "20d293a892e1fa6330da2569065aa260a822198bddce2b183f8c11642e7deb4d"
+    },
+    "spells/teleport.ogg": {
+      "path": "assets/sources/audio/spells/teleport.ogg",
+      "source": "spells",
+      "original": "teleport.ogg",
+      "sha256": "dc4e4d1ca3fff8b2a849df80cc38393abec833987ca9315c82d89738f60e7176"
+    },
+    "sfx100/sfx100v2_glass_01.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_glass_01.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_glass_01.ogg",
+      "sha256": "9c664345b242c2ff06e4d00b0383a03afe1b7bf8a685ec9628fb605a1e43c196"
+    },
+    "demon/S_awk_eff_water_0000.wav": {
+      "path": "assets/sources/audio/demon/S_awk_eff_water_0000.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_awk_eff_water_0000.wav",
+      "sha256": "3b41d37fd41d65f800c7c97a43ccf2255e7c7f5fa0ec7fa06721b72e30a8dab5"
+    },
+    "demon/S_water_01.wav": {
+      "path": "assets/sources/audio/demon/S_water_01.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_water_01.wav",
+      "sha256": "e07e64a9632c33b67f7700259a466f42a636b17655ce2929a0c3b8d6d7166ceb"
+    },
+    "sword/sword.4.ogg": {
+      "path": "assets/sources/audio/sword/sword.4.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.4.ogg",
+      "sha256": "320aa8a77d35f9354c3d7e03a53e987ae67b0c5721f0dd2680100c5e6b5e4cc4"
+    },
+    "demon/S_water_03.wav": {
+      "path": "assets/sources/audio/demon/S_water_03.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_water_03.wav",
+      "sha256": "45c949f44f9859ca16afdd3e2b1858d49af93f4d51c09823bd924d4d50606ce6"
+    },
+    "demon/S_fire_01.wav": {
+      "path": "assets/sources/audio/demon/S_fire_01.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_fire_01.wav",
+      "sha256": "e6c644bc6c780bdf6fb65777067a4d2e9cf7c4f27a61d7b40294ccad60d1187f"
+    },
+    "demon/S_kagura_01.wav": {
+      "path": "assets/sources/audio/demon/S_kagura_01.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_kagura_01.wav",
+      "sha256": "c08c18cb57f3a714c01a0a12657dcce33a3ba8a4ba229d5e156245fd11f0f9d7"
+    },
+    "sword/sword.8.ogg": {
+      "path": "assets/sources/audio/sword/sword.8.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.8.ogg",
+      "sha256": "97f55774d7f0602c5f87e4ef289fcdf7ff07eea987ddc52849909d74374458a6"
+    },
+    "demon/S_hit_firel_01.wav": {
+      "path": "assets/sources/audio/demon/S_hit_firel_01.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_hit_firel_01.wav",
+      "sha256": "e5dc97bcea6ac7b4d7eeb48b440bf2aa4584e67da39e75800b35bd0622ea5888"
+    },
+    "sfx100/sfx100v2_hit_03.ogg": {
+      "path": "assets/sources/audio/sfx100/sfx100v2_hit_03.ogg",
+      "source": "sfx100",
+      "original": "sfx100/sfx100v2_hit_03.ogg",
+      "sha256": "f44a40884dd13df80ef6bad1b8ca91a2566daaf9e03c25420ff018e4ba11e632"
+    },
+    "demon/S_ikazuchi_charge01.wav": {
+      "path": "assets/sources/audio/demon/S_ikazuchi_charge01.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_ikazuchi_charge01.wav",
+      "sha256": "3b0d8f4674afe8f9e68d35072d86dd576169250316bf3808e642bf0ac4a0ae95"
+    },
+    "sword/sword.6.ogg": {
+      "path": "assets/sources/audio/sword/sword.6.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.6.ogg",
+      "sha256": "5b6eaaac9c552ce364cfdea3c12cef846c89796fc9bb880181615f43ee4e4779"
+    },
+    "demon/S_ikazuchi_0000.wav": {
+      "path": "assets/sources/audio/demon/S_ikazuchi_0000.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_ikazuchi_0000.wav",
+      "sha256": "0bff739a0fcb19a40011da52f7923f7f25df9d2a986e1093f9a55c1f696def1c"
+    },
+    "demon/S_hit_elect_0000.wav": {
+      "path": "assets/sources/audio/demon/S_hit_elect_0000.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_hit_elect_0000.wav",
+      "sha256": "7d4d134d98ad7a9909caa6a9f6b7ee218dd59440b9879d6641f52fd344cbc354"
+    },
+    "demon/S_ikazuchi_charge02_0000.wav": {
+      "path": "assets/sources/audio/demon/S_ikazuchi_charge02_0000.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_ikazuchi_charge02_0000.wav",
+      "sha256": "8c3740c1dedd9eb0f7fb63e73fd5f17569396db0772b68c13acd2d2f822b8d66"
+    },
+    "demon/S_thunder_iai_01.wav": {
+      "path": "assets/sources/audio/demon/S_thunder_iai_01.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_thunder_iai_01.wav",
+      "sha256": "9e2f6d0c7945267c7743224df4ed942c78e1ed559fb832b1db4a02f7b553f3f7"
+    },
+    "sword/sword.10.ogg": {
+      "path": "assets/sources/audio/sword/sword.10.ogg",
+      "source": "sword",
+      "original": "sword-attacks/sword - StarNinjas/sword.10.ogg",
+      "sha256": "530bf3daac9e21ba7f8414291820bc8c26f3522ecbda8f00e6454b1cef74cd07"
+    },
+    "demon/S_hit_elect_0001.wav": {
+      "path": "assets/sources/audio/demon/S_hit_elect_0001.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_hit_elect_0001.wav",
+      "sha256": "9c9b1e0ab608c8ff047af346696361ef5df65ef8d8b3e8feb59f6ffeb9110a57"
+    },
+    "demon/S_thunder_iai_02.wav": {
+      "path": "assets/sources/audio/demon/S_thunder_iai_02.wav",
+      "source": "demon",
+      "original": "demon-battle/Battle Sounds/S_thunder_iai_02.wav",
+      "sha256": "a9cb1d4d33e361c3936ca29f1ee1d826d7b9f5bc0901c0a79715a2012ce610f3"
+    },
+    "itachi/1-S_PL_ATK_cmn_vS_rv0.wav": {
+      "path": "assets/sources/audio/itachi/1-S_PL_ATK_cmn_vS_rv0.wav",
+      "source": "itachi",
+      "original": "itachi-en/itachi_en/1-S_PL_ATK_cmn_vS_rv0.wav",
+      "sha256": "2dd178a725b45aa52a3fad153ffc3807c307bd5d55ea1da2d29062995a30edce"
+    },
+    "itachi/38-S_PL_ATK_ckrAtk_b_v0.wav": {
+      "path": "assets/sources/audio/itachi/38-S_PL_ATK_ckrAtk_b_v0.wav",
+      "source": "itachi",
+      "original": "itachi-en/itachi_en/38-S_PL_ATK_ckrAtk_b_v0.wav",
+      "sha256": "f244fe41094eba8fa9fe7076ffa675a3961061207f89688cb7c0cc5df2b23e3e"
+    },
+    "itachi/150-S_PL_gaugeMax.wav": {
+      "path": "assets/sources/audio/itachi/150-S_PL_gaugeMax.wav",
+      "source": "itachi",
+      "original": "itachi-en/itachi_en/150-S_PL_gaugeMax.wav",
+      "sha256": "87318cb34cafea129c95ba083da05680a11e1091325f8e061b26dad769c3534d"
+    },
+    "itachi/130-S_PL_ITM_ckrRecover.wav": {
+      "path": "assets/sources/audio/itachi/130-S_PL_ITM_ckrRecover.wav",
+      "source": "itachi",
+      "original": "itachi-en/itachi_en/130-S_PL_ITM_ckrRecover.wav",
+      "sha256": "98e71184ff6eb93a0615569390ee97159767c32bbce5b367a8ddb9901ae88bb3"
+    },
+    "tanjiro/V_P0001_V00_ATK_CMN_M_0000.wav": {
+      "path": "assets/sources/audio/tanjiro/V_P0001_V00_ATK_CMN_M_0000.wav",
+      "source": "tanjiro",
+      "original": "tanjiro-en/Tanjiro Kamado (English)/V_P0001_V00_ATK_CMN_M_0000.wav",
+      "sha256": "f9309cb3275c8f7693238b40f6f5eb23bfb729e2e8ae0d1d28196bca3d86aead"
+    },
+    "tanjiro/V_P0001_V00_ATK_SKILL01_02.wav": {
+      "path": "assets/sources/audio/tanjiro/V_P0001_V00_ATK_SKILL01_02.wav",
+      "source": "tanjiro",
+      "original": "tanjiro-en/Tanjiro Kamado (English)/V_P0001_V00_ATK_SKILL01_02.wav",
+      "sha256": "62d36be6a4b40fb7881b10c37e4bbb3e8a1d9618bba9a25e10009255fabbeb2e"
+    },
+    "hinokami/V_P0001_V00_C11_ATK_DEMO_ETC_01.wav": {
+      "path": "assets/sources/audio/hinokami/V_P0001_V00_C11_ATK_DEMO_ETC_01.wav",
+      "source": "hinokami",
+      "original": "hinokami-en/Hinokami Tanjiro (English)/V_P0001_V00_C11_ATK_DEMO_ETC_01.wav",
+      "sha256": "eabb4974f85be51814deecaac614de8059aaaacd7bf835420001a57c2186827a"
+    },
+    "tanjiro/V_P0001_V00_ITEM_HEAL_0000.wav": {
+      "path": "assets/sources/audio/tanjiro/V_P0001_V00_ITEM_HEAL_0000.wav",
+      "source": "tanjiro",
+      "original": "tanjiro-en/Tanjiro Kamado (English)/V_P0001_V00_ITEM_HEAL_0000.wav",
+      "sha256": "8b25eb5d3e95e2533009e95b37c9fcad25ca657d86a13188dc79f46f3936d85f"
+    },
+    "zenitsu/V_P0003_V00_C05_ATK_CMN_M_0000.wav": {
+      "path": "assets/sources/audio/zenitsu/V_P0003_V00_C05_ATK_CMN_M_0000.wav",
+      "source": "zenitsu",
+      "original": "zenitsu-ed-en/Zenitsu Agatsuma (Entertainment District, English)/V_P0003_V00_C05_ATK_CMN_M_0000.wav",
+      "sha256": "f15f6a06425986b0fb1bf9a57afc2f8a363d9b6933d0988d76c8ef23f96c3a6b"
+    },
+    "zenitsu/V_P0003_V00_C05_ATK_DEMO_ETC_06.wav": {
+      "path": "assets/sources/audio/zenitsu/V_P0003_V00_C05_ATK_DEMO_ETC_06.wav",
+      "source": "zenitsu",
+      "original": "zenitsu-ed-en/Zenitsu Agatsuma (Entertainment District, English)/V_P0003_V00_C05_ATK_DEMO_ETC_06.wav",
+      "sha256": "db02cb9d29879be82076e84ee9f1706a050a13bfc1087cafd838dfbd1a7d6860"
+    },
+    "zenitsu/V_P0003_V00_C05_ATK_DEMO_ETC_08.wav": {
+      "path": "assets/sources/audio/zenitsu/V_P0003_V00_C05_ATK_DEMO_ETC_08.wav",
+      "source": "zenitsu",
+      "original": "zenitsu-ed-en/Zenitsu Agatsuma (Entertainment District, English)/V_P0003_V00_C05_ATK_DEMO_ETC_08.wav",
+      "sha256": "5faeea83b6fbbf0519a54e513f5b1efa456f7f0ccdf140c8aa1d671494f5a3dc"
+    },
+    "sasuke/chidori.mp3": {
+      "path": "assets/sources/audio/sasuke/chidori.mp3",
+      "source": "sasuke-user",
+      "original": "chidori.mp3",
+      "sha256": "3400015fe9d28222fc85599cc0a305055c3cd1451d6aeadff7dba5de95a0699b"
+    }
+  },
+  "recipes": {
+    "sasuke-attack-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-jutsu-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-ultimate-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-heal-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-heal-impact": {
+      "layers": [
+        {
+          "file": "spells/healing.ogg",
+          "offset": 0,
+          "length": 0.55,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-attack-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-jutsu-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-ultimate-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-heal-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-heal-impact": {
+      "layers": [
+        {
+          "file": "spells/healing.ogg",
+          "offset": 0,
+          "length": 0.55,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-attack-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-jutsu-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-ultimate-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-heal-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-heal-impact": {
+      "layers": [
+        {
+          "file": "spells/healing.ogg",
+          "offset": 0,
+          "length": 0.55,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-attack-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-jutsu-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-ultimate-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-heal-block": {
+      "layers": [
+        {
+          "file": "clash/sword_clash.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-heal-impact": {
+      "layers": [
+        {
+          "file": "spells/healing.ogg",
+          "offset": 0,
+          "length": 0.55,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-attack-release": {
+      "layers": [
+        {
+          "file": "sword/sword.1.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-attack-impact": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_hit_01.ogg",
+          "offset": 0,
+          "length": 0.18,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "clash/sword_clash.2.ogg",
+          "offset": 0,
+          "length": 0.24,
+          "at": 0,
+          "gain": 0.45,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-attack-release": {
+      "layers": [
+        {
+          "file": "sword/sword.3.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-attack-impact": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_hit_01.ogg",
+          "offset": 0,
+          "length": 0.18,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "clash/sword_clash.2.ogg",
+          "offset": 0,
+          "length": 0.24,
+          "at": 0,
+          "gain": 0.45,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-attack-release": {
+      "layers": [
+        {
+          "file": "sword/sword.5.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-attack-impact": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_hit_01.ogg",
+          "offset": 0,
+          "length": 0.18,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "clash/sword_clash.2.ogg",
+          "offset": 0,
+          "length": 0.24,
+          "at": 0,
+          "gain": 0.45,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-attack-release": {
+      "layers": [
+        {
+          "file": "sword/sword.7.ogg",
+          "offset": 0,
+          "length": 0.28,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-attack-impact": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_hit_01.ogg",
+          "offset": 0,
+          "length": 0.18,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "clash/sword_clash.2.ogg",
+          "offset": 0,
+          "length": 0.24,
+          "at": 0,
+          "gain": 0.45,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-jutsu-start": {
+      "layers": [
+        {
+          "file": "spells/electricspell2.ogg",
+          "offset": 0,
+          "length": 0.24,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-jutsu-release": {
+      "layers": [
+        {
+          "file": "spells/electricspell.ogg",
+          "offset": 0.1,
+          "length": 0.42,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_air_01.ogg",
+          "offset": 0,
+          "length": 0.25,
+          "at": 0,
+          "gain": 0.35,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-jutsu-impact": {
+      "layers": [
+        {
+          "file": "spells/electricspell2.ogg",
+          "offset": 0.3,
+          "length": 0.34,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_hit_02.ogg",
+          "offset": 0,
+          "length": 0.22,
+          "at": 0,
+          "gain": 0.65,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-ultimate-start": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_thunder_01.ogg",
+          "offset": 0,
+          "length": 0.42,
+          "at": 0,
+          "gain": 1,
+          "reverse": true
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-ultimate-release": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_air_03.ogg",
+          "offset": 0,
+          "length": 0.55,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "spells/electricspell2.ogg",
+          "offset": 0,
+          "length": 0.6,
+          "at": 0,
+          "gain": 0.5,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "sasuke-ultimate-impact": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_thunder_01.ogg",
+          "offset": 0.2,
+          "length": 0.9,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_stones_01.ogg",
+          "offset": 0,
+          "length": 0.3,
+          "at": 0,
+          "gain": 0.45,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-jutsu-start": {
+      "layers": [
+        {
+          "file": "spells/teleport.ogg",
+          "offset": 0,
+          "length": 0.25,
+          "at": 0,
+          "gain": 1,
+          "reverse": true
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-jutsu-release": {
+      "layers": [
+        {
+          "file": "sfx100/sfx100v2_air_01.ogg",
+          "offset": 0,
+          "length": 0.11,
+          "at": 0.0,
+          "gain": 1.0,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_air_01.ogg",
+          "offset": 0,
+          "length": 0.11,
+          "at": 0.065,
+          "gain": 0.9,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_air_01.ogg",
+          "offset": 0,
+          "length": 0.11,
+          "at": 0.13,
+          "gain": 0.8,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_air_01.ogg",
+          "offset": 0,
+          "length": 0.11,
+          "at": 0.195,
+          "gain": 0.7,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_air_01.ogg",
+          "offset": 0,
+          "length": 0.11,
+          "at": 0.26,
+          "gain": 0.6,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-jutsu-impact": {
+      "layers": [
+        {
+          "file": "spells/teleport.ogg",
+          "offset": 0.3,
+          "length": 0.32,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-ultimate-start": {
+      "layers": [
+        {
+          "file": "spells/teleport.ogg",
+          "offset": 0.1,
+          "length": 0.45,
+          "at": 0,
+          "gain": 1,
+          "reverse": true
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-ultimate-release": {
+      "layers": [
+        {
+          "file": "spells/teleport.ogg",
+          "offset": 0,
+          "length": 0.55,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_air_03.ogg",
+          "offset": 0,
+          "length": 0.5,
+          "at": 0,
+          "gain": 0.45,
+          "reverse": true
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-ultimate-impact": {
+      "layers": [
+        {
+          "file": "spells/electricspell2.ogg",
+          "offset": 0,
+          "length": 0.3,
+          "at": 0,
+          "gain": 0.35,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_glass_01.ogg",
+          "offset": 0,
+          "length": 0.35,
+          "at": 0,
+          "gain": 0.65,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-jutsu-start": {
+      "layers": [
+        {
+          "file": "demon/S_awk_eff_water_0000.wav",
+          "offset": 0,
+          "length": 0.22,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-jutsu-release": {
+      "layers": [
+        {
+          "file": "demon/S_water_01.wav",
+          "offset": 0,
+          "length": 0.65,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.4.ogg",
+          "offset": 0,
+          "length": 0.3,
+          "at": 0,
+          "gain": 0.5,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-jutsu-impact": {
+      "layers": [
+        {
+          "file": "demon/S_water_03.wav",
+          "offset": 0,
+          "length": 0.4,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_hit_02.ogg",
+          "offset": 0,
+          "length": 0.18,
+          "at": 0,
+          "gain": 0.5,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-ultimate-start": {
+      "layers": [
+        {
+          "file": "demon/S_fire_01.wav",
+          "offset": 0,
+          "length": 0.3,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-ultimate-release": {
+      "layers": [
+        {
+          "file": "demon/S_kagura_01.wav",
+          "offset": 0,
+          "length": 0.8,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.8.ogg",
+          "offset": 0,
+          "length": 0.3,
+          "at": 0,
+          "gain": 0.4,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "tanjiro-ultimate-impact": {
+      "layers": [
+        {
+          "file": "demon/S_hit_firel_01.wav",
+          "offset": 0,
+          "length": 0.42,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sfx100/sfx100v2_hit_03.ogg",
+          "offset": 0,
+          "length": 0.24,
+          "at": 0,
+          "gain": 0.5,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-jutsu-start": {
+      "layers": [
+        {
+          "file": "demon/S_ikazuchi_charge01.wav",
+          "offset": 0,
+          "length": 0.26,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-jutsu-release": {
+      "layers": [
+        {
+          "file": "sword/sword.6.ogg",
+          "offset": 0,
+          "length": 0.085,
+          "at": 0.0,
+          "gain": 1.0,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.6.ogg",
+          "offset": 0,
+          "length": 0.085,
+          "at": 0.055,
+          "gain": 0.92,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.6.ogg",
+          "offset": 0,
+          "length": 0.085,
+          "at": 0.11,
+          "gain": 0.84,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.6.ogg",
+          "offset": 0,
+          "length": 0.085,
+          "at": 0.165,
+          "gain": 0.76,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.6.ogg",
+          "offset": 0,
+          "length": 0.085,
+          "at": 0.22,
+          "gain": 0.6799999999999999,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.6.ogg",
+          "offset": 0,
+          "length": 0.085,
+          "at": 0.275,
+          "gain": 0.6,
+          "reverse": false
+        },
+        {
+          "file": "demon/S_ikazuchi_0000.wav",
+          "offset": 0,
+          "length": 0.4,
+          "at": 0,
+          "gain": 0.45,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-jutsu-impact": {
+      "layers": [
+        {
+          "file": "demon/S_hit_elect_0000.wav",
+          "offset": 0,
+          "length": 0.35,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-ultimate-start": {
+      "layers": [
+        {
+          "file": "demon/S_ikazuchi_charge02_0000.wav",
+          "offset": 0,
+          "length": 0.3,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-ultimate-release": {
+      "layers": [
+        {
+          "file": "demon/S_thunder_iai_01.wav",
+          "offset": 0,
+          "length": 0.6,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "sword/sword.10.ogg",
+          "offset": 0,
+          "length": 0.25,
+          "at": 0,
+          "gain": 0.4,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "zenitsu-ultimate-impact": {
+      "layers": [
+        {
+          "file": "demon/S_hit_elect_0001.wav",
+          "offset": 0,
+          "length": 0.35,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        },
+        {
+          "file": "demon/S_thunder_iai_02.wav",
+          "offset": 0,
+          "length": 0.55,
+          "at": 0,
+          "gain": 0.6,
+          "reverse": false
+        }
+      ],
+      "peak": 0.7
+    },
+    "itachi-attack-voice": {
+      "layers": [
+        {
+          "file": "itachi/1-S_PL_ATK_cmn_vS_rv0.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "itachi-jutsu-voice": {
+      "layers": [
+        {
+          "file": "itachi/38-S_PL_ATK_ckrAtk_b_v0.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "itachi-ultimate-voice": {
+      "layers": [
+        {
+          "file": "itachi/150-S_PL_gaugeMax.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "itachi-heal-voice": {
+      "layers": [
+        {
+          "file": "itachi/130-S_PL_ITM_ckrRecover.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "tanjiro-attack-voice": {
+      "layers": [
+        {
+          "file": "tanjiro/V_P0001_V00_ATK_CMN_M_0000.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "tanjiro-jutsu-voice": {
+      "layers": [
+        {
+          "file": "tanjiro/V_P0001_V00_ATK_SKILL01_02.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "tanjiro-ultimate-voice": {
+      "layers": [
+        {
+          "file": "hinokami/V_P0001_V00_C11_ATK_DEMO_ETC_01.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "tanjiro-heal-voice": {
+      "layers": [
+        {
+          "file": "tanjiro/V_P0001_V00_ITEM_HEAL_0000.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "zenitsu-attack-voice": {
+      "layers": [
+        {
+          "file": "zenitsu/V_P0003_V00_C05_ATK_CMN_M_0000.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "zenitsu-jutsu-voice": {
+      "layers": [
+        {
+          "file": "zenitsu/V_P0003_V00_C05_ATK_DEMO_ETC_06.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "zenitsu-ultimate-voice": {
+      "layers": [
+        {
+          "file": "zenitsu/V_P0003_V00_C05_ATK_DEMO_ETC_08.wav",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    },
+    "sasuke-jutsu-voice": {
+      "layers": [
+        {
+          "file": "sasuke/chidori.mp3",
+          "offset": 0,
+          "length": null,
+          "at": 0,
+          "gain": 1,
+          "reverse": false
+        }
+      ],
+      "peak": 0.88
+    }
+  },
+  "characters": {
+    "Sasuke": {
+      "attack": {
+        "name": "Katana",
+        "voice_status": "No verified English callout selected",
+        "block": "assets/audio/sampled/sasuke-attack-block.wav",
+        "release": "assets/audio/sampled/sasuke-attack-release.wav",
+        "impact": "assets/audio/sampled/sasuke-attack-impact.wav"
+      },
+      "jutsu": {
+        "name": "Chidori",
+        "voice_status": "User supplied Chidori callout; source and language not independently verified",
+        "block": "assets/audio/sampled/sasuke-jutsu-block.wav",
+        "start": "assets/audio/sampled/sasuke-jutsu-start.wav",
+        "release": "assets/audio/sampled/sasuke-jutsu-release.wav",
+        "impact": "assets/audio/sampled/sasuke-jutsu-impact.wav",
+        "voice": "assets/audio/sampled/sasuke-jutsu-voice.wav"
+      },
+      "ultimate": {
+        "name": "Kirin",
+        "voice_status": "No verified English callout selected",
+        "block": "assets/audio/sampled/sasuke-ultimate-block.wav",
+        "start": "assets/audio/sampled/sasuke-ultimate-start.wav",
+        "release": "assets/audio/sampled/sasuke-ultimate-release.wav",
+        "impact": "assets/audio/sampled/sasuke-ultimate-impact.wav"
+      },
+      "heal": {
+        "name": "Recover",
+        "voice_status": "No verified English callout selected",
+        "block": "assets/audio/sampled/sasuke-heal-block.wav",
+        "impact": "assets/audio/sampled/sasuke-heal-impact.wav"
+      }
+    },
+    "Tanjiro": {
+      "attack": {
+        "name": "Slash",
+        "voice_status": "English game voice pack: Battle effort",
+        "block": "assets/audio/sampled/tanjiro-attack-block.wav",
+        "release": "assets/audio/sampled/tanjiro-attack-release.wav",
+        "impact": "assets/audio/sampled/tanjiro-attack-impact.wav",
+        "voice": "assets/audio/sampled/tanjiro-attack-voice.wav"
+      },
+      "jutsu": {
+        "name": "Whirlpool",
+        "voice_status": "English game voice pack: Whirlpool skill line (source filename and surrounding Sixth Form clips; listen for final selection)",
+        "block": "assets/audio/sampled/tanjiro-jutsu-block.wav",
+        "start": "assets/audio/sampled/tanjiro-jutsu-start.wav",
+        "release": "assets/audio/sampled/tanjiro-jutsu-release.wav",
+        "impact": "assets/audio/sampled/tanjiro-jutsu-impact.wav",
+        "voice": "assets/audio/sampled/tanjiro-jutsu-voice.wav"
+      },
+      "ultimate": {
+        "name": "Sun Breath",
+        "voice_status": "English game voice pack: Hinokami Kagura callout; Sun Breath family",
+        "block": "assets/audio/sampled/tanjiro-ultimate-block.wav",
+        "start": "assets/audio/sampled/tanjiro-ultimate-start.wav",
+        "release": "assets/audio/sampled/tanjiro-ultimate-release.wav",
+        "impact": "assets/audio/sampled/tanjiro-ultimate-impact.wav",
+        "voice": "assets/audio/sampled/tanjiro-ultimate-voice.wav"
+      },
+      "heal": {
+        "name": "Recover",
+        "voice_status": "English game voice pack: Recovery response",
+        "block": "assets/audio/sampled/tanjiro-heal-block.wav",
+        "impact": "assets/audio/sampled/tanjiro-heal-impact.wav",
+        "voice": "assets/audio/sampled/tanjiro-heal-voice.wav"
+      }
+    },
+    "Itachi": {
+      "attack": {
+        "name": "Kunai",
+        "voice_status": "English game voice pack: Battle effort",
+        "block": "assets/audio/sampled/itachi-attack-block.wav",
+        "release": "assets/audio/sampled/itachi-attack-release.wav",
+        "impact": "assets/audio/sampled/itachi-attack-impact.wav",
+        "voice": "assets/audio/sampled/itachi-attack-voice.wav"
+      },
+      "jutsu": {
+        "name": "Genjutsu",
+        "voice_status": "English game voice pack: General battle line; not a named Genjutsu callout",
+        "block": "assets/audio/sampled/itachi-jutsu-block.wav",
+        "start": "assets/audio/sampled/itachi-jutsu-start.wav",
+        "release": "assets/audio/sampled/itachi-jutsu-release.wav",
+        "impact": "assets/audio/sampled/itachi-jutsu-impact.wav",
+        "voice": "assets/audio/sampled/itachi-jutsu-voice.wav"
+      },
+      "ultimate": {
+        "name": "Tsukuyomi",
+        "voice_status": "English game voice pack: General battle line; not a named Tsukuyomi callout",
+        "block": "assets/audio/sampled/itachi-ultimate-block.wav",
+        "start": "assets/audio/sampled/itachi-ultimate-start.wav",
+        "release": "assets/audio/sampled/itachi-ultimate-release.wav",
+        "impact": "assets/audio/sampled/itachi-ultimate-impact.wav",
+        "voice": "assets/audio/sampled/itachi-ultimate-voice.wav"
+      },
+      "heal": {
+        "name": "Recover",
+        "voice_status": "English game voice pack: Recovery response",
+        "block": "assets/audio/sampled/itachi-heal-block.wav",
+        "impact": "assets/audio/sampled/itachi-heal-impact.wav",
+        "voice": "assets/audio/sampled/itachi-heal-voice.wav"
+      }
+    },
+    "Zenitsu": {
+      "attack": {
+        "name": "Slash",
+        "voice_status": "English game voice pack: Battle effort",
+        "block": "assets/audio/sampled/zenitsu-attack-block.wav",
+        "release": "assets/audio/sampled/zenitsu-attack-release.wav",
+        "impact": "assets/audio/sampled/zenitsu-attack-impact.wav",
+        "voice": "assets/audio/sampled/zenitsu-attack-voice.wav"
+      },
+      "jutsu": {
+        "name": "Sixfold",
+        "voice_status": "English game voice pack: Sixfold callout",
+        "block": "assets/audio/sampled/zenitsu-jutsu-block.wav",
+        "start": "assets/audio/sampled/zenitsu-jutsu-start.wav",
+        "release": "assets/audio/sampled/zenitsu-jutsu-release.wav",
+        "impact": "assets/audio/sampled/zenitsu-jutsu-impact.wav",
+        "voice": "assets/audio/sampled/zenitsu-jutsu-voice.wav"
+      },
+      "ultimate": {
+        "name": "Godspeed",
+        "voice_status": "English game voice pack: God-like Speed callout",
+        "block": "assets/audio/sampled/zenitsu-ultimate-block.wav",
+        "start": "assets/audio/sampled/zenitsu-ultimate-start.wav",
+        "release": "assets/audio/sampled/zenitsu-ultimate-release.wav",
+        "impact": "assets/audio/sampled/zenitsu-ultimate-impact.wav",
+        "voice": "assets/audio/sampled/zenitsu-ultimate-voice.wav"
+      },
+      "heal": {
+        "name": "Recover",
+        "voice_status": "No verified English callout selected",
+        "block": "assets/audio/sampled/zenitsu-heal-block.wav",
+        "impact": "assets/audio/sampled/zenitsu-heal-impact.wav"
+      }
+    }
+  }
+}
