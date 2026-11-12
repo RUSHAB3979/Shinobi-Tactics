@@ -39,13 +39,13 @@ uv run --frozen python client.py
 
 Run the client command in a second terminal for the other player. The server defaults to port 5555. For local-only hosting use `SHINOBI_HOST=127.0.0.1`; `SHINOBI_PORT` selects another server port for verification tools. The normal client uses port 5555.
 
-Select a character and click a move button on your turn. Attack deals 15 damage, Jutsu 25, Ultimate 50, and Recover restores up to 20 HP. Itachi's Jutsu is available once and grants the existing reflection shield. Damage and turn decisions remain server-authoritative.
+Select a character and click a move button on your turn. Attack deals 15 damage and builds chakra. Jutsu, Ultimate and Recover spend chakra; Guard reduces the next incoming hit. Ultimates also require three successful offensive moves. Cooldowns count your own turns. See `docs/strategy.md` for costs, character effects and counterplay. The server derives damage and enforces all resource rules.
 
 Jutsu and Ultimate require the configured hand signs. Missing camera dependencies/model or a failed challenge cause a miss. Offline art review previews those moves without a webcam; live play does not silently bypass the challenge.
 
 In the client, **M** toggles sound, **+/-** adjusts volume, **R** enables reduced motion, and **V** enables optional intros (off by default). The existing Sasuke/Itachi intro is silent and skippable with Esc. Missing media/OpenCV falls back to battle. Combat ultimates use in-engine presentation and need no videos.
 
-Both clients and server must use this version: snapshots now contain match and action IDs so duplicate state messages cannot replay a move.
+Both clients and server must use this version (strategy protocol v2): snapshots now contain match and action IDs so duplicate state messages cannot replay a move.
 
 ## Downloaded combat audio
 
@@ -110,3 +110,7 @@ For offline review: `uv run --frozen python tools/preview_battle.py` (N characte
 ### Visual glowup
 
 The current build uses the painted Shattered Shrine arena, foreground fighters, a top health HUD, technique banners and larger command cards. Elemental attacks illuminate their contact point and the floor. Space Grotesk ships with its OFL license. See `docs/glowup-art-direction.md` for the online research, exact art prompt and design decisions. The delivery's `glowup/index.html` is the latest preview; earlier galleries are historical comparisons.
+
+### Strategy verification
+
+`uv run --frozen python tools/simulate_strategy.py` compares a resource-aware policy against basic-attack spam across all character pairs and both starting positions. This is a deterministic smoke comparison, not a proof of human competitive balance.

@@ -78,11 +78,10 @@ def main():
             game._handle_server_msg(game.game_state)
             assert not game.presentation.busy
         frames[0].save(args.output/"attack-pilot.gif",save_all=True,append_images=frames[1:],duration=33,loop=0)
-        # Confirm a miss, heal, then lethal action over the real protocol.
-        commands = ([(1,dict(action="ATTACK",dmg=0)),(0,dict(action="JUTSU")),
-                     (1,dict(action="ULTIMATE")),(0,dict(action="ATTACK"))] if args.reflection else
-                    [(1,dict(action="ATTACK",dmg=0)),(0,dict(action="HEAL")),
-                     (1,dict(action="ULTIMATE")),(0,dict(action="ATTACK")),(1,dict(action="ULTIMATE"))])
+        # Exercise legal resource-aware moves over the real protocol.
+        commands = [(1, dict(action="JUTSU", success=False)),
+                    (0, dict(action="JUTSU" if args.reflection else "GUARD")),
+                    (1, dict(action="ATTACK"))]
         for pid,command in commands:
             previous=games[0].game_state["last_action"]["id"]
             games[pid].net.send(command)
@@ -97,15 +96,33 @@ def main():
                     break
             else:
                 raise AssertionError("Presentation did not settle within six simulated seconds")
-        assert all(g.scene=="GAME_OVER" for g in games)
-        assert all(g.presentation.visible_hp["P2" if args.reflection else "P1"]==0 for g in games)
+        # Continue a real match; techniques become legal only after earning resources.
+        from combat_rules import unavailable
+        for _ in range(40):
+            state = games[0].game_state
+            if state['phase'] == 'GAME_OVER': break
+            pid = state['turn']; index = 0 if pid == 'P1' else 1
+            r = state['resources'][pid]
+            action = next((a for a in ('ULTIMATE', 'JUTSU', 'ATTACK')
+                           if not unavailable(r, a)), 'ATTACK')
+            previous = state['last_action']['id']
+            games[index].net.send(dict(action=action))
+            poll_until(lambda: all(g.game_state['last_action']['id'] > previous for g in games))
+            for tick in range(420):
+                for game in games:
+                    if game.scene == 'BATTLE': game._scene_battle([], (-1,-1), 1/60)
+                if all(not g.presentation.busy and
+                       (g.game_state['phase'] != 'GAME_OVER' or g.scene == 'GAME_OVER') for g in games): break
+        assert all(g.scene == 'GAME_OVER' for g in games)
+        loser = 'P2' if games[0].game_state['winner'] == 'P1' else 'P1'
+        assert all(g.presentation.visible_hp[loser] == 0 for g in games)
         ordered=sorted(frame_times)
         metrics=dict(character="Itachi vs Sasuke" if args.reflection else args.character,two_tcp_clients=True,mirror_players_independent=True,
                      startup_s=startup,frame_ms=dict(median=ordered[len(ordered)//2],
                      p95=ordered[int(len(ordered)*.95)],p99=ordered[int(len(ordered)*.99)]),
                      peak_rss_mib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024,
-                     checks=["impact HP timing both perspectives","duplicate state","miss","result poses"]+
-                     (["genjutsu shield","reflected Kirin","KO"] if args.reflection else ["heal","lethal ultimate"]))
+                     checks=["impact HP timing both perspectives","duplicate state","technique miss","resources","result poses"]+
+                     (["genjutsu shield","capped reflection","KO"] if args.reflection else ["guard","legal techniques","KO"]))
         (args.output/"metrics.json").write_text(json.dumps(metrics,indent=2)+"\n")
         print(json.dumps(metrics))
     finally:

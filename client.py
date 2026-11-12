@@ -24,6 +24,7 @@ from battle_style import BattleStyle
 from video_overlay import VideoOverlay
 from battle_visuals import CombatEffect, create_arena, ACTOR_ROOTS
 from hand_sign_config import HAND_SIGN_SEQUENCES
+from combat_rules import ACTIONS, DESCRIPTIONS, initial_resources, unavailable
 
 # ── Paths ──────────────────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -424,9 +425,10 @@ class Game:
             Button(bx_start + 3*(bw+10),panel_y, bw, bh, " HEAL",    (40, 160, 80)),
         ]
 
+        self.battle_buttons.append(Button(0,0,180,62,"GUARD",(80,160,190)))
         for i, button in enumerate(self.battle_buttons):
             button.icon = i
-            button.rect = pygame.Rect(24+i*246,545,238,62)
+            button.rect = pygame.Rect(24+i*197,545,188,62)
 
         # ── HP bars ──
         self.hp_player = HPBar(40, HEIGHT - 150, 220, 22)
@@ -443,6 +445,8 @@ class Game:
         return self.anim_sprites[char_name]
 
     def _timing(self, character, action):
+        if action == "guard":
+            return {"release": .1, "impact": .2, "duration": .65}
         clip = self.clip_library.data["characters"][character]["clips"][action]
         markers = {event["name"]: event["time"] for event in clip.get("events", [])}
         return {**markers, "duration": sum(frame["duration"] for frame in clip["frames"])}
@@ -570,7 +574,7 @@ class Game:
                     self.submission_pending = False
                 if phase == "GAME_OVER" and not action and not self.presentation.busy:
                     self.scene = "GAME_OVER"
-        elif mtype == "NOT_YOUR_TURN":
+        elif mtype in ("NOT_YOUR_TURN", "ACTION_REJECTED"):
             self.submission_pending = False
             self.status_msg = msg.get("reason", "Wait for your turn.")
             self.status_timer = 2
@@ -609,6 +613,15 @@ class Game:
         char = snapshot["char_p1" if by == "P1" else "char_p2"]
         act = action["action"]
         self.audio.update(self.volume, self.sfx_enabled)
+        if act == "GUARD":
+            if kind == "start":
+                self.effect = None
+                self._actor(by).play("guard")
+                self._actor(other).play("idle", loop=True)
+            elif kind == "impact":
+                self.status_msg = "GUARD READY: 70% BLOCK"
+                self.status_timer = 1
+            return
         if kind == "start":
             self.audio.play(char, act, "start")
             self._actor(by).play(act.lower())
@@ -861,13 +874,34 @@ class Game:
             index = 1 if self.effect.action == "JUTSU" else 2
             self.style.technique(self.screen,self.effect,
                 CHARACTERS[self.effect.character]["move_names"][index],self.reduced_motion)
+        resources = gs.get("resources", initial_resources())
+        for pid, x in ((self.player_id, 24), (other, 630)):
+            r = resources[pid]
+            tags = " / GUARD" if r['guarding'] else ""
+            self.style.text(self.screen, f"CHAKRA {r['chakra']}/100   ULT {r['charge']}/3{tags}",
+                            (x+12, 94), 12, (160,220,240))
+        r = resources[self.player_id]
+        descriptions = list(DESCRIPTIONS)
+        descriptions[1] = {"Sasuke": "28 DMG / PIERCE / 30 CH", "Itachi": "18 DMG / COUNTER / 30 CH",
+                           "Tanjiro": "28 DMG / +8 HP / 30 CH", "Zenitsu": "28 (+12 vs HEAL) / 30 CH"}[self.my_char]
+        for i, button in enumerate(self.battle_buttons):
+            reason = unavailable(r, ACTIONS[i], gs.get("hp_p1" if self.player_id == "P1" else "hp_p2", 100))
+            button.available = not reason
+            button.description = ((f"ULT CHARGE {r['charge']}/3" if reason.startswith("Land 3") else reason) or descriptions[i])
         self.style.commands(self.screen,self.battle_buttons,is_my_turn,mouse,dt)
+        hovered = next((ACTIONS[i] for i,b in enumerate(self.battle_buttons) if b.rect.collidepoint(mouse)), None)
+        if hovered in ("JUTSU", "ULTIMATE"):
+            sequence = " > ".join(HAND_SIGN_SEQUENCES[self.my_char][hovered]).upper()
+            self.style.text(self.screen, "SIGNS: "+sequence, (24, 475), 12, (240,225,170))
+        warning = "Rival guarding: attacks reduced" if resources[other]['guarding'] else (
+            "Rival just recovered: Zenitsu Jutsu +12 damage" if self.my_char == "Zenitsu" and resources[other]['last_move'] == "HEAL" else "")
+        if warning: self.style.text(self.screen, warning, (24, 455), 12, (240,225,170))
         for event in events:
             if not is_my_turn or self.submission_pending:
                 continue
             for i,btn in enumerate(self.battle_buttons):
                 if btn.clicked(event):
-                    act=["ATTACK","JUTSU","ULTIMATE","HEAL"][i]
+                    act=ACTIONS[i]
                     self.submission_pending=True
                     success=True
                     if act in ("JUTSU","ULTIMATE"):
@@ -882,7 +916,7 @@ class Game:
                             self.status_timer=3
                         self.clock.tick()  # Challenge time is not battle animation time.
                     if self.net and self.net.connected and self.scene=="BATTLE":
-                        self.net.send({"action":act} if success else {"action":act,"dmg":0})
+                        self.net.send({"action":act} if success else {"action":act,"success":False})
                     else:
                         self.submission_pending=False
                     break
