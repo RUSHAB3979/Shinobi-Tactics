@@ -1,0 +1,386 @@
+{
+  "sasuke-attack-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "sasuke-jutsu-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "sasuke-ultimate-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "sasuke-heal-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "sasuke-heal-impact": {
+    "seconds": 0.55,
+    "peak": 0.7,
+    "rms": 0.1762,
+    "sha256": "a1e049eb4b4dca1b126af6c827fb70a73ac7f2dabe2a25943b7c50b7cde1f3a5"
+  },
+  "tanjiro-attack-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "tanjiro-jutsu-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "tanjiro-ultimate-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "tanjiro-heal-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "tanjiro-heal-impact": {
+    "seconds": 0.55,
+    "peak": 0.7,
+    "rms": 0.1762,
+    "sha256": "a1e049eb4b4dca1b126af6c827fb70a73ac7f2dabe2a25943b7c50b7cde1f3a5"
+  },
+  "itachi-attack-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "itachi-jutsu-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "itachi-ultimate-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "itachi-heal-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "itachi-heal-impact": {
+    "seconds": 0.55,
+    "peak": 0.7,
+    "rms": 0.1762,
+    "sha256": "a1e049eb4b4dca1b126af6c827fb70a73ac7f2dabe2a25943b7c50b7cde1f3a5"
+  },
+  "zenitsu-attack-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "zenitsu-jutsu-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "zenitsu-ultimate-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "zenitsu-heal-block": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.2171,
+    "sha256": "15bba79b240c01b73c03694a24fc55dce99c44ba5d8103d324c57bf302d99e4c"
+  },
+  "zenitsu-heal-impact": {
+    "seconds": 0.55,
+    "peak": 0.7,
+    "rms": 0.1762,
+    "sha256": "a1e049eb4b4dca1b126af6c827fb70a73ac7f2dabe2a25943b7c50b7cde1f3a5"
+  },
+  "sasuke-attack-release": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.1165,
+    "sha256": "530143e67d1c5350828b3412c83851360aee56a266512c7df8b3a98eb492f793"
+  },
+  "sasuke-attack-impact": {
+    "seconds": 0.24,
+    "peak": 0.7,
+    "rms": 0.0971,
+    "sha256": "338df63a8e63d999d3ece7e5dd80124ff23c3051f8d607fe617aeb5b10486282"
+  },
+  "itachi-attack-release": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.1128,
+    "sha256": "af95d8f68ac29e7be4f74181756cb93341ffe995ec2f364a22336770cc9ec35a"
+  },
+  "itachi-attack-impact": {
+    "seconds": 0.24,
+    "peak": 0.7,
+    "rms": 0.0971,
+    "sha256": "338df63a8e63d999d3ece7e5dd80124ff23c3051f8d607fe617aeb5b10486282"
+  },
+  "tanjiro-attack-release": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.1368,
+    "sha256": "021df677da71b56d9cd747053b12b469b6ef7d330b722cbb6b29734ce6f4b1f0"
+  },
+  "tanjiro-attack-impact": {
+    "seconds": 0.24,
+    "peak": 0.7,
+    "rms": 0.0971,
+    "sha256": "338df63a8e63d999d3ece7e5dd80124ff23c3051f8d607fe617aeb5b10486282"
+  },
+  "zenitsu-attack-release": {
+    "seconds": 0.28,
+    "peak": 0.7,
+    "rms": 0.1172,
+    "sha256": "40639bef03247abedb0f81477d80d0eaa6ee56f7242c8115285ea8355b79275d"
+  },
+  "zenitsu-attack-impact": {
+    "seconds": 0.24,
+    "peak": 0.7,
+    "rms": 0.0971,
+    "sha256": "338df63a8e63d999d3ece7e5dd80124ff23c3051f8d607fe617aeb5b10486282"
+  },
+  "sasuke-jutsu-start": {
+    "seconds": 0.24,
+    "peak": 0.7,
+    "rms": 0.1537,
+    "sha256": "6d5422585ada86c8249f715fbcf07f608fa9496d310bdb1a5b8ec70544fe975a"
+  },
+  "sasuke-jutsu-release": {
+    "seconds": 0.42,
+    "peak": 0.7,
+    "rms": 0.1299,
+    "sha256": "181bc7de67c2727da9f03e0390c303b8c1e95914407cc064e5d68bc9f40a929f"
+  },
+  "sasuke-jutsu-impact": {
+    "seconds": 0.34,
+    "peak": 0.7,
+    "rms": 0.0574,
+    "sha256": "1e8335f43809676082dd8075196b07cdb46ab320ec632f387391d145ad55d115"
+  },
+  "sasuke-ultimate-start": {
+    "seconds": 0.42,
+    "peak": 0.7,
+    "rms": 0.1414,
+    "sha256": "43fef95e35a76986a4c23975edb247c89d48f1593dcdd309d3b06b9b3d54349f"
+  },
+  "sasuke-ultimate-release": {
+    "seconds": 0.6,
+    "peak": 0.7,
+    "rms": 0.0629,
+    "sha256": "b49b85b7eaf26d7e989c2c2d02887e6aca394984c415a0e9640ec0ced4e4d71c"
+  },
+  "sasuke-ultimate-impact": {
+    "seconds": 0.9,
+    "peak": 0.7,
+    "rms": 0.1008,
+    "sha256": "f882085f2667de5dc4e558084b930fae58c1ba1a4ca616ebef4f0d16386b1c54"
+  },
+  "itachi-jutsu-start": {
+    "seconds": 0.25,
+    "peak": 0.7,
+    "rms": 0.1406,
+    "sha256": "2cb4165dd12f315e574c5bfde3b278ecfc80ca5a70cf63cb0361b31ff50c0500"
+  },
+  "itachi-jutsu-release": {
+    "seconds": 0.37,
+    "peak": 0.7,
+    "rms": 0.1482,
+    "sha256": "560f7ccbd46fbd52ee789faabfbad475cf1b7c1efc32464950584e0a76f9a9b8"
+  },
+  "itachi-jutsu-impact": {
+    "seconds": 0.32,
+    "peak": 0.7,
+    "rms": 0.1674,
+    "sha256": "9b64da4fe6b10113d4fceaabbb9596e2c9ab095fdb5c44f397a5e2e04b78fb16"
+  },
+  "itachi-ultimate-start": {
+    "seconds": 0.45,
+    "peak": 0.7,
+    "rms": 0.1342,
+    "sha256": "6ed726600afc5055b599f9f72729b47ce336c0aa1c80d1390724c2a4edef47c7"
+  },
+  "itachi-ultimate-release": {
+    "seconds": 0.55,
+    "peak": 0.7,
+    "rms": 0.1139,
+    "sha256": "68ba225797d13606fe9ee8f689175a2290b440eab413b9608a2c26c9ea9c633a"
+  },
+  "itachi-ultimate-impact": {
+    "seconds": 0.3,
+    "peak": 0.7,
+    "rms": 0.1066,
+    "sha256": "e5aa8ae9bc22b855ef3a1f6664c93e532c51ab372d008b1ca227e14f731d0ed0"
+  },
+  "tanjiro-jutsu-start": {
+    "seconds": 0.22,
+    "peak": 0.7,
+    "rms": 0.1284,
+    "sha256": "76f05cbbf5829d91eeda19c3e8d7c8e65f407bfba2f24a12e6108b8bdde66a51"
+  },
+  "tanjiro-jutsu-release": {
+    "seconds": 0.65,
+    "peak": 0.7,
+    "rms": 0.2123,
+    "sha256": "44f5ddc98318afa09fa393ce7f683646b0ae8ea8fd50c3d2ee3e3962d122e215"
+  },
+  "tanjiro-jutsu-impact": {
+    "seconds": 0.4,
+    "peak": 0.7,
+    "rms": 0.193,
+    "sha256": "fc55dec89b6ce88de1a8c91324394ea3b5dc32af4f71a977a3103f3f9ea655d2"
+  },
+  "tanjiro-ultimate-start": {
+    "seconds": 0.3,
+    "peak": 0.7,
+    "rms": 0.1898,
+    "sha256": "59d4c4e865ac8418180060746ab60e29d9b9388004b9b090f60296e4e506bd13"
+  },
+  "tanjiro-ultimate-release": {
+    "seconds": 0.8,
+    "peak": 0.7,
+    "rms": 0.2063,
+    "sha256": "d31adb8e8914230d797b47d5bcb015a8e536149eaea9feb17619622237a9a1a7"
+  },
+  "tanjiro-ultimate-impact": {
+    "seconds": 0.42,
+    "peak": 0.7,
+    "rms": 0.3362,
+    "sha256": "7a487405bf35bdbefa166cf763d828fe8946ceecbab1284cbd1e8c53e57d2193"
+  },
+  "zenitsu-jutsu-start": {
+    "seconds": 0.26,
+    "peak": 0.7,
+    "rms": 0.0945,
+    "sha256": "5dc5a07497542bb5c8a7b6ff46e1b1aa16a370fa7b9f524389be4b4d774932d8"
+  },
+  "zenitsu-jutsu-release": {
+    "seconds": 0.4,
+    "peak": 0.7,
+    "rms": 0.1303,
+    "sha256": "4775bf027ff5b54c0361cc24f20eed28125eb34519e66ec50a13519707e44cb3"
+  },
+  "zenitsu-jutsu-impact": {
+    "seconds": 0.35,
+    "peak": 0.7,
+    "rms": 0.2663,
+    "sha256": "b83540ed26a3a854d4d3c212157d77b89645164f74e64bb9e74fe68187f2a72b"
+  },
+  "zenitsu-ultimate-start": {
+    "seconds": 0.3,
+    "peak": 0.7,
+    "rms": 0.1525,
+    "sha256": "0ea5c1f3fcb36bdd0f1a638cb42c4f41755c885546926a84a9b85d9b650a416a"
+  },
+  "zenitsu-ultimate-release": {
+    "seconds": 0.6,
+    "peak": 0.7,
+    "rms": 0.2481,
+    "sha256": "78df76a476953824d21fa2216bc67686e39b75d5a2086a2655cc8b7cb3e1d079"
+  },
+  "zenitsu-ultimate-impact": {
+    "seconds": 0.55,
+    "peak": 0.7,
+    "rms": 0.183,
+    "sha256": "fd3f2ca1be3a0956292c2c770a6b7f1a74c668d8ec120e636d24b94e685e1941"
+  },
+  "itachi-attack-voice": {
+    "seconds": 0.3333,
+    "peak": 0.88,
+    "rms": 0.1992,
+    "sha256": "5bfcc14a22a6fe93a31b89cfd767729e27756eb6928a99ae67f7e282279be938"
+  },
+  "itachi-jutsu-voice": {
+    "seconds": 1.3333,
+    "peak": 0.88,
+    "rms": 0.2241,
+    "sha256": "c4c12205bb82bb9a6b97b88e34e21351568f575d412d47ad5df2573e25e8f383"
+  },
+  "itachi-ultimate-voice": {
+    "seconds": 1.88,
+    "peak": 0.88,
+    "rms": 0.1979,
+    "sha256": "e999427cc3f4c3b0d51e18cbdecce6ac36fd2d8c4702aa2f7a9387486a638746"
+  },
+  "itachi-heal-voice": {
+    "seconds": 0.5467,
+    "peak": 0.88,
+    "rms": 0.1949,
+    "sha256": "2f1dd5d53889593ed6fa3db50f017cfb561d05ae76c262bb75eeec81f53de165"
+  },
+  "tanjiro-attack-voice": {
+    "seconds": 0.3751,
+    "peak": 0.88,
+    "rms": 0.3182,
+    "sha256": "3d5c9a4580ab36d69a48b3618a7c90d9cff8d6473d2e9285bcccae6aadfa7198"
+  },
+  "tanjiro-jutsu-voice": {
+    "seconds": 1.7697,
+    "peak": 0.88,
+    "rms": 0.2503,
+    "sha256": "3348c01bfd4ffd7e08dcffb8280431ac5cb2cc0679dfaa4c36e87be9876d886d"
+  },
+  "tanjiro-ultimate-voice": {
+    "seconds": 2.131,
+    "peak": 0.88,
+    "rms": 0.2268,
+    "sha256": "f4fb744408710fcf8fbe5473312aeed2f0d066fb166e2cf6fcb0f0a6d8b3c643"
+  },
+  "tanjiro-heal-voice": {
+    "seconds": 1.0754,
+    "peak": 0.88,
+    "rms": 0.1907,
+    "sha256": "50972cef89372fc4a6e4f018db77681e3231dab19bb4d6da2eb6a83cd3a5124c"
+  },
+  "zenitsu-attack-voice": {
+    "seconds": 0.5336,
+    "peak": 0.88,
+    "rms": 0.1947,
+    "sha256": "05e828134f658b8c6028f7c1f35c7e41f11defdc3418a60ad00a6f7de6449fc1"
+  },
+  "zenitsu-jutsu-voice": {
+    "seconds": 1.2159,
+    "peak": 0.88,
+    "rms": 0.1725,
+    "sha256": "157c6c7cddc72d11d3dd4af2ea19537eaf6d57b8a586ab48b0fa1eda4bd93663"
+  },
+  "zenitsu-ultimate-voice": {
+    "seconds": 1.4515,
+    "peak": 0.88,
+    "rms": 0.1912,
+    "sha256": "6311d48b2c1fad0b66f9cebee523d82aff181a089343689fd127b99b77f42320"
+  },
+  "sasuke-jutsu-voice": {
+    "seconds": 2.2204,
+    "peak": 0.88,
+    "rms": 0.2215,
+    "sha256": "257d647d95842a8d2608ac2950f935eb344b39729d951dab89e0bf6171d6682a"
+  }
+}

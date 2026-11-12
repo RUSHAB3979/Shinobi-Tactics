@@ -1,0 +1,21 @@
+{
+  "character": "Itachi vs Sasuke",
+  "two_tcp_clients": true,
+  "mirror_players_independent": true,
+  "startup_s": 0.34946497999771964,
+  "frame_ms": {
+    "median": 3.1829559993639123,
+    "p95": 5.256575997918844,
+    "p99": 8.548035999410786
+  },
+  "peak_rss_mib": 181.515625,
+  "checks": [
+    "impact HP timing both perspectives",
+    "duplicate state",
+    "miss",
+    "result poses",
+    "genjutsu shield",
+    "reflected Kirin",
+    "KO"
+  ]
+}

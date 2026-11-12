@@ -1,0 +1,20 @@
+{
+  "character": "Sasuke",
+  "two_tcp_clients": true,
+  "mirror_players_independent": true,
+  "startup_s": 0.2511246670001128,
+  "frame_ms": {
+    "median": 0.6528159992740257,
+    "p95": 1.413885999681952,
+    "p99": 4.132002999540418
+  },
+  "peak_rss_mib": 158.40625,
+  "checks": [
+    "impact HP timing both perspectives",
+    "duplicate state",
+    "miss",
+    "result poses",
+    "heal",
+    "lethal ultimate"
+  ]
+}

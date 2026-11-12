@@ -1,0 +1,14 @@
+{
+  "assets/sasuke/idle": {"classification":"mixed body actions; quarantined", "status":"all 10 local frames visually inspected", "note":"Idle folder includes running poses; old styling differs from replacement."},
+  "assets/sasuke/attack_combo": {"classification":"body; quarantined", "status":"all 10 frames visually inspected", "note":"Potential coherent legacy source, not mixed with new art."},
+  "assets/sasuke/chidori": {"classification":"body; quarantined", "status":"all 10 frames visually inspected"},
+  "assets/sasuke/kirin": {"classification":"mixed VFX; quarantined", "status":"local subset visually inspected; large frames not downloaded", "note":"Fire, blue/purple effects, and smoke are not a continuous body sequence."},
+  "assets/sasuke/healing": {"classification":"mixed UI/VFX; quarantined", "status":"local subset and sample frame 100 visually inspected", "note":"Includes HP bars and effect strips."},
+  "assets/itachi/attack_combo": {"classification":"body; quarantined", "status":"all 9 frames visually inspected"},
+  "assets/itachi/hit": {"classification":"body; quarantined", "status":"all 7 frames visually inspected"},
+  "assets/tanjiro/attack_1": {"classification":"body; quarantined", "status":"all 14 frames visually inspected"},
+  "assets/tanjiro/special_1": {"classification":"mixed extraction; quarantined", "status":"all 13 frames visually inspected", "note":"Several frames include multiple tiny poses and fragments in one image."},
+  "assets/zenitsu/idle": {"classification":"body; quarantined", "status":"all 4 frames visually inspected"},
+  "assets/zenitsu/sixfold": {"classification":"VFX/mixed; quarantined", "status":"local subset visually inspected; large frames not downloaded", "note":"Yellow effect fragments cannot stand in for the character body."},
+  "assets/zenitsu/healing": {"classification":"mixed UI/VFX; quarantined", "status":"local subset visually inspected", "note":"Same UI/effect-strip contamination as Sasuke's collection."}
+}

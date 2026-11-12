@@ -1,0 +1,11 @@
+{
+  "scope": "Sparse original asset subset only; not a full checkout baseline",
+  "startup_s": 0.1969468910001524,
+  "frame_ms": {
+    "median": 4.459236999991845,
+    "p95": 6.731598999976995,
+    "p99": 7.983171999967453
+  },
+  "peak_rss_mib": 65.23828125,
+  "mirror_players_shared": true
+}

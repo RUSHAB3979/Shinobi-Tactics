@@ -1,0 +1,20 @@
+{
+  "character": "Itachi",
+  "two_tcp_clients": true,
+  "mirror_players_independent": true,
+  "startup_s": 0.21488305399998353,
+  "frame_ms": {
+    "median": 0.6145510005808319,
+    "p95": 1.5313559997593984,
+    "p99": 4.468643000109296
+  },
+  "peak_rss_mib": 157.39453125,
+  "checks": [
+    "impact HP timing both perspectives",
+    "duplicate state",
+    "miss",
+    "result poses",
+    "heal",
+    "lethal ultimate"
+  ]
+}

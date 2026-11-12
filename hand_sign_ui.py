@@ -41,6 +41,7 @@ def run_hand_sign_challenge(
     screen: pygame.Surface,
     sign_sequence: list[str],
     action_type: str = "JUTSU",
+    on_tick=None,
 ) -> bool:
     """
     Blocking call — runs the hand-sign mini-game on *screen*.
@@ -66,13 +67,17 @@ def run_hand_sign_challenge(
     if not cap.isOpened():
         cap.release()
         # No webcam → show error and FAIL the challenge (attack misses)
-        _show_camera_error(screen)
+        _show_camera_error(screen, on_tick=on_tick)
         return False
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_W)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_H)
 
-    detector = HandSignDetector()
+    try:
+        detector = HandSignDetector()
+    except Exception:
+        cap.release()
+        raise
     clock = pygame.time.Clock()
 
     scr_w, scr_h = screen.get_size()
@@ -90,14 +95,17 @@ def run_hand_sign_challenge(
     finished = False
 
     # Pre-render fonts once
-    font_title = pygame.font.SysFont("Segoe UI", 36, bold=True)
-    font_sign  = pygame.font.SysFont("Segoe UI", 28, bold=True)
-    font_sm    = pygame.font.SysFont("Segoe UI", 20)
-    font_big   = pygame.font.SysFont("Segoe UI", 52, bold=True)
-    font_hint  = pygame.font.SysFont("Segoe UI", 22)
+    font_title = pygame.font.SysFont(None, 36, bold=True)
+    font_sign  = pygame.font.SysFont(None, 28, bold=True)
+    font_sm    = pygame.font.SysFont(None, 20)
+    font_big   = pygame.font.SysFont(None, 52, bold=True)
+    font_hint  = pygame.font.SysFont(None, 22)
 
     # ── Main loop ─────────────────────────────────────────────────
     while not finished:
+        if on_tick is not None and not on_tick():
+            success = False
+            break
         dt = clock.tick(30) / 1000.0
         elapsed = time.time() - start_time
         remaining = max(0.0, total_time - elapsed)
@@ -159,7 +167,7 @@ def run_hand_sign_challenge(
         screen.blit(overlay, (0, 0))
 
         # Title
-        title = font_title.render("⚡ PERFORM HAND SIGNS ⚡", True, _CYAN)
+        title = font_title.render("PERFORM HAND SIGNS", True, _CYAN)
         screen.blit(title, title.get_rect(center=(scr_w // 2, cam_y - 50)))
 
         # ── Webcam feed ───────────────────────────────────────────
@@ -204,12 +212,12 @@ def run_hand_sign_challenge(
 
             # Check mark for completed
             if i < current_idx:
-                check = font_sign.render("✓", True, _GREEN)
+                check = font_sign.render("OK", True, _GREEN)
                 screen.blit(check, check.get_rect(center=(sx + 55, seq_y - 60)))
 
             # Arrow between signs
             if i < len(sign_sequence) - 1:
-                arr = font_sm.render("→", True, _GREY)
+                arr = font_sm.render(">", True, _GREY)
                 screen.blit(arr, arr.get_rect(center=(sx + 75, seq_y - 42)))
 
         # ── Detected sign feedback (on webcam) ────────────────────
@@ -221,7 +229,7 @@ def run_hand_sign_challenge(
             if is_match and hold_start:
                 held = time.time() - hold_start
                 pct = min(1.0, held / HOLD_TIME)
-                fb_text += f"  ■ HOLD {int(pct * 100)}%"
+                fb_text += f"  HOLD {int(pct * 100)}%"
 
             fb_surf = font_hint.render(fb_text, True, fb_col)
             fb_bg = pygame.Surface((fb_surf.get_width() + 20, fb_surf.get_height() + 10), pygame.SRCALPHA)
@@ -265,26 +273,28 @@ def run_hand_sign_challenge(
         pygame.display.flip()
 
     # ── Result flash ──────────────────────────────────────────────
-    _show_result_flash(screen, success, font_big, clock)
+    _show_result_flash(screen, success, font_big, clock, on_tick=on_tick)
 
     cap.release()
     detector.release()
     return success
 
 
-def _show_result_flash(screen, success, font_big, clock):
+def _show_result_flash(screen, success, font_big, clock, on_tick=None):
     """Brief success / failure flash overlay."""
     scr_w, scr_h = screen.get_size()
     if success:
-        text = "✅  SIGNS COMPLETE!"
+        text = "SIGNS COMPLETE!"
         color = _GREEN
         bg_tint = (0, 60, 20, 180)
     else:
-        text = "❌  SIGNS FAILED — MISS!"
+        text = "SIGNS FAILED - MISS!"
         color = _RED
         bg_tint = (60, 0, 0, 180)
 
     for i in range(40):
+        if on_tick is not None and not on_tick():
+            break
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
                 pygame.quit()
@@ -308,21 +318,23 @@ def _show_result_flash(screen, success, font_big, clock):
         clock.tick(60)
 
 
-def _show_camera_error(screen):
+def _show_camera_error(screen, on_tick=None):
     """Show an error overlay when the camera cannot be opened."""
     scr_w, scr_h = screen.get_size()
     clock = pygame.time.Clock()
-    font_big = pygame.font.SysFont("Segoe UI", 44, bold=True)
-    font_med = pygame.font.SysFont("Segoe UI", 22)
+    font_big = pygame.font.SysFont(None, 44, bold=True)
+    font_med = pygame.font.SysFont(None, 22)
 
     lines = [
-        ("📷  CAMERA NOT FOUND", _RED, font_big),
+        ("CAMERA NOT FOUND", _RED, font_big),
         ("", None, None),
         ("Cannot open webcam — hand signs cannot be verified.", _WHITE, font_med),
         ("Attack will MISS.  Connect a camera and try again.", _YELLOW, font_med),
     ]
 
     for i in range(90):  # ~1.5 seconds at 60 fps
+        if on_tick is not None and not on_tick():
+            break
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
                 pygame.quit()

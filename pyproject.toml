@@ -1,0 +1,13 @@
+[project]
+name = "shinobi-tactics"
+version = "0.2.0"
+description = "Turn-based Pygame battle game with curated sprite animation"
+requires-python = ">=3.12,<3.13"
+dependencies = ["pygame-ce>=2.5,<3", "pillow>=11,<13"]
+
+[project.optional-dependencies]
+camera = ["opencv-python>=4.10,<5", "mediapipe>=0.10,<0.11"]
+video = ["opencv-python>=4.10,<5"]
+
+[tool.uv]
+package = false
