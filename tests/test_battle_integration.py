@@ -40,7 +40,7 @@ class IntegrationTests(unittest.TestCase):
         self.server.state.hp["P2"]=35
         self.server._process({"action":"JUTSU"},"P1")
         self.game._handle_server_msg({"type":"STATE",**self.server.state.snapshot()})
-        self.advance(1.5)
+        self.advance(3.5)
         self.assertTrue(self.game.presentation.visible_shields["P1"])
         self.server._process({"action":"ULTIMATE"},"P2")
         snapshot={"type":"STATE",**self.server.state.snapshot()}
@@ -48,7 +48,7 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(snapshot["phase"],"GAME_OVER")
         self.game._handle_server_msg(snapshot)
         self.assertEqual(self.game.scene,"BATTLE")
-        self.advance(1.1)
+        self.advance(self.game._presentation_timing('Sasuke','ultimate')['impact']-.05)
         self.assertEqual(self.game.presentation.visible_hp["P2"],10)
         self.advance(.1)
         self.assertEqual(self.game.effect.target,self.game._root("P2"))

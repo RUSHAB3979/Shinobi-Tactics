@@ -23,7 +23,7 @@ class FeedbackTests(unittest.TestCase):
         self.state['last_action'] = dict(id=1, by='P1', target='P2', action=action, dmg=damage, reflected=reflected)
         self.game._handle_server_msg(self.state)
         self.game._advance_presentation(.01)
-        self.game._advance_presentation(self.game._timing('Sasuke', action.lower())['impact']-.01)
+        self.game._advance_presentation(self.game._presentation_timing('Sasuke', action.lower())['impact']-.01)
 
     def test_misses_and_heals_do_not_shake_or_destroy_ground(self):
         self.act(damage=0)
@@ -90,7 +90,7 @@ class FeedbackTests(unittest.TestCase):
 
     def test_camera_aftermath_clock_is_independent_of_frame_size_and_hitstop(self):
         ages=[]
-        for steps in ([1.5], [1/60]*90):
+        for steps in ([2.4], [1/60]*144):
             self.game._handle_server_msg(dict(type='STATE', phase='SELECT'))
             self.state['last_action'] = None
             self.game._handle_server_msg(self.state)

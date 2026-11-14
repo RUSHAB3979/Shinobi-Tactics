@@ -42,3 +42,11 @@ Sasuke has no newly selected English voice. Itachi's Genjutsu/Tsukuyomi lines ar
 ## Visual glowup — 10 November 2026
 
 `arena-glowup.png`: original environment generated using the built-in image-generation tool. Prompt, research links and composition decisions are recorded in `docs/glowup-art-direction.md`; the previous arena remains available. `fonts/SpaceGrotesk-Bold.otf`: unmodified Space Grotesk, SIL Open Font License 1.1; copyright and full terms in `fonts/OFL-SpaceGrotesk.txt`.
+
+## Cinematic close-ups (2026-11-14)
+
+`cinematics/*.png`: AI-generated character portrait keyframes using built-in image_gen. Not official artwork or copied reference footage. Prompts in `cinematics/prompts.json`; research and implementation notes in `docs/special-cinematics.md`.
+
+## Technique body keys (2026-11-14)
+
+`assets/sources/choreography/{sasuke-chidori,sasuke-kirin,tanjiro-whirlpool}.png`: AI-generated sprite keys using built-in image_gen with the existing character atlases as model references. Not official anime/game frames. Exported to `assets/curated/*/techniques/`; registration, normalized prompt specifications and retained source art are in the source directory. Other power art is reused with new choreography.

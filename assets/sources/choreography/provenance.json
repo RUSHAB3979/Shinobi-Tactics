@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-14",
+  "note": "Normalized prompt specifications; full generated source atlases retained. AI-generated character art, not official frames.",
+  "assets": [
+    {
+      "file": "sasuke-chidori.png",
+      "tool": "built-in image_gen",
+      "reference": "assets/sources/powers/sasuke.png",
+      "prompt": "Create 4 by 3 transparent full-body Sasuke Chidori keys: seals, wrist brace, open-palm charge, deeper charge, push-off, two driving strides, half thrust, full bare-hand thrust, follow-through, withdrawal, recovery. Match the source model, same scale, right facing, no sword or effects."
+    },
+    {
+      "file": "sasuke-kirin.png",
+      "tool": "built-in image_gen",
+      "reference": "assets/sources/powers/sasuke.png",
+      "prompt": "Create 4 by 3 transparent Sasuke Kirin body keys: seals, separate hands, look skyward, arm raise, arm overhead, overhead palm hold, backward arch, wrist command preparation, downward sweep, downward pointing command, arm lower, recovery. Same source model, planted feet, right facing, no effects."
+    },
+    {
+      "file": "tanjiro-whirlpool.png",
+      "tool": "built-in image_gen",
+      "reference": "assets/sources/powers/tanjiro.png",
+      "prompt": "Create 4 by 3 transparent Tanjiro Whirlpool body keys with two-handed sword: breathing, crouch, shoulder coil, back-three-quarter lift, back view, pivot, right-facing horizontal cut, front-three-quarter sweep, front follow-through, low finish, brake, recovery. Match source model and source resolution; no VFX."
+    }
+  ]
+}

@@ -116,126 +116,190 @@
           "finish": "idle",
           "frames": [
             {
-              "path": "assets/curated/sasuke/powers/00.png",
+              "path": "assets/curated/sasuke/techniques/jutsu/00.png",
               "anchor": [
-                88,
-                170
+                76,
+                190
               ],
               "sockets": {
                 "hand": [
-                  99,
-                  70
-                ]
-              },
-              "duration": 0.08
-            },
-            {
-              "path": "assets/curated/sasuke/powers/01.png",
-              "anchor": [
-                88,
-                170
-              ],
-              "sockets": {
-                "hand": [
-                  54,
-                  93
-                ]
-              },
-              "duration": 0.1
-            },
-            {
-              "path": "assets/curated/sasuke/powers/02.png",
-              "anchor": [
-                88,
-                169
-              ],
-              "sockets": {
-                "hand": [
-                  44,
-                  95
-                ]
-              },
-              "duration": 0.14
-            },
-            {
-              "path": "assets/curated/sasuke/powers/03.png",
-              "anchor": [
-                88,
-                169
-              ],
-              "sockets": {
-                "hand": [
-                  50,
-                  95
-                ]
-              },
-              "duration": 0.08
-            },
-            {
-              "path": "assets/curated/sasuke/powers/04.png",
-              "anchor": [
-                88,
-                166
-              ],
-              "sockets": {
-                "hand": [
-                  48,
-                  97
-                ]
-              },
-              "duration": 0.1
-            },
-            {
-              "path": "assets/curated/sasuke/powers/05.png",
-              "anchor": [
-                88,
-                166
-              ],
-              "sockets": {
-                "hand": [
-                  148,
+                  89,
                   86
+                ]
+              },
+              "duration": 0.1
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/01.png",
+              "anchor": [
+                76,
+                188
+              ],
+              "sockets": {
+                "hand": [
+                  55,
+                  124
+                ]
+              },
+              "duration": 0.17
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/02.png",
+              "anchor": [
+                76,
+                188
+              ],
+              "sockets": {
+                "hand": [
+                  34,
+                  135
+                ]
+              },
+              "duration": 0.24
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/03.png",
+              "anchor": [
+                76,
+                188
+              ],
+              "sockets": {
+                "hand": [
+                  20,
+                  118
+                ]
+              },
+              "duration": 0.24
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/04.png",
+              "anchor": [
+                76,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  26,
+                  106
+                ]
+              },
+              "duration": 0.09
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/05.png",
+              "anchor": [
+                76,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  28,
+                  118
+                ]
+              },
+              "duration": 0.11
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/06.png",
+              "anchor": [
+                76,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  29,
+                  116
+                ]
+              },
+              "duration": 0.1
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/07.png",
+              "anchor": [
+                76,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  131,
+                  86
+                ]
+              },
+              "duration": 0.15
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/08.png",
+              "anchor": [
+                76,
+                176
+              ],
+              "sockets": {
+                "hand": [
+                  138,
+                  73
                 ]
               },
               "duration": 0.12
             },
             {
-              "path": "assets/curated/sasuke/powers/06.png",
+              "path": "assets/curated/sasuke/techniques/jutsu/09.png",
               "anchor": [
-                88,
-                166
+                76,
+                176
               ],
               "sockets": {
                 "hand": [
-                  153,
-                  76
+                  138,
+                  82
                 ]
               },
               "duration": 0.16
             },
             {
-              "path": "assets/curated/sasuke/powers/07.png",
+              "path": "assets/curated/sasuke/techniques/jutsu/10.png",
               "anchor": [
-                88,
-                166
+                76,
+                176
               ],
               "sockets": {
                 "hand": [
-                  69,
-                  118
+                  66,
+                  143
                 ]
               },
-              "duration": 0.3
+              "duration": 0.28
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/jutsu/11.png",
+              "anchor": [
+                76,
+                176
+              ],
+              "sockets": {
+                "hand": [
+                  84,
+                  132
+                ]
+              },
+              "duration": 0.34
             }
           ],
           "events": [
             {
+              "name": "charge",
+              "time": 0.25
+            },
+            {
               "name": "release",
-              "time": 0.32
+              "time": 0.75
             },
             {
               "name": "impact",
-              "time": 0.64
+              "time": 1.2
+            },
+            {
+              "name": "recover",
+              "time": 1.6
             }
           ]
         },
@@ -246,126 +310,194 @@
           "finish": "idle",
           "frames": [
             {
-              "path": "assets/curated/sasuke/powers/08.png",
+              "path": "assets/curated/sasuke/techniques/ultimate/00.png",
               "anchor": [
-                88,
+                89,
                 170
               ],
               "sockets": {
                 "hand": [
-                  99,
-                  72
+                  100,
+                  70
                 ]
               },
               "duration": 0.15
             },
             {
-              "path": "assets/curated/sasuke/powers/09.png",
+              "path": "assets/curated/sasuke/techniques/ultimate/01.png",
               "anchor": [
-                88,
-                170
-              ],
-              "sockets": {
-                "hand": [
-                  98,
-                  84
-                ]
-              },
-              "duration": 0.2
-            },
-            {
-              "path": "assets/curated/sasuke/powers/10.png",
-              "anchor": [
-                88,
-                170
-              ],
-              "sockets": {
-                "hand": [
-                  121,
-                  60
-                ]
-              },
-              "duration": 0.2
-            },
-            {
-              "path": "assets/curated/sasuke/powers/11.png",
-              "anchor": [
-                88,
-                170
-              ],
-              "sockets": {
-                "hand": [
-                  141,
-                  23
-                ]
-              },
-              "duration": 0.25
-            },
-            {
-              "path": "assets/curated/sasuke/powers/12.png",
-              "anchor": [
-                88,
-                171
-              ],
-              "sockets": {
-                "hand": [
-                  102,
-                  19
-                ]
-              },
-              "duration": 0.3
-            },
-            {
-              "path": "assets/curated/sasuke/powers/13.png",
-              "anchor": [
-                88,
-                172
-              ],
-              "sockets": {
-                "hand": [
-                  107,
-                  114
-                ]
-              },
-              "duration": 0.2
-            },
-            {
-              "path": "assets/curated/sasuke/powers/14.png",
-              "anchor": [
-                88,
+                89,
                 170
               ],
               "sockets": {
                 "hand": [
                   132,
-                  116
+                  100
                 ]
               },
-              "duration": 0.25
+              "duration": 0.2
             },
             {
-              "path": "assets/curated/sasuke/powers/15.png",
+              "path": "assets/curated/sasuke/techniques/ultimate/02.png",
               "anchor": [
-                88,
-                171
+                89,
+                170
               ],
               "sockets": {
                 "hand": [
-                  101,
-                  114
+                  132,
+                  52
+                ]
+              },
+              "duration": 0.2
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/03.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  138,
+                  32
+                ]
+              },
+              "duration": 0.2
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/04.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  123,
+                  13
+                ]
+              },
+              "duration": 0.22
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/05.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  130,
+                  13
+                ]
+              },
+              "duration": 0.22
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/06.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  127,
+                  14
+                ]
+              },
+              "duration": 0.18
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/07.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  134,
+                  39
+                ]
+              },
+              "duration": 0.18
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/08.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  136,
+                  102
+                ]
+              },
+              "duration": 0.15
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/09.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  143,
+                  100
                 ]
               },
               "duration": 0.3
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/10.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  116,
+                  113
+                ]
+              },
+              "duration": 0.4
+            },
+            {
+              "path": "assets/curated/sasuke/techniques/ultimate/11.png",
+              "anchor": [
+                89,
+                170
+              ],
+              "sockets": {
+                "hand": [
+                  111,
+                  113
+                ]
+              },
+              "duration": 0.4
             }
           ],
           "events": [
             {
-              "name": "release",
+              "name": "charge",
+              "time": 0.35
+            },
+            {
+              "name": "form",
               "time": 0.55
             },
             {
+              "name": "release",
+              "time": 1.55
+            },
+            {
               "name": "impact",
-              "time": 1.15
+              "time": 2.05
+            },
+            {
+              "name": "recover",
+              "time": 2.35
             }
           ]
         },
@@ -699,158 +831,238 @@
           "finish": "idle",
           "frames": [
             {
-              "path": "assets/curated/tanjiro/powers/00.png",
+              "path": "assets/curated/tanjiro/techniques/jutsu/00.png",
               "anchor": [
-                88,
-                170
-              ],
-              "sockets": {
-                "hand": [
-                  93,
-                  77
-                ],
-                "weapon": [
-                  93,
-                  12
-                ]
-              },
-              "duration": 0.08
-            },
-            {
-              "path": "assets/curated/tanjiro/powers/01.png",
-              "anchor": [
-                88,
-                170
-              ],
-              "sockets": {
-                "hand": [
-                  100,
-                  109
-                ],
-                "weapon": [
-                  16,
-                  157
-                ]
-              },
-              "duration": 0.1
-            },
-            {
-              "path": "assets/curated/tanjiro/powers/02.png",
-              "anchor": [
-                88,
-                170
+                84,
+                197
               ],
               "sockets": {
                 "hand": [
                   99,
-                  114
+                  121
                 ],
                 "weapon": [
-                  14,
-                  104
-                ]
-              },
-              "duration": 0.14
-            },
-            {
-              "path": "assets/curated/tanjiro/powers/03.png",
-              "anchor": [
-                88,
-                170
-              ],
-              "sockets": {
-                "hand": [
-                  109,
-                  55
-                ],
-                "weapon": [
-                  25,
-                  55
-                ]
-              },
-              "duration": 0.18
-            },
-            {
-              "path": "assets/curated/tanjiro/powers/04.png",
-              "anchor": [
-                88,
-                162
-              ],
-              "sockets": {
-                "hand": [
-                  128,
-                  90
-                ],
-                "weapon": [
-                  172,
-                  77
+                  101,
+                  38
                 ]
               },
               "duration": 0.12
             },
             {
-              "path": "assets/curated/tanjiro/powers/05.png",
+              "path": "assets/curated/tanjiro/techniques/jutsu/01.png",
               "anchor": [
-                70,
-                162
+                84,
+                197
               ],
               "sockets": {
                 "hand": [
-                  86,
-                  99
+                  54,
+                  143
                 ],
                 "weapon": [
-                  147,
-                  127
+                  7,
+                  197
                 ]
               },
-              "duration": 0.16
+              "duration": 0.18
             },
             {
-              "path": "assets/curated/tanjiro/powers/06.png",
+              "path": "assets/curated/tanjiro/techniques/jutsu/02.png",
               "anchor": [
-                88,
-                162
+                84,
+                197
               ],
               "sockets": {
                 "hand": [
-                  100,
-                  111
+                  60,
+                  134
                 ],
                 "weapon": [
-                  150,
-                  148
+                  7,
+                  130
+                ]
+              },
+              "duration": 0.25
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/03.png",
+              "anchor": [
+                84,
+                197
+              ],
+              "sockets": {
+                "hand": [
+                  71,
+                  76
+                ],
+                "weapon": [
+                  13,
+                  49
+                ]
+              },
+              "duration": 0.15
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/04.png",
+              "anchor": [
+                84,
+                182
+              ],
+              "sockets": {
+                "hand": [
+                  59,
+                  103
+                ],
+                "weapon": [
+                  7,
+                  105
+                ]
+              },
+              "duration": 0.2
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/05.png",
+              "anchor": [
+                84,
+                182
+              ],
+              "sockets": {
+                "hand": [
+                  107,
+                  105
+                ],
+                "weapon": [
+                  165,
+                  110
+                ]
+              },
+              "duration": 0.2
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/06.png",
+              "anchor": [
+                84,
+                182
+              ],
+              "sockets": {
+                "hand": [
+                  106,
+                  110
+                ],
+                "weapon": [
+                  163,
+                  112
                 ]
               },
               "duration": 0.14
             },
             {
-              "path": "assets/curated/tanjiro/powers/07.png",
+              "path": "assets/curated/tanjiro/techniques/jutsu/07.png",
               "anchor": [
-                88,
-                162
+                84,
+                182
               ],
               "sockets": {
                 "hand": [
-                  69,
-                  109
+                  47,
+                  132
                 ],
                 "weapon": [
-                  32,
-                  158
+                  8,
+                  175
                 ]
               },
-              "duration": 0.16
+              "duration": 0.12
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/08.png",
+              "anchor": [
+                84,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  54,
+                  137
+                ],
+                "weapon": [
+                  7,
+                  179
+                ]
+              },
+              "duration": 0.12
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/09.png",
+              "anchor": [
+                84,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  107,
+                  143
+                ],
+                "weapon": [
+                  165,
+                  193
+                ]
+              },
+              "duration": 0.13
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/10.png",
+              "anchor": [
+                84,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  84,
+                  139
+                ],
+                "weapon": [
+                  134,
+                  90
+                ]
+              },
+              "duration": 0.17
+            },
+            {
+              "path": "assets/curated/tanjiro/techniques/jutsu/11.png",
+              "anchor": [
+                84,
+                177
+              ],
+              "sockets": {
+                "hand": [
+                  55,
+                  150
+                ],
+                "weapon": [
+                  29,
+                  188
+                ]
+              },
+              "duration": 0.32
             }
           ],
           "events": [
             {
+              "name": "charge",
+              "time": 0.3
+            },
+            {
               "name": "release",
-              "time": 0.32
+              "time": 0.55
             },
             {
               "name": "impact",
-              "time": 0.64
+              "time": 1.1
+            },
+            {
+              "name": "recover",
+              "time": 1.65
             }
           ]
         },
@@ -876,7 +1088,7 @@
                   14
                 ]
               },
-              "duration": 0.15
+              "duration": 0.18
             },
             {
               "path": "assets/curated/tanjiro/powers/09.png",
@@ -894,7 +1106,7 @@
                   33
                 ]
               },
-              "duration": 0.2
+              "duration": 0.25
             },
             {
               "path": "assets/curated/tanjiro/powers/10.png",
@@ -912,7 +1124,7 @@
                   9
                 ]
               },
-              "duration": 0.2
+              "duration": 0.32
             },
             {
               "path": "assets/curated/tanjiro/powers/11.png",
@@ -930,7 +1142,7 @@
                   19
                 ]
               },
-              "duration": 0.3
+              "duration": 0.4
             },
             {
               "path": "assets/curated/tanjiro/powers/12.png",
@@ -948,7 +1160,7 @@
                   160
                 ]
               },
-              "duration": 0.32
+              "duration": 0.14
             },
             {
               "path": "assets/curated/tanjiro/powers/13.png",
@@ -984,7 +1196,7 @@
                   81
                 ]
               },
-              "duration": 0.23
+              "duration": 0.25
             },
             {
               "path": "assets/curated/tanjiro/powers/15.png",
@@ -1002,17 +1214,21 @@
                   158
                 ]
               },
-              "duration": 0.25
+              "duration": 0.46
             }
           ],
           "events": [
             {
+              "name": "charge",
+              "time": 0.375
+            },
+            {
               "name": "release",
-              "time": 0.55
+              "time": 0.75
             },
             {
               "name": "impact",
-              "time": 1.05
+              "time": 1.15
             }
           ]
         },
@@ -1355,9 +1571,13 @@
                 "hand": [
                   97,
                   93
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.08
+              "duration": 0.12
             },
             {
               "path": "assets/curated/itachi/powers/01.png",
@@ -1369,9 +1589,13 @@
                 "hand": [
                   98,
                   63
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.1
+              "duration": 0.18
             },
             {
               "path": "assets/curated/itachi/powers/02.png",
@@ -1383,9 +1607,13 @@
                 "hand": [
                   104,
                   70
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.14
+              "duration": 0.18
             },
             {
               "path": "assets/curated/itachi/powers/03.png",
@@ -1397,9 +1625,13 @@
                 "hand": [
                   148,
                   53
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.18
+              "duration": 0.2
             },
             {
               "path": "assets/curated/itachi/powers/04.png",
@@ -1411,9 +1643,13 @@
                 "hand": [
                   153,
                   49
+                ],
+                "head": [
+                  100,
+                  37
                 ]
               },
-              "duration": 0.12
+              "duration": 0.22
             },
             {
               "path": "assets/curated/itachi/powers/05.png",
@@ -1425,9 +1661,13 @@
                 "hand": [
                   153,
                   49
+                ],
+                "head": [
+                  100,
+                  37
                 ]
               },
-              "duration": 0.16
+              "duration": 0.18
             },
             {
               "path": "assets/curated/itachi/powers/06.png",
@@ -1439,9 +1679,13 @@
                 "hand": [
                   102,
                   107
+                ],
+                "head": [
+                  100,
+                  37
                 ]
               },
-              "duration": 0.14
+              "duration": 0.26
             },
             {
               "path": "assets/curated/itachi/powers/07.png",
@@ -1453,19 +1697,27 @@
                 "hand": [
                   101,
                   102
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.16
+              "duration": 0.46
             }
           ],
           "events": [
             {
+              "name": "charge",
+              "time": 0.24
+            },
+            {
               "name": "release",
-              "time": 0.32
+              "time": 0.48
             },
             {
               "name": "impact",
-              "time": 0.64
+              "time": 1.08
             }
           ]
         },
@@ -1485,6 +1737,10 @@
                 "hand": [
                   111,
                   42
+                ],
+                "head": [
+                  100,
+                  37
                 ]
               },
               "duration": 0.15
@@ -1499,9 +1755,13 @@
                 "hand": [
                   116,
                   37
+                ],
+                "head": [
+                  100,
+                  37
                 ]
               },
-              "duration": 0.2
+              "duration": 0.25
             },
             {
               "path": "assets/curated/itachi/powers/10.png",
@@ -1513,9 +1773,13 @@
                 "hand": [
                   127,
                   39
+                ],
+                "head": [
+                  100,
+                  37
                 ]
               },
-              "duration": 0.2
+              "duration": 0.25
             },
             {
               "path": "assets/curated/itachi/powers/11.png",
@@ -1527,9 +1791,13 @@
                 "hand": [
                   106,
                   53
+                ],
+                "head": [
+                  100,
+                  37
                 ]
               },
-              "duration": 0.25
+              "duration": 0.3
             },
             {
               "path": "assets/curated/itachi/powers/12.png",
@@ -1541,9 +1809,13 @@
                 "hand": [
                   132,
                   62
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.3
+              "duration": 0.35
             },
             {
               "path": "assets/curated/itachi/powers/13.png",
@@ -1555,9 +1827,13 @@
                 "hand": [
                   133,
                   40
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.2
+              "duration": 0.4
             },
             {
               "path": "assets/curated/itachi/powers/14.png",
@@ -1569,9 +1845,13 @@
                 "hand": [
                   99,
                   104
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.25
+              "duration": 0.35
             },
             {
               "path": "assets/curated/itachi/powers/15.png",
@@ -1583,19 +1863,27 @@
                 "hand": [
                   99,
                   104
+                ],
+                "head": [
+                  100,
+                  38
                 ]
               },
-              "duration": 0.3
+              "duration": 0.45
             }
           ],
           "events": [
             {
+              "name": "charge",
+              "time": 0.325
+            },
+            {
               "name": "release",
-              "time": 0.55
+              "time": 0.65
             },
             {
               "name": "impact",
-              "time": 1.15
+              "time": 1.7
             }
           ]
         },
@@ -1944,7 +2232,7 @@
                   123
                 ]
               },
-              "duration": 0.08
+              "duration": 0.12
             },
             {
               "path": "assets/curated/zenitsu/powers/01.png",
@@ -1962,7 +2250,7 @@
                   128
                 ]
               },
-              "duration": 0.1
+              "duration": 0.18
             },
             {
               "path": "assets/curated/zenitsu/powers/02.png",
@@ -1980,7 +2268,7 @@
                   127
                 ]
               },
-              "duration": 0.14
+              "duration": 0.3
             },
             {
               "path": "assets/curated/zenitsu/powers/03.png",
@@ -1998,7 +2286,7 @@
                   118
                 ]
               },
-              "duration": 0.18
+              "duration": 0.12
             },
             {
               "path": "assets/curated/zenitsu/powers/04.png",
@@ -2034,7 +2322,43 @@
                   28
                 ]
               },
-              "duration": 0.16
+              "duration": 0.12
+            },
+            {
+              "path": "assets/curated/zenitsu/powers/04.png",
+              "anchor": [
+                88,
+                162
+              ],
+              "sockets": {
+                "hand": [
+                  67,
+                  107
+                ],
+                "weapon": [
+                  9,
+                  127
+                ]
+              },
+              "duration": 0.12
+            },
+            {
+              "path": "assets/curated/zenitsu/powers/05.png",
+              "anchor": [
+                88,
+                163
+              ],
+              "sockets": {
+                "hand": [
+                  116,
+                  84
+                ],
+                "weapon": [
+                  165,
+                  28
+                ]
+              },
+              "duration": 0.12
             },
             {
               "path": "assets/curated/zenitsu/powers/06.png",
@@ -2052,7 +2376,7 @@
                   121
                 ]
               },
-              "duration": 0.14
+              "duration": 0.16
             },
             {
               "path": "assets/curated/zenitsu/powers/07.png",
@@ -2070,17 +2394,41 @@
                   128
                 ]
               },
-              "duration": 0.16
+              "duration": 0.65
             }
           ],
           "events": [
             {
               "name": "release",
-              "time": 0.32
+              "time": 0.6
+            },
+            {
+              "name": "accent_1",
+              "time": 0.72
+            },
+            {
+              "name": "accent_2",
+              "time": 0.84
+            },
+            {
+              "name": "accent_3",
+              "time": 0.96
+            },
+            {
+              "name": "accent_4",
+              "time": 1.08
+            },
+            {
+              "name": "accent_5",
+              "time": 1.2
+            },
+            {
+              "name": "accent_6",
+              "time": 1.32
             },
             {
               "name": "impact",
-              "time": 0.64
+              "time": 1.32
             }
           ]
         },
@@ -2106,7 +2454,7 @@
                   127
                 ]
               },
-              "duration": 0.15
+              "duration": 0.2
             },
             {
               "path": "assets/curated/zenitsu/powers/09.png",
@@ -2124,7 +2472,7 @@
                   134
                 ]
               },
-              "duration": 0.2
+              "duration": 0.3
             },
             {
               "path": "assets/curated/zenitsu/powers/10.png",
@@ -2142,7 +2490,7 @@
                   127
                 ]
               },
-              "duration": 0.2
+              "duration": 0.35
             },
             {
               "path": "assets/curated/zenitsu/powers/11.png",
@@ -2160,7 +2508,7 @@
                   132
                 ]
               },
-              "duration": 0.3
+              "duration": 0.1
             },
             {
               "path": "assets/curated/zenitsu/powers/12.png",
@@ -2178,7 +2526,7 @@
                   79
                 ]
               },
-              "duration": 0.32
+              "duration": 0.22
             },
             {
               "path": "assets/curated/zenitsu/powers/13.png",
@@ -2214,7 +2562,7 @@
                   127
                 ]
               },
-              "duration": 0.23
+              "duration": 0.25
             },
             {
               "path": "assets/curated/zenitsu/powers/15.png",
@@ -2232,13 +2580,17 @@
                   128
                 ]
               },
-              "duration": 0.25
+              "duration": 0.48
             }
           ],
           "events": [
             {
+              "name": "charge",
+              "time": 0.425
+            },
+            {
               "name": "release",
-              "time": 0.55
+              "time": 0.85
             },
             {
               "name": "impact",

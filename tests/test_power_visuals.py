@@ -26,7 +26,7 @@ class PowerTests(unittest.TestCase):
         actor=AnimationPlayer(self.library,'Sasuke');actor.play('jutsu')
         effect=self.effect();actor.update(effect.timing['impact'])
         frame=actor.clip['frames'][actor.frame_index]
-        self.assertEqual(Path(frame['path']).parts[-2:],('powers','06.png'))
+        self.assertEqual(Path(frame['path']).parts[-3:],('techniques','jutsu','08.png'))
         self.assertNotIn('weapon',frame['sockets'])
         effect.update(effect.timing['impact']);position=effect.movement()
         effect.bind(actor,position,'right')
@@ -67,7 +67,7 @@ class PowerTests(unittest.TestCase):
         for name in self.library.data['characters']:
             for action in ('jutsu','ultimate'):
                 frames=self.library.data['characters'][name]['clips'][action]['frames']
-                self.assertEqual(len({f['path'] for f in frames}),8)
+                self.assertGreaterEqual(len({f['path'] for f in frames}),8)
                 self.assertTrue(all('hand' in f['sockets'] for f in frames))
 
     def test_kirin_reflection_and_miss_keep_actual_target(self):

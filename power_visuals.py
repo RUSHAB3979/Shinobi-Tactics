@@ -45,6 +45,7 @@ def crescent(surface,center,radius,angle,color,width=13,span=2.4):
 
 class CombatEffect:
     _dragons=None
+    _sky_dragons=None
     def __init__(self,character,action,source,target,timing,*,miss=False,reflected=False,contact_target=None):
         self.character,self.action=character,action;self.source,self.target=source,target
         self.contact_target=contact_target or target;self.timing=timing
@@ -52,14 +53,24 @@ class CombatEffect:
         self.layer=pygame.Surface((1024,530),pygame.SRCALPHA)
         self.back_layer=pygame.Surface((1024,530),pygame.SRCALPHA)
         self.direction=1 if self.contact_target[0]>source[0] else -1
-        self.reduced=False;self.hand=(source[0],source[1]-80);self.weapon=self.hand;self.body=source
+        self.reduced=False;self.hand=(source[0],source[1]-80);self.weapon=self.hand;self.head=(source[0],source[1]-135);self.body=source
         self.accent_times=[]
         if character=='Zenitsu' and action=='JUTSU':
-            r,i=timing['release'],timing['impact'];self.accent_times=[r+(i-r)*k/6 for k in range(6)]
+            r,i=timing['release'],timing['impact'];self.accent_times=[r+(i-r)*(k+1)/6 for k in range(6)]
         if character=='Sasuke' and action=='ULTIMATE' and CombatEffect._dragons is None:
             root=Path(__file__).resolve().parent/'assets/vfx/kirin'
             images=[pygame.image.load(str(root/f'{i:02d}.png')).convert_alpha() for i in range(8)]
             CombatEffect._dragons=images+[pygame.transform.flip(image,True,False) for image in images]
+            # Precompute the downward-facing sky dragon and its transformed jaw.
+            CombatEffect._sky_dragons=[]
+            for facing in (1,-1):
+                for image in images:
+                    oriented=pygame.transform.flip(image,True,False) if facing<0 else image
+                    angle=-32*facing;size=1.05
+                    art=pygame.transform.rotozoom(oriented,angle,size)
+                    jaw=pygame.Vector2((180 if facing>0 else 44)-112,143-112).rotate(-angle)*size
+                    anchor=(art.get_width()/2+jaw.x,art.get_height()/2+jaw.y)
+                    CombatEffect._sky_dragons.append((art,anchor))
 
     def update(self,dt):
         self.age+=dt
@@ -77,8 +88,36 @@ class CombatEffect:
         t=self.age if age is None else age
         if not self.melee:return self.source
         r,i,d=self.timing['release'],self.timing['impact'],self.timing['duration']
-        if t<r or t>=d:return self.source
-        contact=(self.contact_target[0]-self.direction*82,self.contact_target[1]-(60 if self.miss else 0))
+        if t>=d:return self.source
+        if self.character=='Sasuke' and self.action=='JUTSU':
+            contact=(self.contact_target[0]-self.direction*64,self.contact_target[1]-(60 if self.miss else 0))
+            if t<r:return self.source
+            if reduced:return self.source if self.reflected or t>=1.60 else contact
+            if t<i:
+                q=ease((t-r)/(i-r))
+                if self.reflected:q=ease((t-r)/(i-r)/.65) if q<.65 else 1-ease((q-.65)/.35)
+                return lerp(self.source,contact,q)
+            if self.reflected or t>=1.60:return self.source
+            return contact
+        if t<r:
+            if reduced or self.action == "ATTACK":return self.source
+            # Weight shifts backward before the drive; sockets follow the body.
+            coil=math.sin(math.pi*clamp(t/r))
+            return (self.source[0]-self.direction*14*coil,self.source[1]+5*coil)
+        contact=(self.contact_target[0]-self.direction*64,self.contact_target[1]-(60 if self.miss else 0))
+        if self.character=='Zenitsu' and self.action in ('JUTSU','ULTIMATE'):
+            if t<r:return self.source
+            if t>=i:
+                if self.reflected or t>=d-.20:return self.source
+                return contact
+            if reduced:return self.source
+            q=clamp((t-r)/(i-r))
+            if self.action=='ULTIMATE':
+                # A single fast iaido burst, distinct from Sixfold direction changes.
+                return lerp(self.source,contact,1-(1-q)**4)
+            nodes=self.dash_nodes
+            segment=min(5,int(q*6));local=q*6-segment
+            return lerp(nodes[segment],nodes[segment+1],ease(local))
         # Intentional contact-position cut at reduced motion, with no traversal.
         if reduced:
             if self.reflected and t>=i:return self.source
@@ -91,11 +130,31 @@ class CombatEffect:
         else:
             if self.reflected:return self.source
             amount=1-ease((t-i-.09)/(d-i-.09))
-        return lerp(self.source,contact,amount)
+        position = lerp(self.source,contact,amount)
+        if self.character == "Tanjiro" and r<t<i and not self.reflected:
+            # Sword technique follows an airborne arc and lands at contact.
+            lift=(22 if self.action == "JUTSU" else 38)*math.sin(math.pi*clamp((t-r)/(i-r)))
+            return (position[0],position[1]-lift)
+        return position
 
     def bind(self,actor,root,facing,reduced=False):
         self.body=root;self.reduced=reduced
         self.hand=actor.socket('hand',root,facing);self.weapon=actor.socket('weapon',root,facing)
+        self.head=actor.socket('head',root,facing)
+    @property
+    def dash_nodes(self):
+        end=(self.contact_target[0]-self.direction*64,self.contact_target[1]-(60 if self.miss else 0))
+        nodes=[self.source]
+        for q,lift in ((.24,-34),(.41,12),(.65,-42),(.54,17),(.84,-26),(1,0)):
+            x,y=lerp(self.source,end,q);nodes.append((x,y+lift))
+        return nodes
+
+    @property
+    def caster_opacity(self):
+        if self.character=='Itachi' and self.action=='JUTSU' and self.timing['release']<self.age<self.timing['impact']:
+            return round(255*(1-.78*math.sin(math.pi*self.travel)))
+        return 255
+
     def trail_positions(self):
         if self.reduced or not self.melee or not self.timing['release']<self.age<self.timing['impact']:return []
         return [(self.movement(age=max(self.timing['release'],self.age-lag)),alpha)
@@ -121,32 +180,20 @@ class CombatEffect:
                 pygame.draw.arc(layer,(22,4,15,round(255*fade)),(p[0]-22,p[1]-19,38,38),a,a+2.3,7)
             pygame.draw.circle(layer,(20,3,12,round(240*fade)),moon,20)
         elif self.character=='Sasuke' and self.action=='ULTIMATE':
-            layer.fill((8,19,55,round(80*fade)))
-            for k in range(9):
-                x=tx-230+k*55
-                pygame.draw.ellipse(layer,(22,36,76,round(180*fade)),(x,35+math.sin(k)*12,145,65))
-                pygame.draw.arc(layer,(80,133,209,round(170*fade)),(x+10,45,110,44),.2,2.7,2)
-            if r<t<i:
-                for k in range(4):
-                    a=(tx-150+k*92,68);bolt(layer,a,(a[0]+38,120),t,(90,170,255),1,k)
+            sky=ease(t/.65)*(1-ease((t-i-.10)/.65))
+            layer.fill((5,12,35,round(135*sky)))
+            for k in range(11):
+                drift=0 if self.reduced else math.sin(t*.8+k)*12
+                x=50+k*94+drift
+                pygame.draw.ellipse(layer,(12,25,52,round(230*sky)),(x-80,90+(k%3)*20,205,100))
+                pygame.draw.arc(layer,(77,107,151,round(150*sky)),(x-65,115+(k%3)*17,165,58),.1,3.0,2)
+            if .35<t<r:
+                for k in range(3 if self.reduced else 6):
+                    start=(self.contact_target[0]-self.direction*70+(k-2)*38,140)
+                    bolt(layer,start,(self.contact_target[0]-self.direction*60,205),t,(80,153,240),1,k)
         elif self.character=='Itachi' and self.action=='JUTSU':
             pygame.draw.ellipse(layer,(135,35,90,round(80*fade)),(tx-78,ty-85,156,190),3)
-        if self.action in ('JUTSU','ULTIMATE') and self.age < self.timing['impact']:
-            charge = ease(self.age / self.timing['release'])
-            col = PALETTES[self.character]
-            if self.character == 'Tanjiro' and self.action == 'ULTIMATE': col = (255,155,55)
-            # Energy gathers around the caster before the release. No full-screen flashes.
-            sx, sy = self.source[0], self.source[1]-70
-            if not self.reduced:
-                for j in range(12):
-                    a = j*2.399
-                    q = (self.age*.85+j/12)%1
-                    r = 25+(1-q)*85
-                    p = (sx+math.cos(a)*r,sy+math.sin(a)*r*.7)
-                    end = (sx+math.cos(a)*(r+12),sy+math.sin(a)*(r+12)*.7)
-                    pygame.draw.line(layer,(*col,round(130*charge*q)),p,end,2)
-            pygame.draw.ellipse(layer,(*col,round(100*charge)),
-                (self.source[0]-48,self.source[1]-9,96,18),2)
+        if self.character=='Tanjiro' and self.action=='JUTSU':self._water(layer,back=True)
         surface.blit(layer,(0,0))
 
     def _crow(self,surface,x,y,phase,scale=1):
@@ -165,43 +212,80 @@ class CombatEffect:
             pygame.draw.circle(surface,(24,5,16,alpha),point((x+math.cos(a)*radius*.54,y+math.sin(a)*radius*.26)),max(2,round(radius*.1)))
 
     def _chidori(self,surface):
-        if self.age>self.timing['impact']+.18:return
-        charge=ease(self.age/self.timing['release']);x,y=self.hand;radius=7+charge*9
-        pygame.draw.circle(surface,(35,115,245,70),point((x,y)),round(radius+14))
-        pygame.draw.circle(surface,(82,184,255),point((x,y)),round(radius))
-        pygame.draw.circle(surface,WHITE,point((x,y)),round(radius*.55))
-        for k in range(7 if not self.reduced else 4):
-            a=k*math.tau/7+self.age*2;end=(x+math.cos(a)*(radius+22),y+math.sin(a)*(radius+22))
-            bolt(surface,(x,y),end,self.age,(110,205,255),1,k)
-        if self.age>self.timing['release'] and not self.reduced:
-            for k in range(3):bolt(surface,(self.source[0],self.source[1]-35),(x-k*13*self.direction,y+k*9),self.age,(64,145,255),2,k)
+        r,i=self.timing['release'],self.timing['impact']
+        if self.age<.18 or self.age>i+.20:return
+        charge=ease((self.age-.18)/(r-.18));x,y=self.hand
+        fade=1-ease((self.age-i)/.2)
+        # Irregular fingertip discharge around a compact white palm core.
+        for k in range(5 if self.reduced else 9):
+            a=k*2.399+(0 if self.reduced else int(self.age*18)*.31)
+            reach=(15+charge*23)*(1+(k%3)*.17)
+            end=(x+math.cos(a)*reach,y+math.sin(a)*reach)
+            elbow=lerp((x,y),end,.58)
+            bolt(surface,(x,y),end,self.age,(77,174,255),2,k)
+            branch=(end[0]+math.sin(a)*12,end[1]-math.cos(a)*12)
+            bolt(surface,elbow,branch,self.age,(117,210,255),1,k+13)
+        core=[(x+math.cos(k*math.tau/9)*(7+charge*5)*(1 if k%2 else .68),
+               y+math.sin(k*math.tau/9)*(7+charge*5)) for k in range(9)]
+        pygame.draw.polygon(surface,(225,249,255,round(255*fade)),core)
+        if r<self.age<i and not self.reduced:
+            # Only a short attached wake; this technique is not a ranged beam.
+            for k in range(3):
+                end=(x-self.direction*(18+k*11),y+10+k*6)
+                bolt(surface,(x,y),end,self.age,(65,147,245),1,k)
+            pygame.draw.line(surface,(128,198,242,110),(self.body[0]-self.direction*38,self.body[1]-6),
+                             (self.body[0]-self.direction*80,self.body[1]-3),2)
+
+    @property
+    def kirin_jaw(self):
+        q=self.travel
+        sky=(self.contact_target[0]-self.direction*70,240)
+        destination=(self.contact_target[0],self.contact_target[1]-80-(75 if self.miss else 0))
+        return lerp(sky,destination,q*q)
 
     def _kirin(self,surface):
-        r,i=self.timing['release'],self.timing['impact']
-        if self.age<r:return
-        tx,ty=self.target[0],self.target[1]-80-(75 if self.miss else 0)
-        # Jaw, rather than image center, is the contact anchor.
-        jaw=lerp((tx-self.direction*135,18),(tx,ty),ease(self.travel))
-        if self.age<=i:frame=min(4,int(self.travel*5))
-        elif self.impact_age is not None and self.impact_age<.30:frame=min(7,5+int(self.impact_age*10))
-        else:return
-        image=self._dragons[frame+(8 if self.direction<0 else 0)]
-        anchor=(180 if self.direction>0 else 44,143)
+        t=self.age;r,i=self.timing['release'],self.timing['impact']
+        form=self.timing.get('form',.55)
+        if t<form or t>i+.38:return
+        jaw=self.kirin_jaw
+        if t<r:
+            forming=ease((t-form)/.52)
+            frame=min(3,int(forming*3.9))
+            # Fully formed readable hold before the downward command.
+            alpha=round(255*forming)
+        elif t<i:
+            frame=4;alpha=255
+        else:
+            frame=min(7,5+int((t-i)*9));alpha=round(255*(1-ease((t-i)/.38)))
+        if t<r:
+            image=self._dragons[frame+(8 if self.direction<0 else 0)]
+            anchor=(180 if self.direction>0 else 44,143)
+        else:
+            image,anchor=self._sky_dragons[frame+(8 if self.direction<0 else 0)]
+        image.set_alpha(alpha)
         surface.blit(image,(round(jaw[0]-anchor[0]),round(jaw[1]-anchor[1])))
-        bolt(surface,(tx-self.direction*110,80),jaw,self.age,(85,170,255),4)
-        if self.impact_age is not None and not self.miss and self.impact_age<.28:
-            for k in range(5):bolt(surface,(tx,ty),(tx+(k-2)*47,self.target[1]+4-abs(k-2)*10),self.age,(130,210,255),2,k)
+        image.set_alpha(None)
+        if r<t<i:
+            bolt(surface,(jaw[0]-self.direction*35,145),jaw,t,(100,190,255),3)
+        if self.impact_age is not None and not self.miss and not self.reflected and self.impact_age<.32:
+            for k in range(5):
+                bolt(surface,jaw,(self.target[0]+(k-2)*49,self.target[1]+3),t,(139,212,255),2,k)
+        if self.reflected and self.travel>.70:
+            a=(self.contact_target[0],self.contact_target[1]-85)
+            b=(self.target[0],self.target[1]-85)
+            self._eye(surface,a,30)
+            bolt(surface,a,lerp(a,b,ease((self.travel-.70)/.30)),t,(216,83,143),2)
 
     def _illusion(self,surface):
         r,i=self.timing['release'],self.timing['impact'];tx,ty=self.target[0],self.target[1]-100-(60 if self.miss else 0)
         if self.age<r:
-            self._eye(surface,(self.hand[0],self.hand[1]-10),11+ease(self.age/r)*8);return
+            self._eye(surface,self.head,4+ease(self.age/r)*4);return
         if self.action=='JUTSU':
             for k in range(8 if not self.reduced else 4):
                 q=clamp(self.travel*1.4-k*.055);p=lerp((self.source[0],self.source[1]-110),(tx,ty),ease(q))
                 self._crow(surface,p[0]+math.sin(k*2.3+self.age*4)*40*q,p[1]+math.cos(k*1.7+self.age*4)*42,self.age*18+k,.6+k*.07)
             if self.age<i+.22:
-                self._eye(surface,(tx,ty),24+20*self.travel)
+                pygame.draw.ellipse(surface,(160,49,120,160),(tx-38,ty-52,76,105),2)
                 for k in range(3):
                     radius=60+k*10
                     pygame.draw.arc(surface,(160,49,120,130),(tx-radius,ty-radius,radius*2,radius*2),self.age+k,self.age+k+2,2)
@@ -214,17 +298,19 @@ class CombatEffect:
                     a=k*2.4;x=tx+math.cos(a)*100;y=ty+math.sin(a)*90
                     pygame.draw.polygon(surface,(150,38,73,160),[(x,y),(x+6,y-13),(x+13,y-16),(x+6,y+4)])
 
-    def _water(self,surface):
+    def _water(self,surface,back=False):
         if self.age<self.timing['release'] or (self.impact_age is not None and self.impact_age>.32):return
-        tx,ty=self.body[0]+self.direction*30,self.body[1]-65
-        for turn in range(3):
+        tx,ty=self.hand
+        angle=math.atan2(self.weapon[1]-ty,self.weapon[0]-tx)
+        if not back:crescent(surface,(tx,ty),max(35,math.dist(self.hand,self.weapon)),angle,(69,190,224,190),11,2.4)
+        for turn in ((0,1) if back else (2,)):
             points=[]
             for k in range(48):
                 a=k/47*math.tau*1.3+self.age*(3 if self.reduced else 9)+turn*2.1;radius=32+k*.95+turn*7
                 points.append((tx+math.cos(a)*radius,ty+math.sin(a)*radius*.50-k*.35))
             ribbon(surface,points,(24,105+turn*30,178+turn*22,200),8-turn)
             pygame.draw.lines(surface,(175,245,255,230),False,points[-30:],2)
-        for k in range(14):
+        for k in range(0 if back else 14):
             a=k*2.4+self.age*2;x=self.weapon[0]+math.cos(a)*(10+k*2);y=self.weapon[1]+math.sin(a)*(10+k*2)+k*1.1
             pygame.draw.ellipse(surface,(165,240,255,200),(x,y,3,6))
 
@@ -235,7 +321,7 @@ class CombatEffect:
                 pygame.draw.circle(surface,(250,125,37,150),point((x,y)),2)
             return
         if self.impact_age is not None and self.impact_age>.35:return
-        center=(self.body[0]+self.direction*35,self.body[1]-78);angle=-1.5+self.travel*3.4
+        center=self.hand;angle=math.atan2(self.weapon[1]-self.hand[1],self.weapon[0]-self.hand[0])
         for j in range(3):
             points=[]
             for k in range(42):
@@ -258,17 +344,20 @@ class CombatEffect:
         start=(self.source[0],self.source[1]-60);end=(self.contact_target[0],self.contact_target[1]-75-(70 if self.miss else 0))
         if self.action=='JUTSU':
             for k,when in enumerate(self.accent_times):
-                if not 0<=self.age-when<.12:continue
-                center=lerp(start,end,(k+1)/6);center=(center[0],center[1]+(22 if k%2 else -22))
-                crescent(surface,center,50,-1.1 if k%2 else .9,yellow,10,2.7)
-                bolt(surface,lerp(start,end,k/6),center,self.age,yellow,2,k)
+                if not 0<=self.age-when<.115:continue
+                node=self.dash_nodes[k+1]
+                center=(node[0],node[1]-75)
+                # Each arc coincides with a real dash endpoint.
+                crescent(surface,center,38,-1.1 if k%2 else .9,yellow,5 if self.reduced else 9,2.7)
+                if not self.reduced:
+                    prev=self.dash_nodes[k]
+                    bolt(surface,(prev[0],prev[1]-75),center,self.age,yellow,2,k)
         else:
-            head=lerp(start,end,min(1,self.travel*1.65))
-            ribbon(surface,[lerp(start,head,k/20) for k in range(21)],(255,175,35,90),22)
-            bolt(surface,start,head,self.age,yellow,4)
-            if self.travel>.6:crescent(surface,end,90,-.8,(255,225,100),17,3.5)
+            head=(self.body[0]+self.direction*35,self.body[1]-85)
             if not self.reduced:
-                for k in range(7):pygame.draw.line(surface,(250,220,120,110),(start[0],start[1]+(k-3)*18),(head[0]-self.direction*25,head[1]+(k-3)*10),1)
+                ribbon(surface,[lerp(start,head,k/20) for k in range(21)],(255,175,35,90),18)
+                bolt(surface,start,head,self.age,yellow,3)
+            if self.travel>.65:crescent(surface,head,65,-.8,(255,225,100),10,2.5)
         if self.reflected:
             bounce=(self.contact_target[0],self.contact_target[1]-75);dest=(self.target[0],self.target[1]-75)
             bolt(surface,bounce,lerp(bounce,dest,ease((self.travel-.58)/.42)),self.age,(225,115,185),2)
@@ -290,6 +379,10 @@ class CombatEffect:
 
     def _impact(self,surface,intensity):
         if self.impact_age is None or self.miss or self.impact_age>.30:return
+        if self.character=='Itachi':
+            fade=1-self.impact_age/.30
+            self._eye(surface,(self.target[0],self.target[1]-125),15+20*self.impact_age,round(180*fade))
+            return
         k=self.impact_age;tx,ty=self.target[0],self.target[1]-75;col=PALETTES[self.character];fade=1-k/.30;radius=12+k*180
         if self.character=='Tanjiro' and self.action=='ULTIMATE':col=(255,160,55)
         pygame.draw.ellipse(surface,(*col,round(180*fade)),(tx-radius,ty-radius*.65,radius*2,radius*1.3),max(1,round(4*fade)))

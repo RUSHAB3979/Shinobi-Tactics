@@ -1,225 +1,233 @@
-# Shinobi Tactics — asset and animation improvement plan
+# Shinobi Tactics — technique-specific attack animation plan
 
-**Implementation owner:** GPT‑6.1 Sol
-**Prepared:** 9 November 2026
-**Repository:** https://github.com/RUSHAB3979/Shinobi-Tactics
-**Inspected snapshot:** GitHub `main` tree `7932ad67802784f538ff4f25933323c49d9f09e9` (tree hash, not a commit hash). Recheck HEAD before implementation.
-**Status:** Core asset and animation overhaul implemented and verified headlessly; remaining desktop/device and legacy-audit checks are listed below.
+Implementation owner: GPT-6.1 Sol
+Prepared: 14 November 2026
+Status: IMPLEMENTED locally; all eight moves reviewed. Final package verification recorded in outputs/jutsu-choreography/verification-summary.md.
+Repository: https://github.com/RUSHAB3979/Shinobi-Tactics
 
-## Downloaded audio follow-up — 10 November 2026
+## 1. User correction and definition of success
 
-- [x] Research and preserve English voice archives for Itachi, Tanjiro, Hinokami Tanjiro, and Zenitsu Entertainment District; record sources, counts, checksums, and source terms.
-- [x] Map downloaded effects to all 12 offensive moves and four recovery actions; import 63 sampled cues and retain 46 source masters.
-- [x] Integrate separate voice/anticipation/release/contact buses, speech ducking, mute/volume, missing-device fallback, and recovery holds for longer lines.
-- [x] Verify 37 automated tests and per-sample decode/headroom; prepare a 16-move listening preview and downloadable source archives.
-- [ ] Acquire verified English Chidori/Kirin callouts. Sasuke currently has sampled effects without selected English voice.
-- [ ] Acquire named English Genjutsu/Tsukuyomi calls; current Itachi selection uses general English battle lines.
-- [ ] Human listening check on the laptop, including Whirlpool identification, levels and Hinokami Kagura for Sun Breath. See `docs/audio-research.md`.
+The user rejected generic portrait cinematics as the main improvement. The requested animation must depict the technique itself: Chidori visibly gathers lightning in Sasuke’s hand and becomes a charging hand thrust; Kirin forms a lightning dragon in the sky before Sasuke directs it down. Apply this specificity to all eight existing Jutsu/Ultimate moves.
 
-## Astra review follow-up — 10 November 2026
+The fighter’s changing pose, the source of the power, its path and the target reaction must tell the story. A nameplate, portrait zoom, glowing circle, screen shake or stock lightning overlay cannot substitute for that choreography. Brief technique-relevant close-ups are permitted only when they clarify an action (palm charging, raised hand commanding the storm, eye casting an illusion). Do not put the same face intro before every move.
 
-- [x] Replace Chidori's katana contact with a dedicated bare-hand sequence and moving palm attachment.
-- [x] Preserve melee contact in reduced motion, with a contact-position cut and restrained effects.
-- [x] Give Tsukuyomi a separate red-moon illusion treatment, distinct from Genjutsu's crow cast and shield.
-- [x] Upgrade all eight powers with eight unique drawn poses each, authored hand/weapon attachments, and move-specific choreography; add an eight-frame Kirin dragon.
-- [x] Add focused regression coverage and normal/reduced actual-renderer previews for all powers and their hit/miss/reflection outcomes.
-- [x] Retain generated source masters, reproduce exports/audio, and document the updated build and verification scope in `docs/power-upgrade.md`.
+Acceptance question: with names and audio hidden, can a viewer distinguish Chidori from Kirin, Genjutsu from Tsukuyomi, and Sixfold from Godspeed? If not, the move is unfinished.
 
-The runtime now references 116 body poses across 36 clips, plus eight separate dragon frames and 24 audio cues. The original legacy-audit and physical-device limitations below remain open; this pass does not turn them into completed checks.
+This is a 2D Pygame presentation improvement. Preserve the roster, turn system, damage rules, hand-sign inputs and English voice preference. Do not change engines or add balance rules to imitate anime lore.
 
+## 2. Current state and safe starting point
 
-## Implementation follow-up — 9 November 2026
+Inspected local branch: `improve-animation-assets`, HEAD `99e801f7216dc013710d6be24f1513aa47878b6a`, with uncommitted cinematic-pass changes. Recheck Git status and remote refs before editing. The previously reviewed `feat/strategic-combat` branch is separate; do not silently merge it or discard its chakra/Guard mechanics if it becomes the implementation base.
 
-- Working base: `31925a14750a374277ce103ece253b8f611199a8`, local branch `improve-animation-assets`.
-- Completed the Sasuke pilot before expanding all four characters. Delivered 64 exported body poses (59 referenced), 36 clips, a new arena, 24 original audio cues, explicit pivots/facing/timing, independent actors, queued action IDs, synchronized impact feedback, nonblocking optional intro, and offline viewers.
-- Validation: 21 automated checks, runtime asset validation, five actual two-TCP-client scenarios, and all 32 character/move/side cases. See `docs/verification.md` and `docs/evidence/` for the measured scope.
-- P0 deviation: retired original folders are quarantined. The local source subset was inventoried; 971 large original PNGs remain unmaterialized/unreviewed. Every runtime replacement has been reviewed. No unseen legacy clip is accepted by the new manifest.
-- Baseline and performance measurements are headless and explicitly scoped; live display/vsync, camera, speaker output, and positive optional video decoding remain unverified. No original full-source baseline or exhaustive legacy cleanup is claimed.
-- Original source folders remain intact. The compact build omits unused legacy material; source masters, provenance, tests, docs, and tools are included. No remote repository update was performed.
-- Next work: run a desktop two-client match with physical camera/audio, assess feel and optional intro decoding, then refine any poses/cues based on that review. Resume legacy-source archaeology only if those retired assets are needed.
+Read current instructions, `pyproject.toml`, `uv.lock`, this plan and `game-feel-glowup` skill. Use the existing Python 3.12 `.venv` through `agent-env`; one heavy process at a time, two CPU threads on this laptop. Preserve unrelated changes. Use a separate worktree if another editing session is active, and deliberately transfer the relevant uncommitted changes rather than assuming a new worktree contains them.
 
-## Objective and scope
+Existing useful code:
 
-Make every playable move visually correct, readable, and satisfying. Repair asset selection, frame sequencing, character consistency, and impact timing before adding stronger effects. Preserve the current Python/Pygame, two-player, turn-based game and its four characters: Sasuke, Tanjiro, Itachi, and Zenitsu. Keep the 1024×640 battle layout initially. This is not a conversion into a real-time fighting game.
+| File | Current role / required work |
+| --- | --- |
+| `assets/animations.json`, `animation.py` | Per-character body frames, pivots, sockets and events. Author actual poses here; do not just stretch the old clip. |
+| `assets/curated/*/powers/` | Existing power poses; audit individually for reuse. |
+| `power_visuals.py` | Existing Chidori hand effect, Kirin dragon, illusions, water/flame/thunder. Improve choreography and synchronization; primitives alone do not satisfy the art target. |
+| `assets/vfx/kirin/` | Eight existing dragon frames. Review shape, scale and continuity before reusing. |
+| `battle_presentation.py`, `client.py` | Action queue, body/effect clocks, authoritative impact and reaction. Keep one contact event. |
+| `special_cinematics.py`, `assets/cinematics/` | Rejected generic portrait-first solution. Remove its mandatory 1.05/1.45-second intro from the normal attack path. Preserve artwork as optional source material; do not delete broadly. |
+| `combat_audio.py`, `combat_feedback.py`, `battle_style.py` | Existing English audio, contact sounds, shake, hitstop and HUD. Reuse, then synchronize to the redesigned moves. |
+| `tests/`, `tools/verify_feedback.py`, `tools/verify_battle.py` | Existing verification harnesses; update for the new timeline and chosen branch. |
 
-Deliver a coherent sprite library, reliable animation playback, distinct move effects and sound, a finished arena presentation, and reproducible previews and checks. Keep current damage, healing, turn rules, and hand-sign mechanics unless a narrowly scoped presentation integration requires changes. Changes to balance are outside this plan.
+The previous cinematic pass passed 52 tests and 96 render cases. Those checks establish technical behavior, not user approval of its visuals. The earlier historical plan is preserved at `docs/animation-plan-2026-11-09.md`; this document supersedes its visual priorities. Its old audio counts and missing-Chidori note are stale: the user-supplied Chidori voice is present; Kirin has no verified named voice.
 
-## Evidence and limitations
+## 3. Online reference board and evidence boundaries
 
-Reviewed `client.py`, `server.py`, `hand_sign_config.py`, `README.md`, the complete GitHub file tree, and twelve representative PNGs. The tree contains no dependency manifest, lockfile, test suite, or repository `AGENTS.md`. README contains only the project title. The initial full clone was stopped because the current tree contains roughly 745 MB of files; source and sample inspection continued remotely. No runnable checkout was retained, no game session was played, and no runtime performance claim is established. Full visual auditing is task P0, not a completed check.
+Research accessed 14 November 2026. Sources are reference material, not permission to copy their footage/assets. Numerical timings and the staging below are proposed game adaptations, not frame-accurate reproductions of the anime. Pages and indexed descriptions were researched; no full episode or trailer was watched frame-by-frame in this planning pass. Do not invent timestamps. Before final pose production, Sol should inspect available official illustrations/trailers and record actual shot observations; if playback is unavailable, record that limitation.
 
-### Confirmed defects
-
-| Problem | Evidence | Required outcome |
+| ID | Reference | What to study / confidence |
 | --- | --- | --- |
-| Non-character images are played as character frames | `assets/sasuke/attack_1/frame_29.png` and `frame_54.png` show isolated purple effect fragments; sampled Zenitsu `sixfold` frames 29 and 77 show yellow effect fragments. | Separate body animation, weapon/projectile, and VFX tracks; an effect must never replace the character body. |
-| Healing collection includes unrelated UI | `assets/sasuke/healing/frame_100.png` depicts an HP bar. This is one sample, not proof about all healing frames. | Audit every healing folder; replace incorrect collections with a character recovery pose plus a separate healing effect. |
-| Inconsistent source style and dimensions | Sasuke idle frame 0 is 75×171; attack frame 0 is 414×964 with a visibly different rendering style. Itachi idle is 229×465; Zenitsu `idle_new` frame 0 is 712×1300. | Choose and enforce a consistent sprite style, logical size, and anchor. Resizing alone cannot fix style differences. |
-| Arbitrary clip truncation | `AnimatedSprite._load_all` slices attacks to 30 frames, healing to 20, idle to 12. Sasuke `chidori_new` has 79 files, `kirin` 73; Zenitsu `sixfold` 78, `godspeed` 80. | Explicitly curate complete clips with startup, action, and recovery; do not simply remove caps and play every file. |
-| Numeric frame order is broken | Loader uses lexicographic `sorted(os.listdir(...))`; healing folders have 178 files named `frame_00` through `frame_177`. `frame_100` precedes `frame_11`. | Explicit manifest order or natural numeric sorting, with a regression check crossing frame 99. |
-| Missing mappings fail silently | Tanjiro maps `ultimate`, `hit`, `down`, `guard`, and `victory` to nonexistent directories. Sasuke and Zenitsu also map nonexistent `victory` folders. `play()` leaves the previous clip running if lookup fails. | Resolve every required mapping; log actionable errors and provide intentional fallbacks. |
-| Frame advancement depends on render stalls | `AnimatedSprite.update` advances at most one frame per update even when `dt` spans multiple frame durations. | Consume elapsed time correctly; preserve one-shot event ordering under variable frame rate. |
-| Scale and facing are inferred incorrectly | `_scene_battle` normalizes every image to 180 px height, smoothscales each frame, flips only the local player, and adds bobbing during all actions. | Stable body scale, per-clip anchors and source-facing metadata, deliberate motion, crisp rendering. |
-| Attack and reaction have no shared timing | `_process_action` starts attacker, defender hit animation, particles, sound, and shake immediately. HP display follows received state immediately. | A shared presentation timeline with release/impact/recovery events. |
-| Mirror matches share playback state | `_get_anim_sprite` caches mutable `AnimatedSprite` by character name; both sides can receive the same instance and update it twice. | Share immutable frame surfaces, but give each actor an independent player. |
-| Cinematics interrupt the main loop | `play_cutscene`, `play_genjutsu_anim`, and counter flash run their own loops. Itachi genjutsu can play locally before send and again on receipt. | One nonblocking presentation sequence per confirmed action; keep network and quit events responsive. |
-| Finishing blows skip battle presentation | `_handle_server_msg` goes straight to `GAME_OVER`, bypassing `_process_action` in that branch. Result rendering does not advance character animations. | Show the finishing impact, defeat, and victory before presenting the result screen. |
-| Media declarations are inconsistent | Character metadata names `chidori.mp4`, `sun_breathing.mp4`, `tsukuyomi.mp4`, and `thunderclap.mp4`; tree contains only `Itachi Genjutsu .mp4` and `Sasuke vs Itachi starting scene.mp4`. Audio exists only for Sasuke/Itachi jutsu and ultimate. | Trace actual call sites, remove stale references or provide intentional alternatives; complete move audio coverage. |
+| R1 | [Official Chidori database](https://naruto-official.com/en/news/01_1715) | Primary source: identifies Chidori as a concentrated-chakra, high-speed thrust. Use the linked illustration to study the attacking hand and forward posture. |
+| R2 | [Official manga artist interview: Kirin](https://naruto-official.com/en/news/01_1494) | Primary source includes the Kirin illustration from Volume 43, chapter 391. Study its dragon silhouette and layered outlined lightning. |
+| R3 | [The End — episode 138 synopsis](https://naruto.fandom.com/wiki/The_End) | Secondary episode guide: clouds, guided lightning and destruction at the hideout. Use for reference-scene identification; cross-check the sequence against licensed episode/manga access before claiming exact poses. |
+| R4 | [Official Naruto anniversary retrospective](https://naruto-official.com/en/news/01_1287) | Primary source describes Itachi trapping Kakashi in Tsukuyomi. Illusion staging should establish mental capture, not a physical lightning hit. |
+| R5 | [STORM development: expressions and technique scale](https://naruto-official.com/en/news/01_1909) | Primary production principles: posture and environmental response communicate power. The combination-technique Kirin is a different context; do not copy its Susanoo/black-flame additions into this move. |
+| R6 | [STORM development: elemental effects](https://naruto-official.com/en/news/01_1719) | Primary production principles: distinguish water, fire and other effects by behavior; use restrained impact holds. |
+| R7 | [SEGA character introductions on PlayStation Blog](https://blog.playstation.com/2021/09/17/20210917-demonslayer/) | Primary publisher reference with Tanjiro and Zenitsu character media. Establish water-sword motion and Zenitsu’s concentrated thunder-breathing identity. Does not establish every move below. |
+| R8 | [Official Hinokami Chronicles site](https://demonslayer-hinokami.sega.com/) | Official roster/media reference, including Entertainment District variants. Use its character trailers as visual starting points. |
+| R9 | [Zenitsu technique descriptions](https://kimetsu-no-yaiba.fandom.com/wiki/Zenitsu_Agatsuma) | Secondary index distinguishes repeated Thunderclap variants from Godspeed and Seventh Form. Do not substitute the Seventh Form’s dragon for Godspeed. |
 
-Sources: [client.py](https://github.com/RUSHAB3979/Shinobi-Tactics/blob/main/client.py), [server.py](https://github.com/RUSHAB3979/Shinobi-Tactics/blob/main/server.py), [assets](https://github.com/RUSHAB3979/Shinobi-Tactics/tree/main/assets). These links follow `main`; record the actual implementation commit in the audit.
+Whirlpool’s exact rotation and the chosen Sun Breath form need pose-reference validation before final artwork. `SUN BREATH` is a broad game label, not a precise form name. Default to a clearly documented Hinokami Kagura-inspired sword sweep; do not silently rename it or claim it exactly reproduces a named form. Genjutsu is likewise a broad label: the crow treatment below is an adaptation for the existing game mechanic.
 
-## Art direction
+## 4. Shared animation and asset requirements
 
-Default direction: cohesive 2D pixel-art anime sprites with clear silhouettes, restrained palettes, crisp edges, and readable attacks. Keep character outfits, body proportions, lighting, and pixel density consistent across idle, attack, reaction, and ultimate. Use the strongest coherent existing source set as the reference after P0. Do not upscale disconnected low-quality fragments and call them new animation.
+Build each sequence as preparation → formation → release/travel → contact → recovery. The table timings below start at move presentation time zero and exclude any optional voice-only recovery hold. They are initial tuning targets, not mandatory extra delays.
 
-- Character bodies remain visible through the whole move. Detached slashes, lightning, water, fire, and projectiles are separate layers.
-- Use one documented logical scale per character, derived from its standing body, not each frame’s full bounding box. Preserve crouching, leaning, airborne poses, and large weapon arcs naturally.
-- Give every frame a stable foot/root anchor and explicit offsets. Preserve the original pivot when trimming transparent margins. Separate effect anchors from body anchors.
-- Use nearest-neighbor scaling for pixel art. Prefer integer scale and coherent source resolution; verify the result at actual game size rather than only enlarged contact sheets.
-- Attacks need anticipation, a clear release/contact pose, and recovery. Stronger feedback means better timing and silhouette, not constant shake or a longer flash.
-- Keep backgrounds lower contrast than characters and VFX. Keep HP, turn status, and command labels readable during ultimates.
-- Keep editable sources, export settings, and provenance for replacement assets. Prefer repairing usable assets first. Use original or appropriately licensed replacements; do not pull random sprite-sheet images without tracing their source.
-- If image generation is used later, consult the available imagegen skill. Generate reference sheets or coherent source art, then inspect and align exported frames individually. Treat generated strips as unvalidated source material, not ready-to-play clips.
+- Body animation must contain distinct silhouettes: stance, weight transfer, hand/weapon action, commitment and follow-through. Rough target: 10–16 meaningful body keys for a complex move, with extra transition/smear frames where useful. More near-duplicate frames is not quality.
+- Keep editable sources. Export transparent body, weapon, elemental and foreground/background layers separately. Generated artwork is source material requiring cleanup, consistent anatomy, outfit, scale, registration and temporal continuity; a generated contact sheet is not a validated animation.
+- Establish a per-character model sheet and source resolution before generating frames. Match the existing fighter style and pixel density; do not graft a detailed anime hand onto a tiny unrelated body. Inspect at 1024×640 actual game size.
+- Define `root`, `hand`, `weapon_tip` and `head/eye` anchors as needed. One common transform drives body, sockets, VFX and camera. Palm lightning must follow the palm every frame, including mirrored play.
+- Camera framing may show a hand or upper body using an authored detailed insert, but return to a readable view of attacker and defender before contact. Keep HUD fixed and inputs/network polling responsive.
+- Events may include cosmetic `charge`, `form`, `release`, `accent_1..6`, `impact`, `recover`. Only `impact` changes displayed HP and triggers the authoritative recipient reaction. Cosmetic markers cannot apply extra damage.
+- Do not duplicate the old generic intro plus a new technique build-up. Replace that dependency with a single move timeline. If retaining `perform`, give it a documented move-specific purpose; otherwise remove the unused path and update tests.
+- Scale effect energy by phase: small local origin, recognizable formation, committed release, short high-contrast contact, decaying aftermath. Avoid constant full-screen flashes.
 
-## Execution rules for GPT‑6.1 Sol
+## 5. Per-technique choreography
 
-1. Start by reading current project instructions, checking `pwd`, Git status, and dependency manifests. Preserve unrelated changes. Use a separate worktree if another editing session is active.
-2. Work sequentially through P0–P6. Limit heavy work to one task and two CPU threads on this Intel i3/Intel integrated GPU laptop. Do not install CUDA or packages into system Python/Conda base.
-3. Use `agent-env` for generic tools; follow an existing project environment if present. If absent, create a project-local environment and a reproducible dependency manifest. Separate core Pygame requirements from optional video/webcam packages.
-4. Keep this plan in the implementation checkout as `plan.md`. Update checkboxes, actual file paths, validation evidence, and the next task as work progresses.
-5. Complete the Sasuke ATTACK pilot before mass-producing replacements. Carry the validated approach across all four characters.
-6. No blanket renaming/deletion of source folders. Keep original assets until every consumer is migrated. Do not execute a generic image-normalization script over the entire asset library.
-7. Suggested new file names below are proposals, not files that already exist. Keep refactoring focused on asset loading, animation, and presentation; avoid rewriting unrelated networking or webcam recognition.
+### A. Sasuke — Chidori (pilot, highest priority)
 
-## P0 — Baseline and complete asset audit
+Reference: R1; R2 also contains a Chidori collision example. Target total: 1.8–2.2 seconds.
 
-**Dependencies:** None. **Priority:** Critical.
+1. 0.00–0.25: Sasuke plants his forward foot, bends knees and lowers his center of gravity. The attack hand is clearly visible near his hip; the other arm can briefly brace the wrist.
+2. 0.25–0.75: Pinpoint sparks converge into the palm. A compact blue-white electrical core grows; irregular branching arcs crawl around the fingers and forearm. Light touches sleeve, face and ground. A short palm-focused shot is optional, never a generic portrait.
+3. 0.75–1.20: He drives forward with shoulder and torso leading, attacking arm initially drawn back. Charge remains attached to the hand. Feet push off; speed lines and a short trail follow his route, not a beam to the opponent.
+4. Contact around 1.20: Distinct bare-hand thrust into the target’s torso position. Show a concentrated electrical burst at the palm-target intersection, then the defender recoils once. No sword contact and no detached thrown orb.
+5. 1.20–2.00: Follow-through, hand withdrawal, residual crackles and a planted recovery. Avoid visibly skating backward to idle; use authored retreat steps or a brief recovery cut.
 
-- [x] Obtain a working checkout and record the commit. If transfer size is an issue, use a documented partial/sparse Git workflow and fetch only needed character assets first; do not assume the planning workspace is a cloned repository.
-- [x] Read all five Python modules and verify the actual import requirements. Document launch/setup commands and optional dependency fallbacks. Bind any test server to loopback or use a local fixture.
-- [x] Create `tools/audit_assets.py`: inventory PNG dimensions, alpha bounds, count/order/gaps, byte size, duplicate hashes, folder mappings, and audio/video references. Flag suspicious frames without automatically deleting them.
-- [ ] Produce numbered contact sheets and scrub-able previews for every mapped action, including every frame of long clips. Review unused folders as possible sources. Label each frame/sequence as body, VFX, projectile, UI, mixed extraction, duplicate, or unusable; record uncertainty.
-- [x] Write `docs/asset-audit.md` and a machine-readable inventory. Record which assets are used at runtime versus merely present on disk. Document each missing clip and its proposed source/replacement.
-- [ ] Capture a reproducible baseline of representative actions, mirror matches, both sides, and game-over transitions. Record startup time, peak process memory, and frame-time distribution before optimization.
+Assets: crouch/brace, palm formation, push-off, run/drive, extended thrust, recoil and recovery poses; 6–8 electrical formation shapes; contact burst; short sleeve/ground glow. Existing Chidori voice begins with formation; electricity rises into release, contact sound fires once.
 
-**Acceptance:** Every currently mapped action has a reviewed source or an explicit missing-asset entry. The audit includes the known effect-only and HP-bar contamination. No unreviewed long folder is accepted merely because its filename matches a move.
+Pass gate: freeze any charge/travel frame and the lightning’s origin is visibly the hand. Silhouette-only footage still reads as a thrust. Both facings contact the actual recipient.
 
-## P1 — Explicit clip data and a trustworthy animation player
+### B. Sasuke — Kirin (second pilot)
 
-**Dependencies:** P0. **Priority:** Critical.
+References: R2/R3; use R5 only for scale principles. Target total: 2.7–3.2 seconds.
 
-Primary integration points: `CHARACTERS`, `AnimatedSprite`, `_get_anim_sprite`, `_scene_select`, `_scene_battle`, `_scene_game_over` in `client.py`.
+1. 0.00–0.50: Sasuke stops and raises one arm toward the sky. Clouds gather above the arena; establish the vertical relationship between caster, sky and target. Compress environmental preparation cosmetically; do not add a weather resource or prerequisite.
+2. 0.50–1.35: Lightning branches converge inside clouds into a recognizable dragon head and neck. Reveal horns, open jaw, silhouette and electrical body progressively. Give the fully formed dragon a readable 0.15–0.25-second hold.
+3. 1.35–1.70: Sasuke sweeps his raised hand down. This visible command releases the dragon. Keep the caster grounded; no melee dash.
+4. 1.70–2.05: Dragon dives from above toward the target with accelerating vertical motion. Its jaw/contact anchor reaches the target at the single impact marker. Do not slide a small dragon sideways across the screen.
+5. 2.05–3.00: Strong downward strike, short contact hold, outward ground discharge, bounded dust/cracks and fading cloud illumination. Restore the arena gradually.
 
-- [x] Define `assets/animations.json` and a small loader/player module, e.g. `animation.py`. Each clip specifies explicit frame paths/order, frame durations, loop/hold/return behavior, source facing, logical scale, frame anchors/offsets, and named events. Distinguish character and VFX tracks in the schema.
-- [x] Document the manifest format in `docs/animation-format.md`. Use seconds or milliseconds consistently; validate positive durations, valid frame paths, event bounds, and completion targets.
-- [x] Curate a complete Sasuke attack sequence from reviewed frames or author missing poses. Remove global frame-count caps only when manifest-driven sequences replace them.
-- [x] Implement elapsed-time-based advancement with deterministic handling of long `dt`, loops, completion, and events crossed between rendered frames. Each impact/release event fires once per playback. Visual pauses must not stop network polling.
-- [x] Cache loaded immutable images separately from per-actor animation state. Create distinct player and enemy animation instances even when both select Sasuke.
-- [x] Replace per-frame height fitting with character scale and authored pivots. Mirror around the actor anchor; transform effect/weapon offsets correctly. Suppress generic idle bob during attacks and defeat.
-- [x] Cache scaled/flipped surfaces at the configured scale. Load only required sequences instead of eagerly decoding every unused directory.
-- [x] Use an explicit visible fallback for missing assets during development and an actionable diagnostic. Never silently continue an unrelated attack because another clip was missing.
-- [x] Add a lightweight `tools/preview_animations.py` viewer: character/action selector, play/pause, frame step, speed adjustment, side flip, root/bounds overlay, checkerboard background, and visible event markers. It must work without a server or camera.
+Assets: arm-raise, sky-command and follow-through poses; cloud formation layers; at least distinct forming/held/diving/contact dragon states, with body and jaw anchors; ground discharge. Reuse the eight existing dragon frames only if they support these phases. Sound: cloud rumble → electrical build-up → diving crack → contact thunder. Do not substitute the Chidori voice for missing Kirin speech.
 
-**Acceptance:** Sasuke idle → attack → recovery → idle is complete and coherent on both sides, without disappearing into an effect-only image, resizing between poses, or drifting at the feet. Numeric ordering, frame-rate independence, one-shot events, and independent mirror-match players have automated checks.
+Pass gate: at normal playback the viewer can identify sky formation, dragon, downward hand command, descent and contact as separate beats. Dragon stays below HUD or is composed in world space without covering health bars.
 
-## P2 — Action timeline and one complete combat example
+### C. Itachi — Genjutsu
 
-**Dependencies:** P1. **Priority:** Critical.
+References: R4/R7-style character readability; crow-cast details are a game adaptation. Target: 1.6–2.1 seconds.
 
-Primary integration points: `_process_action`, `_handle_server_msg`, HP bars, battle button gating, cutscene helpers; narrow additions to `server.py` if needed for action IDs.
+1. Quiet stance with an eye or two-finger casting gesture; eye emphasis belongs to the cast, not an unrelated face introduction.
+2. A silhouette breaks into crows/feathers or a brief double image, drawing the opponent’s attention. Stagger wing poses and depth rather than scattering identical icons.
+3. A short distortion reaches the opponent, whose pose stiffens at contact. Dark/crimson ripples settle around the target. Preserve readable bodies and their positions.
+4. Resolve into the existing reflection-ready shield indicator. Reflection readiness follows the server state; the crow animation itself grants nothing.
 
-- [x] Introduce a presentation controller, e.g. `battle_presentation.py`, with stages: startup → release/travel → impact → recovery → settle. Support layered body, projectile/VFX, sound, camera, and reaction tracks.
-- [x] Drive the pilot Sasuke ATTACK through this controller. For melee, use a readable approach/strike/return or an explicitly stylized slash reaching the opponent; do not show a remote sword swing causing unexplained damage.
-- [x] Trigger defender recoil, hit spark, hit sound, displayed HP change, and brief impact pause at the authored impact event. Preserve server-authoritative HP separately from presentation HP; the client must not recalculate damage.
-- [x] Queue confirmed actions instead of overwriting an active animation. Add a server-generated monotonic action identifier scoped to the match (or an equally reliable event identity) and ignore duplicate presentations. Do not deduplicate by character/action name because repeated moves are valid.
-- [x] Disable command submission while a challenge/submission is pending or presentation is active; keep polling network and processing quit/disconnect events. Handle snapshots arriving during playback without dropping actions.
-- [x] Support miss (`dmg == 0`), heal, guard/reflection, and KO branches. A miss must not show a successful impact or HP loss. Reflected effects must resolve against the actual recipient, including Kirin.
-- [x] Replace blocking cinematic/flash loops with update/draw state driven by the main loop. Route local and received Itachi genjutsu through one presentation path, avoiding double playback. Keep optional video skip and missing-decoder fallback functional.
-- [x] Defer result-screen presentation until the terminal action, defeat, and winner pose finish. Continue updating animations on the result screen.
+Assets: gesture, composed hold, crow dissolution/reassembly body masks, 4–6 crow wing silhouettes, subtle distortion layer. Use an illusion pulse and wing noise rather than heavy ground destruction. When a later move is reflected, show a brief illusion break and send reaction/audio to the attacker according to the result; do not replay a full cast.
 
-**Initial tuning ranges, not fixed requirements:** normal attack total 0.45–0.85 s; jutsu 0.8–1.5 s; ultimate 1.5–2.5 s; impact pause 35–70 ms; brief decaying shake around 2–5 px. Adjust after preview. Optional video playback should not be mandatory for every ultimate.
+Pass gate: visually reads as deception/mental capture and distinguishes the cast from the later counter.
 
-**Acceptance:** A recorded two-client Sasuke attack shows visible contact before damage feedback. Repeated state messages do not replay it, identical successive attacks still play, and lethal/reflected/missed actions show the correct result. Rendering at 30/60/120 Hz and occasional long frames preserves event order.
+### D. Itachi — Tsukuyomi
 
-## P3 — Rebuild the complete playable character library
+Reference: R4; red-moon realm treatment adapts the existing art direction. Target: 2.3–2.8 seconds.
 
-**Dependencies:** P2. **Priority:** High. Work one character at a time.
+1. Brief Mangekyou activation attached to Itachi’s actual cast (roughly 0.2 seconds), then a visual connection to the defender.
+2. Arena dissolves into a crimson/black illusion realm. Keep Itachi and the target spatially readable; create layered silhouettes, restrained time-smear or shadow duplicates.
+3. Target is held in a distinct immobilized pose; short symbolic shadow/blade passes imply mental assault without physical lightning, gore or six gameplay hits.
+4. One illusion-collapse/contact marker updates HP and triggers the target reaction. The red realm cracks/fades back to the arena; no crater or explosive knockback.
 
-Each character requires coherent idle, ATTACK, JUTSU, ULTIMATE, heal, hit, guard/counter where applicable, down/defeat, and victory. Run/walk/dash clips are required only where used for staging. Do not spend this pass rebuilding unused jumps, grabs, or miscellaneous `anim_*` folders.
+Assets: eye activation tied to body pose, cast and hold, restrained-target silhouette, realm layers and dissolve masks. Sound should thin out into a muffled pulse, then resolve sharply at contact.
 
-| Character | Proposed visual treatment | Required audit/replacement work |
-| --- | --- | --- |
-| Sasuke | Katana anticipation and slash; Chidori hand charge, blue lightning approach and contact burst; Kirin sky cue, descending lightning silhouette, impact and fade. | Rebuild the mixed `attack_1` body sequence; classify `chidori_new`, `chidori_charge`, `chidori_run`, and `kirin`; replace invalid healing; supply victory. Ensure Kirin targets the correct actor after reflection. |
-| Tanjiro | Clean sword arc; Whirlpool as a water ribbon with rotational flow; Sun Breath as a distinct warm flame arc and decisive finisher. | Review `special_1`, `special_2`, `water_surface`, and attacks visually before assigning move names. Author missing ultimate/hit/down/guard/victory and a recovery pose. Do not rename `down_slash` to defeat without inspection. |
-| Itachi | Kunai release plus separately travelling projectile; Genjutsu eye/crow distortion and a readable shield state; Tsukuyomi brief red-black scene treatment with clear target reaction. | Keep body, projectile, and overlays separate; use one coherent source style; review `genjutsu_start`, `genjutsu`, `tsukuyomi`, and reaction clips. Replace heal-to-idle placeholder with intentional recovery presentation. |
-| Zenitsu | Crouched/sheathing anticipation, directional slash, lightning trail; Sixfold as six readable visual accents; Godspeed as a stronger charge and decisive dash/impact. | Classify mixed `attack_1`, `sixfold`, and `godspeed` collections; keep lightning separate from the body; harmonize `idle_new` with combat poses; replace invalid healing and add victory. Six visual strikes still use the existing single server damage result. |
+Pass gate: clearly a realm-changing illusion, not Genjutsu with a larger eye symbol.
 
-- [x] Sasuke library completed and reviewed.
-- [x] Tanjiro library completed and reviewed.
-- [x] Itachi library completed and reviewed.
-- [x] Zenitsu library completed and reviewed.
-- [x] Every character receives a final comparison sheet at the same logical scale and a preview reel showing all required transitions.
-- [x] Record source/author/license or generation-and-editing provenance in `assets/ATTRIBUTION.md`; store editable sources separately from runtime exports.
+### E. Tanjiro — Whirlpool
 
-**Acceptance per character:** Correct costume/silhouette/palette across states; no foreign UI pixels, orphaned effect fragments, cropping, accidental empty frames, unintended style jumps, or unexplained facing changes. All mapped actions play a complete startup/action/recovery or intentional terminal hold. Missing assets are repaired, not hidden by arbitrary aliases.
+Reference starting points: R7/R8; validate the exact torso rotation against suitable footage before final poses. Target: 1.7–2.1 seconds.
 
-## P4 — Impact effects, audio, arena, and UI assets
+1. Lower stance, coil hips and shoulders in opposite directions, katana positioned to initiate a rotational cut.
+2. Uncoil into a clear circular sword sweep. Build a blue-white water ribbon from the blade path, passing behind and then in front of the body with appropriate occlusion.
+3. Spiral expands into the opponent’s space, with contact on the blade/water cutting arc. Use splash and directional recoil rather than lightning cracks.
+4. Land/settle from rotation; ribbon separates into droplets and dissipates.
 
-**Dependencies:** P3 (prototype effects may be developed during the pilot). **Priority:** Medium.
+Assets: coiled pose, quarter/half/three-quarter rotational keys, contact and settle; blade-tip trail with foam edges and droplets. This is a ground-arena adaptation; do not flood the map or present it as a water projectile detached from the sword.
 
-- [x] Build reusable effect types for slash, kunai trail/contact, lightning, water, flame, genjutsu, healing, block, and KO. Use distinct shape/motion as well as color. Specify layering and actor-relative/world-relative anchors.
-- [x] Add/review short release, travel, hit, block, heal, and ultimate sounds; sync playback to timeline markers. Balance levels, cap simultaneous voices, prevent duplicate audio, and preserve a muted/no-audio fallback. Complete Tanjiro and Zenitsu coverage.
-- [x] Replace the empty grid arena with one coherent low-contrast environment and anchored contact shadows that support the existing diagonal battle layout. Keep foreground effects from obscuring commands and HP.
-- [x] Use portraits and move icons consistent with the sprite art. Keep each icon accompanied by readable text; replace unreliable emoji/system-font glyphs with bundled suitable assets where necessary.
-- [x] Add adjustable effect intensity/reduced motion, volume/mute, and cutscene skip. Avoid prolonged full-screen flashes. Strong feedback must remain readable at reduced intensity.
-- [x] Resolve stale video declarations. Prefer compact in-engine animation where sufficient; keep optional existing clips only when correctly mapped and intentionally used. Do not add large videos to compensate for missing combat poses.
+Pass gate: water follows the sword and body rotation; hiding water still reveals a coherent rotational attack.
 
-**Acceptance:** Every move has a recognizable visual identity and a synchronized audio cue; body silhouettes and HUD remain legible. Reduced motion and muted audio preserve all gameplay information.
+### F. Tanjiro — Sun Breath
 
-## P5 — Verification and performance on the target laptop
+References: R8 media; exact form remains an explicit adaptation choice. Target: 2.0–2.5 seconds.
 
-**Dependencies:** P4. **Priority:** Required before completion.
+1. Audible breath and grounded preparation; both hands visibly hold the katana.
+2. Blade edge develops warm embers. Tanjiro pivots into a committed rising-to-descending sword arc, with one clear change in body orientation.
+3. Fire-colored ribbon traces the blade’s actual motion, broadening through the swing. One focused slash contacts the defender.
+4. Follow-through and recovery, with small drifting embers. No fireball from the palm and no generic explosion covering the sword.
 
-- [x] Asset validation: all referenced files exist and decode; durations and pivots are valid; no missing required action; manifest order is explicit; no unreviewed effect/UI frame appears on a body track.
-- [x] Playback tests: numeric ordering through 100+, variable `dt`, loop wrapping, terminal holds, completion transitions, missing-file diagnostics, event firing exactly once, and mirror-match independence.
-- [x] Presentation integration tests: HP feedback at impact, miss, reflection, heal at full HP, repeated/duplicate messages, queued actions, finishing blow, reflected KO, disconnect during animation, rematch state reset.
-- [x] Manual preview matrix: all four characters × ATTACK/JUTSU/ULTIMATE/HEAL on both screen sides; all reactions and result states; each same-character matchup; Itachi vs Sasuke special interaction.
-- [x] Optional dependencies: without video decoder, without video file, without sound device, and without webcam. Preserve documented hand-sign behavior; provide an offline preview fixture to test presentation without changing live challenge rules.
-- [ ] Record frame times, asset-load latency, peak memory, and effects-heavy sequences at 1024×640. Target smooth 60 FPS on the user's laptop; report median/p95/p99 and stalls rather than only an average. Compare against P0 and state any unmet target.
-- [x] Cache background layers and avoid per-frame image decode, scaling, font creation, and large surface allocation where profiling identifies them. Cap particles; load actor assets on demand. Consider atlases only after profiling shows a benefit.
-- [x] Re-run relevant checks after fixes and keep before/after recordings from the same scenario. Use a seeded preview mode for reproducible comparisons.
+Assets: breathing/preparation, two-handed lift, pivot, sweeping contact and follow-through poses; flame ribbon with red outer edge and warm core. Distinguish visually from Whirlpool by trajectory, acceleration and residual particles, not just hue.
 
-**Acceptance:** No known missing mappings, corrupted body clips, incorrect damage feedback, stuck states, or mirror-match interference. Runtime checks and visual checks both pass. Performance limitations are measured and explicitly documented; automated tests alone do not establish visual quality.
+Pass gate: sword, grip and arc remain readable through the fire. Document the chosen choreography without inventing a canonical form name.
 
-## P6 — Handoff and completion
+### G. Zenitsu — Sixfold
 
-**Dependencies:** P5.
+References: R7/R8/R9. Target: 1.8–2.3 seconds.
 
-- [x] Update README with environment setup, server/client launch, optional media/webcam setup, preview and validation commands, and controls.
-- [x] Deliver `docs/asset-audit.md`, `docs/animation-format.md`, provenance, manifests, curated source/export assets, relevant tests, preview tools, and before/after evidence.
-- [ ] Remove unused runtime assets only after checking all references and retaining required editable originals; summarize download-size and decoded-memory changes separately.
-- [x] Update this plan with actual completion status and remaining limitations. Summarize changes, checks run, checks not run, and visual evidence.
+1. Low iaido stance, hand on hilt, weight on loaded legs. Show breath and a brief stillness before acceleration.
+2. Six visibly separate directional dash accents with alternating positions and pauses of contrast. Author a path through arena space; do not fake sixfold by drawing six crescents while the same sprite glides linearly.
+3. Accents 1–5 build the attack; final pass contains the sole authoritative contact. Coordinate foot push-off, drawn sword and trailing electrical streaks.
+4. End in a distinct landing/re-sheathing pose with dust and residual charge fading.
 
-## Definition of done
+Assets: crouch/hilt grip, push-off, directional dash keys/smears, final slash, landing and sheath. Render sparse readable afterimages; do not make all six routes simultaneously bright.
 
-All four characters and all four player commands have complete, correct, distinct presentations. Characters retain their identity and body throughout animation; feet/pivots/facing are stable; hit, sound, HP, and camera feedback agree with impact. Misses, reflection, KO, mirror matches, and rematches work. The asset library is documented and reproducible, the animation viewer makes future edits reviewable, and the game runs acceptably on the target laptop with measured evidence.
+Pass gate: six accents can be counted in slowed footage, but the normal-speed sequence still reads as one rapid technique. Damage remains one event.
 
-## Resume prompt for GPT‑6.1 Sol
+### H. Zenitsu — Godspeed
 
-> Read `plan.md` and the project's current instructions. Implement the unchecked tasks in dependency order, starting with P0. Verify the repository and preserve unrelated edits. The known defects include mixed body/VFX/UI frames, inconsistent source art, arbitrary truncation, lexical frame sorting, missing mappings, shared mirror-match animation state, immediate hit feedback, and skipped finishing-blow animation. First establish a complete asset audit, then deliver and verify the Sasuke ATTACK pilot before expanding the roster. Update this plan after each milestone with changed paths, checks, visual evidence, and the next task. Keep Pygame and the current turn-based mechanics. Work within the Intel i3 CPU budget. Do not mark implementation complete based only on generated assets or tests; inspect playback and verify both clients.
+References: R7/R8/R9. Target: 1.8–2.3 seconds.
 
+1. Deeper still crouch and leg loading than Sixfold, tight electrical tension at feet/hilt, restrained camera framing on the stance.
+2. One decisive explosive launch: a narrow, bright track and short smear show the body crossing the gap at extreme speed. Do not reuse Sixfold’s zigzag pattern.
+3. One decisive sword pass/contact, then resolve Zenitsu beyond or alongside the target in a coherent finishing pose. Return to the normal root only through a believable settle/cut.
+4. Afterimage fades behind the route; thunder follows the visual attack, with contact timing preserved.
 
-## Battle impact follow-up — 10 November 2026
+Assets: deep load, push-off, elongated dash smear, slash, brake/landing and sheath. No lightning dragon: that would confuse Godspeed with a different technique and with Kirin.
 
-Implemented whole-world directional camera impulses with a stable HUD, action-scaled hitstop (45/65/95 ms), contact knockback, elemental ground marks, shockwaves, debris/mist/embers and illusion implosions. Aftermath is capped at six impacts and fades after 3.2 seconds. Reduced motion disables camera/knockback/fast debris and shortens hitstop. Damage, reflection, turn rules and animation contact markers remain server-authoritative.
+Pass gate: silence → one fast burst → finishing pose is immediately distinct from Sixfold’s repeated accents.
 
-Seven reproducible original low impact sounds now layer beneath the recorded effects. Contact audio pans toward the recipient, voice ducking/master mute still apply, and reflected attacks use a counter layer. Misses and recovery never trigger destruction. A presentation clock callback keeps shake and aftermath consistent through hit pauses and long frames.
+## 6. Integration rules and implementation order
 
-Verification: 45 automated tests; 96 power/outcome/side/motion cases; two fresh real TCP scenarios (Itachi/Sasuke reflection and Tanjiro heal/ultimate/KO). Current preview: `battle-impact/index.html` in the delivery, with sixteen 3.6-second normal/reduced clips and an eight-power reel. Tools: `tools/verify_feedback.py`, `tools/preview_battle.py`, `tools/build_impact_audio.py`.
+- [x] P0 — Recheck working branch, existing edits and actual active move names. Record baseline frames and make a list of reusable body/VFX assets. Retire the mandatory generic portrait intro without deleting unrelated changes. Capture the correction in implementation notes.
+- [x] P1 — Storyboard Chidori and Kirin: 6–8 annotated panels each, showing body silhouette, hand/dragon origin, motion path, target and timing. Produce rough in-engine animatics with actual changing body poses, not final particles first.
+- [x] P2 — Finish Chidori end-to-end. Validate palm attachment, forward thrust, mirrored contact, miss, reflection, voice and reduced motion. Produce a normal-speed clip plus slowed pose inspection. Do not batch-generate the rest before this pilot meets the visual gate.
+- [x] P3 — Finish Kirin end-to-end. Validate formation above the battlefield, command gesture, dragon scale and vertical dive. Compare the two Sasuke moves side-by-side with labels hidden.
+- [x] P4 — Implement the two Itachi techniques, then Tanjiro’s two sword techniques, then Zenitsu’s two speed techniques. Give each its own choreography and asset set. Check off each only after actual-renderer review.
+- [x] P5 — Run integration, performance, motion and audio checks. Provide updated playable files, eight full-motion clips, eight reduced-motion clips and concise provenance. Do not stop at a design gallery.
 
-Remaining work is the already-recorded English voice gaps, final human listening on physical speakers, live display/vsync and optional camera/video hardware checks. No remote publication or balance change was performed.
+Sol should execute sequentially and update this plan with completed work, evidence and remaining issues. User approval is not required for routine implementation choices; use the visual gates internally rather than repeatedly stopping to ask permission. Do not push, publish or merge unless the user authorizes that action.
 
+Timeline implementation: make the animation manifest the authority for local pose/event timing. If new cosmetic markers require extending the queue, preserve ordered markers, duplicate suppression and long-frame partitioning. Voice holds may extend recovery, not accelerate speech or move contact independently of the body clip. Keep audio from clipping and preserve mute/missing-device behavior.
 
-## Full visual glowup — 10 November 2026
+For any resource/Guard version of the game: honor `blocked`, `missed` and `reflected` results. Guard uses a block pose/sound and restrained contact effect; reflection selects the real recipient and shows a clear counter cue. Do not reverse the entire Kirin dragon simply because damage is reflected if that obscures the illusion counter. Preserve the server result and make the counter visually explicit.
 
-Implemented a new painted shrine arena, foreground fighter composition, unified top health HUD and command cards, bundled typography, menu/selection styling, ultimate technique cut-ins, cached elemental contact/ground light, vignette and low-motion-aware ambient particles. Research and the exact generated-art prompt are in `docs/glowup-art-direction.md`. The latest delivery review is `glowup/index.html`; earlier previews are retained for comparison. 48 automated tests cover the existing combat/audio regressions plus command text fit, bounded lighting caches and reduced ambient motion. Full power/TCP checks and package validation are recorded in the current verification report.
+## 7. Acceptance and verification
+
+Visual gates for every move:
+
+- [x] Body-only playback is coherent; important motion is not hidden by VFX or cut-ins.
+- [x] Technique origin is obvious: palm / sky / gaze / sword / legs.
+- [x] Forming, release, contact and recovery have different readable silhouettes.
+- [x] VFX adhere to transformed sockets and do not jump on mirroring or trimming.
+- [x] Labels-off comparison distinguishes all eight moves.
+- [x] No generic portrait pre-roll remains in the default flow.
+- [x] Normal-speed playback looks intentional, not just a pleasing freeze frame.
+
+Technical checks:
+
+- [x] One authoritative impact per action, visible HP at contact, no duplicate playback after repeated snapshots.
+- [x] Long frame versus small-step simulation agrees through charge, release, hitstop and finish; queued specials do not overlap clocks or voices incorrectly.
+- [x] Both sides, hit/miss/reflection and Guard when supported. Misses avoid destruction on the defender; reflected KO reaches correct result poses.
+- [x] Reduced motion keeps readable formation/contact but suppresses shake, rapid camera travel and repeated screen flashes. Preserve Sixfold’s identity with subdued sequential accents rather than six rapid camera cuts.
+- [x] Rematch/disconnect clears body overrides, effects, camera and pending markers.
+- [x] Existing Python suite plus focused new behavior tests passes; adapt obsolete cinematic timing tests rather than deleting event invariants.
+- [x] Repeat the 96-case renderer matrix if all eight powers change; extend with guarded-hit cases if available. Run representative real TCP exchanges on the actual implementation branch.
+- [x] Measure headless median/p95/p99 render cost, cache growth and memory. Target a 16.7 ms frame budget where practical; never label a headless timing as verified live 60 FPS. Keep atlases, particles and caches bounded.
+- [x] Check actual normal-speed video playback and representative keyframes, not merely successful encoding. State whether audio was reconstructed or recorded live.
+
+Deliverables: completed `plan.md` checklist; updated runtime body/VFX assets and manifest; source/provenance notes; eight short final attack clips plus reduced-motion variants; test/performance evidence; a working game build or checkout. Final report must separate actual changes from remaining visual/asset gaps.
+
+## 8. Prompt to give Sol
+
+> Read `plan.md` and implement the technique-specific attack animation plan. The user rejected the generic portrait-first cinematics: prioritize actual jutsu choreography. Start with Chidori forming lightning in Sasuke’s palm and becoming a bare-hand thrust, then Kirin forming a dragon in the sky and diving on his downward command. Complete and inspect these pilots before expanding to all eight specials. Preserve current mechanics, unrelated edits, English audio and authoritative impact timing. Follow the asset, body-pose, reduced-motion and verification gates; deliver actual game-renderer evidence and update the checklist. Do not treat extra glow, camera shake, portrait zooms or translated static sprites as completed attack animation.
+
+## Implementation record — 14 November 2026
+
+- Working branch and both remote refs rechecked; main remains 58fc520, strategic-combat d3d01ce. Presentation work stays on the current animation branch.
+- Removed mandatory portrait intro from runtime. Added 36 registered body keys: 12 Chidori, 12 Kirin, 12 Whirlpool; retimed and choreographed the other five specials with existing body artwork.
+- Sasuke pilots: 24 render cases passed, both full-motion clips played through in the browser. Phase boards and body-only strips are in the jutsu-choreography review folder.
+- 55 unit/integration tests passed, including current-frame rear/front water binding, real Sixfold endpoints and pre-release Kirin formation.
+- Two real TCP-client scenarios passed: Itachi/Sasuke reflection and reflected-Kirin KO; Zenitsu heal/miss/ultimate KO.
+- Asset validator passed: 36 clips, 128 body poses, 8 Kirin frames, 64 sampled cues and existing generated/impact layers.
+- Reproduction sources and limitations are documented in docs/choreography-implementation.md. Official illustration fetches timed out; no claim of full-episode pose comparison.
+- Refreshed final 96-case export passed after the water attachment fix. Median render 2.87 ms, p95 5.13 ms, p99 6.60 ms headlessly. This is not a live FPS measurement.
+- Fresh extracted build passed 55 tests and the asset validator; final review page contains all eight attacks, reduced-motion clips, phase boards and body-only strips.

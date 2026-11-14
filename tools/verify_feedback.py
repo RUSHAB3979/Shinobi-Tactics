@@ -64,6 +64,7 @@ def soundtrack(game, events, duration, path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,default=ROOT/'work/feedback')
+    parser.add_argument('--character',choices=('Sasuke','Itachi','Tanjiro','Zenitsu'))
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True,exist_ok=True)
@@ -72,8 +73,8 @@ def main():
     scratch.mkdir(parents=True,exist_ok=True)
     game = Game(); game.player_id = 'P1'
     cases=[]; clips=[]; costs=[]
-    duration=3.6
-    for name in ('Sasuke','Itachi','Tanjiro','Zenitsu'):
+    duration=5.2
+    for name in ((args.character,) if args.character else ('Sasuke','Itachi','Tanjiro','Zenitsu')):
         for action in ('JUTSU','ULTIMATE'):
             for by in ('P1','P2'):
                 for reduced in (False,True):

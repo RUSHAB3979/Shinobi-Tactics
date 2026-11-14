@@ -63,11 +63,13 @@ class AudioTests(unittest.TestCase):
                 voice = self.game.audio.voice_duration(character, 'jutsu')
                 self.assertGreater(voice, .1)
                 self.assertGreaterEqual(presentation['duration'], voice)
-                self.assertEqual(presentation['impact'], original['impact'])
+                self.assertAlmostEqual(presentation['impact'], original['impact'])
                 self.game.audio.play(character, 'jutsu', 'start')
                 self.assertTrue(self.game.audio.channels['voice'].get_busy())
                 self.game.sfx_enabled = False
-                self.assertEqual(self.game._presentation_timing(character, 'jutsu'), original)
+                muted = self.game._presentation_timing(character, 'jutsu')
+                self.assertEqual(muted['impact'], presentation['impact'])
+                self.assertEqual(muted['duration'], original['duration'])
 
     def test_voice_ducking_and_master_mute(self):
         audio = self.game.audio

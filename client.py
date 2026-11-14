@@ -450,7 +450,6 @@ class Game:
     def _presentation_timing(self, character, action):
         timing = self._timing(character, action)
         self.audio.update(self.volume, self.sfx_enabled)
-        # Hold only recovery; release, contact, damage, and actor speed stay unchanged.
         timing["duration"] = max(timing["duration"], self.audio.voice_duration(character, action)+.06)
         return timing
 
@@ -618,6 +617,8 @@ class Game:
                 self._timing(char, act.lower()), miss=act != "HEAL" and action.get("dmg",0) == 0,
                 reflected=action.get("reflected",False), contact_target=self._root(other))
         elif kind == "release":
+            if char == "Itachi" and action.get("dmg",0)>0:
+                self._actor(other).play("guard", loop=True)
             if act != "HEAL":
                 self.audio.play(char, act, "release")
         elif kind == "impact":
@@ -811,10 +812,6 @@ class Game:
                       and self.ending_timer is None)
         self.world.blit(self.arena, (0,0))
         self.style.atmosphere(self.world,dt,self.reduced_motion)
-        if self.effect:
-            self.effect.reduced = self.reduced_motion
-            self.effect.draw_background(self.world,.45 if self.reduced_motion else 1)
-        self.feedback.draw_ground(self.world, self.reduced_motion)
         actor_positions = {pid:self._root(pid) for pid in ("P1","P2")}
         if self.effect and self.presentation.active:
             by = self.presentation.active["last_action"]["by"]
@@ -823,6 +820,11 @@ class Game:
             actor = self._actor(by)
             facing = "right" if by == self.player_id else "left"
             self.effect.bind(actor,actor_positions[by],facing,self.reduced_motion)
+        if self.effect:
+            self.effect.reduced = self.reduced_motion
+            self.effect.draw_background(self.world,.45 if self.reduced_motion else 1)
+        self.feedback.draw_ground(self.world, self.reduced_motion)
+        if self.effect and self.presentation.active:
             for position,alpha in self.effect.trail_positions():
                 actor.draw(self.world,position,facing=facing,opacity=alpha)
         self.style.lighting(self.world,self.effect,self.reduced_motion)
@@ -831,8 +833,12 @@ class Game:
             dx,dy = self.feedback.displacement(self._root(pid), self.reduced_motion)
             x,y = x+dx,y+dy
             pygame.draw.ellipse(self.world,(13,23,33),(x-43,y-4,86,12))
+            opacity = self.effect.caster_opacity if self.effect and self.presentation.active and pid==by else 255
+            if self.effect and self.presentation.active and self.effect.character=="Itachi" and self.effect.action=="ULTIMATE" and pid!=by and self.effect.timing['release']<self.effect.age<self.effect.timing['impact']:
+                for offset in (-20,20):
+                    self._actor(pid).draw(self.world,(x+offset,y),facing="right" if pid==self.player_id else "left",opacity=45)
             self._actor(pid).draw(self.world,(x,y),
-                                  facing="right" if pid == self.player_id else "left")
+                                  facing="right" if pid == self.player_id else "left",opacity=opacity)
             if self.presentation.visible_shields[pid]:
                 pygame.draw.ellipse(self.world,(210,70,105),(x-45,y-150,90,145),2)
         if self.effect:

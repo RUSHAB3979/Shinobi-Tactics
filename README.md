@@ -1,6 +1,6 @@
 # Shinobi Tactics
 
-A two-player, turn-based Pygame battle game featuring Sasuke, Tanjiro, Itachi, and Zenitsu. Each power has an eight-pose body sequence, attached elemental effects, and synchronized impact feedback. Chidori uses a bare-hand charge and thrust; Kirin descends as an animated lightning dragon; Genjutsu sends crows and grants the counter shield; Tsukuyomi stages a red-moon illusion. Whirlpool, Sun Breath, Sixfold, and Godspeed have separate sword/dash choreography. Reduced motion keeps contact readable with a cut to the contact position.
+A two-player, turn-based Pygame battle game featuring Sasuke, Tanjiro, Itachi, and Zenitsu. Each power has a registered body sequence of eight to twelve distinct poses, attached elemental effects, and synchronized impact feedback. Chidori uses a bare-hand charge and thrust; Kirin descends as an animated lightning dragon; Genjutsu sends crows and grants the counter shield; Tsukuyomi stages a red-moon illusion. Whirlpool, Sun Breath, Sixfold, and Godspeed have separate sword/dash choreography. Reduced motion keeps contact readable with a cut to the contact position.
 
 ## Setup
 
@@ -55,10 +55,12 @@ All 12 offensive moves and four recoveries use sampled effects, with 11 English 
 
 ## Asset workflow
 
-- `assets/sources/`: retained 4×4 pose-sheet masters.
+- `assets/sources/`: retained pose-sheet masters, including the new 4×3 technique sheets.
 - `assets/curated/`: exported body poses used by the game.
 - `assets/animations.json`: ordered clips, durations, anchors, facing, event markers.
 - `assets/sources/powers/`: new power-pose sheets and the Kirin effect master.
+- `assets/sources/choreography/`: new body source sheets, registration data and retimed clip definitions.
+- `tools/export_choreography.py`: reproduce the current technique export after the base power exporter.
 - `assets/vfx/kirin/`: eight exported dragon effect frames.
 - `power_visuals.py`: move-specific choreography, hand/weapon attachments, trails, illusions, elements, and impacts; re-exported by `battle_visuals.py`.
 - `assets/audio/generated/`: reproducible fallback WAV cues.
@@ -110,3 +112,7 @@ For offline review: `uv run --frozen python tools/preview_battle.py` (N characte
 ### Visual glowup
 
 The current build uses the painted Shattered Shrine arena, foreground fighters, a top health HUD, technique banners and larger command cards. Elemental attacks illuminate their contact point and the floor. Space Grotesk ships with its OFL license. See `docs/glowup-art-direction.md` for the online research, exact art prompt and design decisions. The delivery's `glowup/index.html` is the latest preview; earlier galleries are historical comparisons.
+
+### Technique choreography
+
+Specials now begin with technique-specific body movement and effects: Chidori palm charge/thrust, Kirin sky formation/command/dive, illusions, rotational sword cuts and distinct thunder dashes. Reduced motion is available with `R`. See [implementation and reference notes](docs/choreography-implementation.md) and [current plan](plan.md).
